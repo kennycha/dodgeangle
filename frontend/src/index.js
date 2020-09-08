@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import App from './App';
 import './index.css';
 import rootReducer, { rootSaga } from './modules/index';
+import { HelmetProvider } from 'react-helmet-async';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -21,7 +22,9 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
