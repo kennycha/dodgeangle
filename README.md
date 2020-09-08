@@ -1,0 +1,62 @@
+# Dodge Angle
+
+## 협업 규칙
+
+### JIRA
+
+1. 오전 스크럼 회의 때, Story 다같이 설정
+
+   cf) Epic은 프로젝트 기획 시
+
+2. 개념 단위 : Epic, 기능 단위 : Story, 개발 단위 : Sub Task
+
+   - 비개발도 Story로 작성
+
+   - [예시](https://taes-k.github.io/2019/12/07/sw-jira-scrum/)
+
+     ```
+     Epic : 사용자의 회원정보를 관리한다
+     Story : 회원가입 기능을 구현한다
+     Sub Task : 회원가입 폼 UI를 구현한다
+     ```
+
+3. 본인 개발 본인 등록이 기본
+
+   - 필요한 경우 협업자에게 알리고 타인 등록
+
+### GIT
+
+1. 커밋 메시지 형식
+
+   ```
+   [Add] 50자 이내 제목
+   
+   파일명 1
+   - 세세한 변경 1
+   - 세세한 변경 2
+   파일명 2
+   - 세세한 변경 1
+   - 세세한 변경 2
+   ```
+
+2. `Add(추가)`, `Update(변경)`, `Fix(에러 수정)`, `Delete(삭제)`, `Chores(잡일)`
+
+3. 브랜치명
+
+   - master(바지사장)
+     - develop(실세)
+       - front
+         - feature/login-api
+       - back
+         - feature/login-api
+         - hotfix/asdf
+
+4. pull request ↔ merge 방식
+
+   - front 관리 : 차영부
+   - back 관리 : 각자(신뢰기반)
+   - 머지 방식은 일단 자율적으로
+
+5. feature 브랜치는 일회용
+
+6. gitlab 권한 부여 : maintainer 모두에게 부여
