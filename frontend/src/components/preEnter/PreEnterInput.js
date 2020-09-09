@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/styles/palette';
+import Button from '../common/Button';
 
 const InputBlock = styled(Responsive)`
   background: ${palette.yellow[3]};
@@ -9,10 +10,15 @@ const InputBlock = styled(Responsive)`
 
 const Input = styled.input``;
 
-const PreEnterInput = () => {
+const PreEnterInput = ({ teamMates, setTeamMates, onButtonClick }) => {
+  const onInputChange = (e) => {
+    setTeamMates(e.target.value);
+  };
+
   return (
     <InputBlock>
-      <Input />
+      <Input onChange={onInputChange} />
+      <Button onClick={onButtonClick}>입력</Button>
     </InputBlock>
   );
 };

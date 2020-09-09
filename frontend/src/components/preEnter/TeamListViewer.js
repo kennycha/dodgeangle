@@ -7,8 +7,21 @@ const TeamListViewerBlock = styled(Responsive)`
   background: ${palette.violet[3]};
 `;
 
-const TeamListViewer = () => {
-  return <TeamListViewerBlock>Team List</TeamListViewerBlock>;
+const TeamListItem = styled.div`
+  background: ${palette.indigo[3]};
+`;
+
+const TeamListViewer = ({ teamMates, error }) => {
+  return (
+    <TeamListViewerBlock>
+      <h1>Team Mates List</h1>
+      {teamMates?.map((teamMate) => (
+        <TeamListItem key={teamMates.indexOf(teamMate)}>
+          {teamMate}
+        </TeamListItem>
+      ))}
+    </TeamListViewerBlock>
+  );
 };
 
 export default TeamListViewer;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import PreEnterTitle from '../components/preEnter/PreEnterTitle';
 import PreEnterInputContainer from '../containers/preEnter/PreEnterInputContainer';
 import TeamListContainer from '../containers/preEnter/TeamListViewerContainer';
-import PreEnterTitleContainer from '../containers/preEnter/PreEnterTitleContainer';
 
 const PreEnterPage = () => {
   return (
@@ -10,7 +10,7 @@ const PreEnterPage = () => {
       <Helmet>
         <title>PreEnter | DODGEANGLE</title>
       </Helmet>
-      <PreEnterTitleContainer />
+      <PreEnterTitle />
       <PreEnterInputContainer />
       <TeamListContainer />
     </>
