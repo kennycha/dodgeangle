@@ -15,7 +15,13 @@ const PreEnterInputContainer = () => {
       .split('AAA')
       .map((t) => t.trim().slice(0, -15))
       .slice(0, 5);
-    dispatch(confirmTeamMates(parsedTeamMates));
+    // id를 포함한 객체로 array에 저장
+    const teamMatesArray = parsedTeamMates.map((teamMate) => ({
+      id: parsedTeamMates.indexOf(teamMate),
+      name: teamMate,
+      pos: '',
+    }));
+    dispatch(confirmTeamMates(teamMatesArray));
   };
 
   return (
