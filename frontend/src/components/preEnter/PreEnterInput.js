@@ -17,7 +17,9 @@ const PreEnterInput = ({ teamMates, setTeamMates, onButtonClick }) => {
   return (
     <InputBlock>
       <Input onChange={onInputChange} />
-      <Button onClick={onButtonClick}>입력</Button>
+      <Button onClick={onButtonClick} fullWidth>
+        입력
+      </Button>
     </InputBlock>
   );
 };
