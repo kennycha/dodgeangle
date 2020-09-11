@@ -3,6 +3,9 @@ import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
 import { confirmTeamMates, changePosition } from '../../modules/teamMates';
 
+const placeholder = document.createElement('span');
+placeholder.className = 'placeholder';
+
 const TeamListViewerContainer = () => {
   const dispatch = useDispatch();
   const [dragged, setDragged] = useState();
@@ -18,9 +21,6 @@ const TeamListViewerContainer = () => {
     );
   };
 
-  const placeholder = document.createElement('div');
-  placeholder.className = 'placeholder';
-
   const dragStart = (e) => {
     setDragged(e.target);
     e.dataTransfer.effectAllowed = 'move';
@@ -28,14 +28,15 @@ const TeamListViewerContainer = () => {
   };
 
   const dragEnd = (e) => {
-    dragged.style.display = 'block';
+    // dragged.style.display = 'block';
+    dragged.style.opacity = '1';
     if (dragged.parentNode !== over?.parentNode) {
       return;
     }
     dragged.parentNode.removeChild(placeholder);
 
-    let from = parseInt(dragged?.id);
-    let to = parseInt(over?.id);
+    const from = parseInt(dragged?.id);
+    const to = parseInt(over?.id);
 
     if (from === to) {
       return;
@@ -72,6 +73,7 @@ const TeamListViewerContainer = () => {
   const dragOver = (e) => {
     e.preventDefault();
     // dragged.style.display = 'none';
+    dragged.style.opacity = '0.5';
     if (e.target.className === 'placeholder') return;
     setOver(e.target);
     e.target.parentNode.insertBefore(placeholder, e.target);
