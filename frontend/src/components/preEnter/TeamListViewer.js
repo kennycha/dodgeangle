@@ -9,16 +9,22 @@ const TeamListViewerBlock = styled(Responsive)`
 
 const TeamListItemBlock = styled.div`
   background: ${palette.indigo[3]};
-  margin: 1rem;
+  margin: 0.5rem;
+  height: 50px;
   cursor: pointer;
 `;
 
-const TeamListItem = ({ teamMate, onSelectChange }) => {
+const TeamListItem = ({ teamMate, onSelectChange, dragStart, dragEnd }) => {
   return (
-    <TeamListItemBlock>
-      <div>{teamMate.id}</div>
-      <div>{teamMate.name}</div>
-      <div>{teamMate.pos}</div>
+    <TeamListItemBlock
+      draggable={true}
+      onDragStart={dragStart}
+      onDragEnd={dragEnd}
+      id={teamMate.id}
+    >
+      {teamMate.id}
+      {teamMate.name}
+      {teamMate.pos}
       <select onChange={onSelectChange} id={teamMate.id}>
         <option value="top">탑</option>
         <option value="jgl">정글</option>
@@ -30,15 +36,24 @@ const TeamListItem = ({ teamMate, onSelectChange }) => {
   );
 };
 
-const TeamListViewer = ({ teamMates, error, onSelectChange }) => {
+const TeamListViewer = ({
+  teamMates,
+  error,
+  onSelectChange,
+  dragStart,
+  dragEnd,
+  dragOver,
+}) => {
   return (
-    <TeamListViewerBlock>
+    <TeamListViewerBlock onDragOver={dragOver}>
       <h1>Team Mates List</h1>
       {teamMates?.map((teamMate) => (
         <TeamListItem
           key={teamMate.id}
           teamMate={teamMate}
           onSelectChange={onSelectChange}
+          dragStart={dragStart}
+          dragEnd={dragEnd}
         />
       ))}
     </TeamListViewerBlock>
