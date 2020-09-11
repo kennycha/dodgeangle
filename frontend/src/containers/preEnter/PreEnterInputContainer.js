@@ -8,14 +8,18 @@ const PreEnterInputContainer = () => {
   const dispatch = useDispatch();
 
   const onButtonClick = () => {
-    // textarea로 변경 후 아래로 분리자 바꿔야 함
-    // const inputTeamMates = teamMates.split('\n');
-
-    const parsedTeamMates = teamMates
-      .split('AAA')
-      .map((t) => t.trim().slice(0, -15))
-      .slice(0, 5);
-    dispatch(confirmTeamMates(parsedTeamMates));
+    if (teamMates.length !== 0) {
+      const parsedTeamMates = teamMates
+        .split('\n')
+        .map((t) => t.trim().slice(0, -15))
+        .slice(0, 5);
+      const teamMatesArray = parsedTeamMates.map((teamMate) => ({
+        id: parsedTeamMates.indexOf(teamMate),
+        name: teamMate,
+        pos: '',
+      }));
+      dispatch(confirmTeamMates(teamMatesArray));
+    }
   };
 
   return (

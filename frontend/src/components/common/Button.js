@@ -11,6 +11,8 @@ const buttonStyle = css`
   padding: 0.25rem 1rem;
   color: white;
   outline: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   cursor: pointer;
 
   background: ${palette.gray[8]};
