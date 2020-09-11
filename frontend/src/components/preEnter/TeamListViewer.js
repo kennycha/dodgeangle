@@ -8,7 +8,7 @@ const TeamListViewerBlock = styled(Responsive)`
 `;
 
 const TeamListItemBlock = styled.div`
-  background: ${palette.indigo[3]};
+  background: ${palette.indigo[5]};
   margin: 0.5rem;
   height: 50px;
   cursor: pointer;
