@@ -13,6 +13,8 @@ services:
     command: gunicorn dodge_angle.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"
+    depends_on:
+      - database
 
   frontend:
     build:
@@ -33,5 +35,19 @@ services:
       - backend
       - frontend
 
+  database:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: dodge_angle
+      MYSQL_USER: normalfriends
+      MYSQL_PASSWORD: *
+      MYSQL_ROOT_PASSWORD: *
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - persistent_data:/var/lib/mysql
+
 volumes:
   build_folder:
+  persistent_data:
