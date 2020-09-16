@@ -7,9 +7,9 @@ services:
     build:
       context: ./backend
       args:
-        DJANGO_ALLOWED_HOSTS: *
-        DJANGO_SECRET_KEY: *
-        DJANGO_CORS_ORIGIN_WHITELIST: *
+        DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+        DJANGO_CORS_ORIGIN_WHITELIST: ${DJANGO_CORS_ORIGIN_WHITELIST}
     command: gunicorn dodge_angle.wsgi --bind 0.0.0.0:8000 -w 9
     ports:
       - "8000:8000"
@@ -20,7 +20,7 @@ services:
     build:
       context: ./blog_frontend
       args:
-        API_URL: *
+        API_URL: ${API_URL}
     volumes:
       - build_folder:/frontend/build
 
@@ -42,8 +42,8 @@ services:
     environment:
       MYSQL_DATABASE: dodge_angle
       MYSQL_USER: normalfriends
-      MYSQL_PASSWORD: *
-      MYSQL_ROOT_PASSWORD: *
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ROOT_HOST: '%'
     volumes:
       - persistent_data:/var/lib/mysql
