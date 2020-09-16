@@ -15,9 +15,22 @@ const TeamListViewerContainer = () => {
     error: teamMates.error,
   }));
 
-  const onSelectChange = (e) => {
+  const onPositionClick = (e) => {
+    const prevOverlay = e.target.parentNode.parentNode.querySelector(
+      '.selected',
+    );
+    prevOverlay.style.display = 'none';
+    prevOverlay.classList.remove('selected');
+
+    const overlay = e.target.parentNode.querySelector('div');
+    overlay.style.display = 'block';
+    overlay.classList.add('selected');
+
     dispatch(
-      changePosition({ id: parseInt(e.target.id), pos: e.target.value }),
+      changePosition({
+        id: parseInt(e.target.parentNode.parentNode.id),
+        pos: e.target.parentNode.id,
+      }),
     );
   };
 
@@ -83,10 +96,10 @@ const TeamListViewerContainer = () => {
     <TeamListViewer
       teamMates={teamMates}
       error={error}
-      onSelectChange={onSelectChange}
       dragStart={dragStart}
       dragEnd={dragEnd}
       dragOver={dragOver}
+      onPositionClick={onPositionClick}
     />
   );
 };

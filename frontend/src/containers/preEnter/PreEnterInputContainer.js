@@ -16,7 +16,7 @@ const PreEnterInputContainer = () => {
       const teamMatesArray = parsedTeamMates.map((teamMate) => ({
         id: parsedTeamMates.indexOf(teamMate),
         name: teamMate,
-        pos: '',
+        pos: 'top',
       }));
       dispatch(confirmTeamMates(teamMatesArray));
     }
