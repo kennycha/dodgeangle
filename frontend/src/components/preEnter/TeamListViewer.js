@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/styles/palette';
+//npm install react-icons --save
+import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 
 const TeamListViewerBlock = styled(Responsive)`
   background: ${palette.violet[3]};
@@ -14,7 +16,7 @@ const TeamListItemBlock = styled.div`
   cursor: pointer;
 `;
 
-const TeamListItem = ({ teamMate, onSelectChange, dragStart, dragEnd }) => {
+const TeamListItem = ({ teamMate, onSelectChange, onMeChange, dragStart, dragEnd }) => {
   return (
     <TeamListItemBlock
       draggable={true}
@@ -22,6 +24,11 @@ const TeamListItem = ({ teamMate, onSelectChange, dragStart, dragEnd }) => {
       onDragEnd={dragEnd}
       id={teamMate.id}
     >
+      {teamMate.me ?
+        <FaRegCheckCircle onClick={()=>onMeChange(teamMate.id)} /> :
+        <FaRegCircle onClick={()=>onMeChange(teamMate.id)}/>
+      }
+      {teamMate.me ? "나" : "너"}
       {teamMate.id}
       {teamMate.name}
       {teamMate.pos}
@@ -40,6 +47,7 @@ const TeamListViewer = ({
   teamMates,
   error,
   onSelectChange,
+  onCheckboxChange,
   dragStart,
   dragEnd,
   dragOver,
@@ -52,6 +60,7 @@ const TeamListViewer = ({
           key={teamMate.id}
           teamMate={teamMate}
           onSelectChange={onSelectChange}
+          onMeChange={onMeChange}
           dragStart={dragStart}
           dragEnd={dragEnd}
         />
