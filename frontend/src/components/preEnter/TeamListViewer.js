@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import palette from '../../lib/styles/palette';
+import PositionSelector from './PositionSelector';
 
 const TeamListViewerBlock = styled(Responsive)`
   background: ${palette.violet[3]};
@@ -17,33 +18,38 @@ const TeamListItemBlock = styled.div`
   cursor: pointer;
 `;
 
-const PositionItemBlock = styled.div`
-  height: 100px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+const TeamMateInfo = styled.div`
+  font-size: 1.25rem;
+  font-weight: bold;
 `;
 
-const PositionItem = styled.div`
-  display: relative;
-`;
+// const PositionItemBlock = styled.div`
+//   height: 100px;
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: center;
+// `;
 
-const PositionOverlay = styled.div`
-  height: 80px;
-  width: 80px;
-  border-radius: 100%;
-  position: absolute;
-  background-color: ${palette.black};
-  opacity: 0.7;
-  display: none;
-`;
+// const PositionItem = styled.div`
+//   display: relative;
+// `;
 
-const PositionImg = styled.img`
-  height: 80px;
-  width: 80px;
-  margin-right: 1rem;
-  border-radius: 100%;
-`;
+// const PositionOverlay = styled.div`
+//   height: 80px;
+//   width: 80px;
+//   border-radius: 100%;
+//   position: absolute;
+//   background-color: ${palette.black};
+//   opacity: 0.7;
+//   display: none;
+// `;
+
+// const PositionImg = styled.img`
+//   height: 80px;
+//   width: 80px;
+//   margin-right: 1rem;
+//   border-radius: 100%;
+// `;
 
 const TeamListItem = ({ teamMate, dragStart, dragEnd, onPositionClick }) => {
   return (
@@ -53,50 +59,11 @@ const TeamListItem = ({ teamMate, dragStart, dragEnd, onPositionClick }) => {
       onDragEnd={dragEnd}
       id={teamMate.id}
     >
-      <div draggable={false}>{teamMate.id}</div>
-      <div draggable={false}>{teamMate.name}</div>
-      <PositionItemBlock id={teamMate.id} draggable={false}>
-        <PositionItem id="top">
-          <PositionOverlay className="selected" />
-          <PositionImg
-            src={require('../../img/positions/top.png')}
-            draggable={false}
-            onClick={onPositionClick}
-          />
-        </PositionItem>
-        <PositionItem id="jgl">
-          <PositionOverlay />
-          <PositionImg
-            src={require('../../img/positions/jgl.png')}
-            draggable={false}
-            onClick={onPositionClick}
-          />
-        </PositionItem>
-        <PositionItem id="mid">
-          <PositionOverlay />
-          <PositionImg
-            src={require('../../img/positions/mid.png')}
-            draggable={false}
-            onClick={onPositionClick}
-          />
-        </PositionItem>
-        <PositionItem id="adc">
-          <PositionOverlay />
-          <PositionImg
-            src={require('../../img/positions/adc.png')}
-            draggable={false}
-            onClick={onPositionClick}
-          />
-        </PositionItem>
-        <PositionItem id="sup">
-          <PositionOverlay />
-          <PositionImg
-            src={require('../../img/positions/sup.png')}
-            draggable={false}
-            onClick={onPositionClick}
-          />
-        </PositionItem>
-      </PositionItemBlock>
+      <TeamMateInfo draggable={false}>
+        {parseInt(teamMate.id) + 1}픽
+      </TeamMateInfo>
+      <TeamMateInfo draggable={false}>{teamMate.name}</TeamMateInfo>
+      <PositionSelector teamMate={teamMate} onPositionClick={onPositionClick} />
     </TeamListItemBlock>
   );
 };

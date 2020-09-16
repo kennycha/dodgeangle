@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
 import { confirmTeamMates, changePosition } from '../../modules/teamMates';
@@ -91,6 +91,21 @@ const TeamListViewerContainer = () => {
     setOver(e.target);
     e.target.parentNode.insertBefore(placeholder, e.target);
   };
+
+  useEffect(() => {
+    const overlays = Array.from(document.querySelectorAll('.overlay'));
+    overlays.forEach((overlay) => {
+      overlay.style.display = 'none';
+    });
+
+    const selectedPositions = Array.from(
+      document.querySelectorAll('.selected'),
+    );
+    selectedPositions.forEach((selectedPosition) => {
+      const selectedOverlay = selectedPosition.parentNode.querySelector('div');
+      selectedOverlay.style.display = 'block';
+    });
+  }, [teamMates, dispatch]);
 
   return (
     <TeamListViewer
