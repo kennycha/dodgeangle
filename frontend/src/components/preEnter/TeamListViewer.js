@@ -47,7 +47,7 @@ const TeamListViewer = ({
   teamMates,
   error,
   onSelectChange,
-  onCheckboxChange,
+  onMeChange,
   dragStart,
   dragEnd,
   dragOver,

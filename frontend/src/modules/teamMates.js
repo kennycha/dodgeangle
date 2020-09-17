@@ -36,7 +36,7 @@ const teamMates = handleActions(
     [CHANGE_POSITION]: (state, { payload: { id, pos } }) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.id === id ? { ...teamMate, pos: pos, me: true } : teamMate,
+        teamMate.id === id ? { ...teamMate, pos: pos} : teamMate,
       ),
     }),
     [CHANGE_ME]: (state, { payload: id }) => ({
