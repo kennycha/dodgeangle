@@ -21,6 +21,11 @@ const PositionOverlay = styled.div`
   background-color: ${palette.black};
   opacity: 0.7;
   display: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const PositionImg = styled.img`
@@ -28,6 +33,11 @@ const PositionImg = styled.img`
   width: 80px;
   margin-right: 1rem;
   border-radius: 100%;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const PositionSelector = ({ teamMate, onPositionClick }) => {
@@ -37,7 +47,7 @@ const PositionSelector = ({ teamMate, onPositionClick }) => {
     <PositionItemBlock id={teamMate.id} draggable={false}>
       {positions.map((position) =>
         position === teamMate.pos ? (
-          <PositionItem id={position} key={position}>
+          <PositionItem id={position} key={position} draggable={false}>
             <PositionOverlay className="overlay selected" draggable={false} />
             <PositionImg
               src={require(`../../img/positions/${position}.png`)}

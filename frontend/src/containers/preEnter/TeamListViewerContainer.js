@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
-import { confirmTeamMates, changePosition, changeMe } from '../../modules/teamMates';
-
+import {
+  confirmTeamMates,
+  changePosition,
+  changeMe,
+} from '../../modules/teamMates';
 
 const placeholder = document.createElement('span');
 placeholder.className = 'placeholder';
@@ -36,9 +39,7 @@ const TeamListViewerContainer = () => {
   };
 
   const onMeChange = (id) => {
-    dispatch(
-      changeMe( id )
-    );
+    dispatch(changeMe(id));
   };
 
   const dragStart = (e) => {
