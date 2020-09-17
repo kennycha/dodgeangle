@@ -38,7 +38,7 @@ const PositionSelector = ({ teamMate, onPositionClick }) => {
       {positions.map((position) =>
         position === teamMate.pos ? (
           <PositionItem id={position} key={position}>
-            <PositionOverlay className="overlay selected" />
+            <PositionOverlay className="overlay selected" draggable={false} />
             <PositionImg
               src={require(`../../img/positions/${position}.png`)}
               draggable={false}
@@ -47,7 +47,7 @@ const PositionSelector = ({ teamMate, onPositionClick }) => {
           </PositionItem>
         ) : (
           <PositionItem id={position} key={position}>
-            <PositionOverlay className="overlay" />
+            <PositionOverlay className="overlay" draggable={false} />
             <PositionImg
               src={require(`../../img/positions/${position}.png`)}
               draggable={false}

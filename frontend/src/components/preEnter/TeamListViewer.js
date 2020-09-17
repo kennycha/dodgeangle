@@ -12,13 +12,14 @@ const TeamListItemBlock = styled.div`
   background: ${palette.indigo[5]};
   margin: 0.5rem;
   height: 100px;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   align-items: center;
   cursor: pointer;
 `;
 
 const TeamMateInfo = styled.div`
+  margin-left: 1.5rem;
   font-size: 1.25rem;
   font-weight: bold;
 `;
@@ -32,9 +33,8 @@ const TeamListItem = ({ teamMate, dragStart, dragEnd, onPositionClick }) => {
       id={teamMate.id}
     >
       <TeamMateInfo draggable={false}>
-        {parseInt(teamMate.id) + 1}픽
+        {parseInt(teamMate.id) + 1}픽 {teamMate.name}
       </TeamMateInfo>
-      <TeamMateInfo draggable={false}>{teamMate.name}</TeamMateInfo>
       <PositionSelector teamMate={teamMate} onPositionClick={onPositionClick} />
     </TeamListItemBlock>
   );

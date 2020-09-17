@@ -43,10 +43,8 @@ const TeamListViewerContainer = () => {
   const dragEnd = (e) => {
     // dragged.style.display = 'block';
     dragged.style.opacity = '1';
-    if (dragged.parentNode !== over?.parentNode) {
-      return;
-    }
-    dragged.parentNode.removeChild(placeholder);
+    const pholders = document.querySelectorAll('.placeholder');
+    pholders.forEach((pholder) => pholder.remove());
 
     const from = parseInt(dragged?.id);
     const to = parseInt(over?.id);
@@ -88,6 +86,7 @@ const TeamListViewerContainer = () => {
     // dragged.style.display = 'none';
     dragged.style.opacity = '0.5';
     if (e.target.className === 'placeholder') return;
+    if (e.target.parentNode !== dragged.parentNode) return;
     setOver(e.target);
     e.target.parentNode.insertBefore(placeholder, e.target);
   };
