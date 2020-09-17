@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
-import { confirmTeamMates, changePosition } from '../../modules/teamMates';
+import { confirmTeamMates, changePosition, changeMe } from '../../modules/teamMates';
+
 
 const placeholder = document.createElement('span');
 placeholder.className = 'placeholder';
@@ -34,6 +35,12 @@ const TeamListViewerContainer = () => {
     );
   };
 
+  const onMeChange = (id) => {
+    dispatch(
+      changeMe( id )
+    );
+  };
+
   const dragStart = (e) => {
     setDragged(e.target);
     e.dataTransfer.effectAllowed = 'move';
@@ -60,9 +67,8 @@ const TeamListViewerContainer = () => {
         ...teamMates.slice(to + 1),
       ];
       const teamMatesArray = newTeamMates.map((teamMate) => ({
+        ...teamMate,
         id: newTeamMates.indexOf(teamMate),
-        name: teamMate.name,
-        pos: teamMate.pos,
       }));
       dispatch(confirmTeamMates(teamMatesArray));
     } else {
@@ -73,9 +79,8 @@ const TeamListViewerContainer = () => {
         ...teamMates.slice(from + 1),
       ];
       const teamMatesArray = newTeamMates.map((teamMate) => ({
+        ...teamMate,
         id: newTeamMates.indexOf(teamMate),
-        name: teamMate.name,
-        pos: teamMate.pos,
       }));
       dispatch(confirmTeamMates(teamMatesArray));
     }
@@ -110,6 +115,7 @@ const TeamListViewerContainer = () => {
     <TeamListViewer
       teamMates={teamMates}
       error={error}
+      onMeChange={onMeChange}
       dragStart={dragStart}
       dragEnd={dragEnd}
       dragOver={dragOver}
