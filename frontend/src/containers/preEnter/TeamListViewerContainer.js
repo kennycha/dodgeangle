@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
 import { confirmTeamMates, changePosition } from '../../modules/teamMates';
@@ -15,9 +15,22 @@ const TeamListViewerContainer = () => {
     error: teamMates.error,
   }));
 
-  const onSelectChange = (e) => {
+  const onPositionClick = (e) => {
+    const prevOverlay = e.target.parentNode.parentNode.querySelector(
+      '.selected',
+    );
+    prevOverlay.style.display = 'none';
+    prevOverlay.classList.remove('selected');
+
+    const overlay = e.target.parentNode.querySelector('div');
+    overlay.style.display = 'block';
+    overlay.classList.add('selected');
+
     dispatch(
-      changePosition({ id: parseInt(e.target.id), pos: e.target.value }),
+      changePosition({
+        id: parseInt(e.target.parentNode.parentNode.id),
+        pos: e.target.parentNode.id,
+      }),
     );
   };
 
@@ -30,10 +43,8 @@ const TeamListViewerContainer = () => {
   const dragEnd = (e) => {
     // dragged.style.display = 'block';
     dragged.style.opacity = '1';
-    if (dragged.parentNode !== over?.parentNode) {
-      return;
-    }
-    dragged.parentNode.removeChild(placeholder);
+    const pholders = document.querySelectorAll('.placeholder');
+    pholders.forEach((pholder) => pholder.remove());
 
     const from = parseInt(dragged?.id);
     const to = parseInt(over?.id);
@@ -75,18 +86,34 @@ const TeamListViewerContainer = () => {
     // dragged.style.display = 'none';
     dragged.style.opacity = '0.5';
     if (e.target.className === 'placeholder') return;
+    if (e.target.parentNode !== dragged.parentNode) return;
     setOver(e.target);
     e.target.parentNode.insertBefore(placeholder, e.target);
   };
+
+  useEffect(() => {
+    const overlays = Array.from(document.querySelectorAll('.overlay'));
+    overlays.forEach((overlay) => {
+      overlay.style.display = 'none';
+    });
+
+    const selectedPositions = Array.from(
+      document.querySelectorAll('.selected'),
+    );
+    selectedPositions.forEach((selectedPosition) => {
+      const selectedOverlay = selectedPosition.parentNode.querySelector('div');
+      selectedOverlay.style.display = 'block';
+    });
+  }, [teamMates, dispatch]);
 
   return (
     <TeamListViewer
       teamMates={teamMates}
       error={error}
-      onSelectChange={onSelectChange}
       dragStart={dragStart}
       dragEnd={dragEnd}
       dragOver={dragOver}
+      onPositionClick={onPositionClick}
     />
   );
 };
