@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -44,7 +44,6 @@ const TeamListViewerContainer = () => {
 
   const dragStart = (e) => {
     setDragged(e.target);
-    console.log('set', e.target);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', dragged);
     e.target.style.opacity = '0.5'; // 드레그 중인 div 투명도 증가
@@ -55,15 +54,23 @@ const TeamListViewerContainer = () => {
     let target = e.target;
     // draggable div 탐색
     while (target?.className !== dragged.className) {
+      // 타겟이 위쪽 여백(root) or 타겟이 공백(부모노드 찾아가면 root)
       if (target?.id === 'root' || target?.parentNode?.id === 'root') {
-        // 타겟이 위쪽 여백(root) or 타겟이 공백(부모노드 찾아가면 root)
-        console.log(target?.parentNode?.id || target?.parentNode?.className || target.id)
+        // 스타일링할 over가 존재하고, 그 over가 dragged와 같지 않다면
+        if (over && over !== dragged) {
+          over.style.opacity = '1';
+        }
         setOver();
         return;
       }
       target = target.parentNode;
     }
-    console.log(target?.id || target.className)
+
+    // 스타일링할 over가 존재하고, 그 over가 dragged와 같이 않고, 현재 타겟과 같지 않으면
+    if (over && over !== dragged && over !== target) {
+      over.style.opacity = '1';
+    }
+    target.style.opacity = '0.5';
     setOver(target); // Over에 타겟 저장
   };
 
@@ -71,12 +78,28 @@ const TeamListViewerContainer = () => {
     dragged.style.opacity = '1'; // 드레그 끝난 div 투명도 원상 복귀
 
     if (!over) return; // 여백에서 멈췄으면 => 아무 동작 X
+    over.style.opacity = '1' // 드레그 타겟인 div 투명도 원상 복귀
     const fromId = parseInt(dragged.id); // ? 삭제 => 없으면 로직 오류임
     const toId = parseInt(over.id); // ? 삭제 => 없으면 로직 오류임
 
     if (fromId === toId) return;
     dispatch(switching({ fromId, toId }));
   };
+
+  useEffect(() => {
+    const overlays = Array.from(document.querySelectorAll('.overlay'));
+    overlays.forEach((overlay) => {
+      overlay.style.display = 'none';
+    });
+
+    const selectedPositions = Array.from(
+      document.querySelectorAll('.selected'),
+    );
+    selectedPositions.forEach((selectedPosition) => {
+      const selectedOverlay = selectedPosition.parentNode.querySelector('div');
+      selectedOverlay.style.display = 'block';
+    });
+  }, [teamMates, dispatch]);
 
   return (
     <TeamListViewer
