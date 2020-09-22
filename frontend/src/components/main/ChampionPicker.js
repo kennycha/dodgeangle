@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 const ChampionPickerBlock = styled.div`
-  height: 100vh;
+  height: 100%;
   background: ${palette.grape[3]};
 `;
 

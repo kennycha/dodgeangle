@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 const AllyListBlock = styled.div`
-  height: 100vh;
+  height: 100%;
   background: ${palette.orange[3]};
 `;
 
