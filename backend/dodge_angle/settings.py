@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'normal_db',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': config('MONGO_INITDB_ROOT_HOST'),
+            'host': config('DJANGO_CORS_ORIGIN_WHITELIST'),
             'port': 27017,
             'username': config('MONGO_INITDB_ROOT_USERNAME'),
             'password': config('MONGO_INITDB_ROOT_PASSWORD'),

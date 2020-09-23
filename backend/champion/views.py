@@ -18,12 +18,12 @@ def get_all_champion(request):
     cole = client.get_database('normal_db')
     collection_list = cole.get_collection('champion').find()
     champion_data = loads(dumps(collection_list))
-    data = {}
+    data = []
     for champion in champion_data:
         temp = {}
         for key, value in champion.items():
             if key != '_id' and key != 'key':
                 temp[key] = value
-        data[champion['key']] = temp
+        data.append(temp)
     client.close()
     return Response(data)
