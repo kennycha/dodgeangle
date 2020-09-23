@@ -13,7 +13,8 @@ def db_client():
         )
     return client
 
-def main():
+
+def set_data():
     client = db_client()
     collection = client.normal_db.champion
 
@@ -34,6 +35,12 @@ def main():
         collection.insert(temp)
 
     client.close()
+
+
+def main():
+    client = db_client()
+    print(client.list_database_names())
+
 
 if __name__ == "__main__":
     main()
