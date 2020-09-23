@@ -24,6 +24,8 @@ def get_all_champion(request):
         for key, value in champion.items():
             if key != '_id' and key != 'key':
                 temp[key] = value
+            if key == 'key':
+                temp['id'] = value
         data.append(temp)
     client.close()
     return Response(data)
