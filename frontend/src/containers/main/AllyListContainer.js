@@ -13,14 +13,10 @@ const AllyListContainer = () => {
   // const [over, setOver] = useState();
   const { teamMates, error } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
-    error: teamMates.error
+    error: teamMates.error,
   }));
-  console.log("팀메이츠확인", teamMates)
-  return (
-    <AllyList
-      teamMates={teamMates}
-    />
-  );
+  // console.log("팀메이츠확인", teamMates)
+  return <AllyList teamMates={teamMates} />;
 };
 
 export default AllyListContainer;
