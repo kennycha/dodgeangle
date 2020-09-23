@@ -4,7 +4,7 @@ from decouple import config
 
 def db_client():
     client = MongoClient(
-        host = config('DJANGO_CORS_ORIGIN_WHITELIST'),
+        host = config('MONGO_INITDB_ROOT_HOST'),
         port = 27017,
         username = config('MONGO_INITDB_ROOT_USERNAME'),
         password = config('MONGO_INITDB_ROOT_PASSWORD'),
