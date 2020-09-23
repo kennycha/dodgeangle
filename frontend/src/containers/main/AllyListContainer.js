@@ -11,8 +11,9 @@ const AllyListContainer = () => {
   // const dispatch = useDispatch();
   // const [dragged, setDragged] = useState();
   // const [over, setOver] = useState();
-  const { teamMates } = useSelector(({ teamMates }) => ({
+  const { teamMates, error } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
+    error: teamMates.error
   }));
   console.log("팀메이츠확인", teamMates)
   return (

@@ -43,10 +43,11 @@ const AllyListItem = ({
     <AllyListItemBlock>
       <AllyInfo>
         <ChampionImg
-          // src={require(`../../img/champions/${teamMate?.name}.png`)}
-          src={require(`../../img/positions/${teamMate?.pos}.png`)}
+          src={require(`../../img/champions/${teamMate?.name}.png`)}
+          // src={require(`../../img/positions/${teamMate?.pos}.png`)}
         />
-        소환사명&챔피언&포지션&승률&최근게임&챔피언성적
+        소환사명: {teamMate?.name}
+        {/* &챔피언&포지션&승률&최근게임&챔피언성적 */}
       </AllyInfo>
     </AllyListItemBlock>
   )
