@@ -5,6 +5,9 @@ const CONFIRM_TEAMMATES = 'teamMates/CONFIRM_TEAMMATES';
 const CHANGE_POSITION = 'teamMates/CHANGE_POSITION';
 const CHANGE_ME = 'teamMates/CHANGE_ME';
 const SWITCHING = 'teamMates/SWITCHING';
+const PICK_CHAMPION = 'teamMates/PICK_CHAMPION'
+const BAN_CHAMPION = 'teamMates/BAN_CHAMPION'
+
 // action creator 함수
 export const confirmTeamMates = createAction(
   CONFIRM_TEAMMATES,
@@ -22,6 +25,15 @@ export const switching = createAction(SWITCHING, ({ fromId, toId }) => ({
   toId,
 }));
 
+export const pickChampion = createAction(PICK_CHAMPION, ({id, champion}) => ({
+  id,
+  champion,
+}))
+
+export const banChampion = createAction(BAN_CHAMPION, ({id, champion}) => ({
+  id,
+  champion,
+}))
 // initial state
 const initialState = {
   teamMates: null,
@@ -58,6 +70,18 @@ const teamMates = handleActions(
           ? { ...state.teamMates[fromId], id: teamMate.id }
           : teamMate,
       ),
+    }),
+    [PICK_CHAMPION]: (state, { payload: { id, champion }}) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.id === id ? { ...teamMate, pick: champion } : teamMate
+      ),
+    }),
+    [BAN_CHAMPION]: (state, { payload: { id, champion }}) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.id === id ? { ...teamMate, ban: champion }: teamMate
+      )
     }),
   },
   initialState,

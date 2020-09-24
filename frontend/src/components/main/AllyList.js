@@ -23,29 +23,37 @@ const AllyInfo = styled.div`
   font-weight: bold;
 `;
 
-// const ChampionImg = styled.img`
-//   height: 40px;
-//   width: 40px;
-//   margin-right: 1rem;
-//   border-radius: 100%;
-//   user-select: none;
-//   -moz-user-select: none;
-//   -webkit-user-drag: none;
-//   -webkit-user-select: none;
-//   -ms-user-select: none;
-// `;
+const ChampionImg = styled.img`
+  height: 40px;
+  width: 40px;
+  margin-right: 1rem;
+  border-radius: 100%;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+`;
 
 const AllyListItem = ({ teamMate }) => {
-  // console.log('팀메이트 확인', teamMate);
   return (
     <AllyListItemBlock>
       <AllyInfo>
-        {/* <ChampionImg
-          src={require(`../../img/champions/${teamMate?.name}.png`)}
-          // src={require(`../../img/positions/${teamMate?.pos}.png`)}
-        /> */}
-        소환사명: {teamMate?.name}
-        {/* &챔피언&포지션&승률&최근게임&챔피언성적 */}
+        {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
+        <ChampionImg
+          src={require(`../../img/${
+            teamMate.ban ? 'champions/' + teamMate.ban.image : 'question.png'
+          }`)}
+        />
+        {/* 선택한 position or 캐릭터 */}
+        <ChampionImg
+          src={require(`../../img/${
+            teamMate.pick
+              ? 'champions/' + teamMate.pick.image
+              : 'positions/' + teamMate.pos + '.png'
+          }`)}
+        />
+        {teamMate?.name}
       </AllyInfo>
     </AllyListItemBlock>
   );
