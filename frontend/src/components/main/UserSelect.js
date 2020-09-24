@@ -42,9 +42,13 @@ const UserSelectItemBlock = styled.div`
 
 const UserSelectItem = ({ ally, onClick, id }) => {
   return ally ? (
-    <UserSelectItemBlock ally onClick={onClick} id={id}></UserSelectItemBlock>
+    <UserSelectItemBlock ally onClick={onClick} id={id}>{`${
+      parseInt(id[1]) + 1
+    }픽`}</UserSelectItemBlock>
   ) : (
-    <UserSelectItemBlock onClick={onClick} id={id}></UserSelectItemBlock>
+    <UserSelectItemBlock onClick={onClick} id={id}>{`${
+      parseInt(id[1]) + 1
+    }픽`}</UserSelectItemBlock>
   );
 };
 
