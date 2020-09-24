@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UserSelect from '../../components/main/UserSelect';
+import { enemyBanChampion, enemyPickChampion } from '../../modules/enemies';
 import { banChampion, pickChampion } from '../../modules/teamMates';
 
 const UserSelectContainer = ({ champion }) => {
@@ -17,11 +18,13 @@ const UserSelectContainer = ({ champion }) => {
       if (id[0] === 'A') {
         dispatch(banChampion({ id: parseInt(id[1]), champion }));
       } else {
+        dispatch(enemyBanChampion({ id: parseInt(id[1]), champion }));
       }
     } else {
       if (id[0] === 'A') {
         dispatch(pickChampion({ id: parseInt(id[1]), champion }));
       } else {
+        dispatch(enemyPickChampion({ id: parseInt(id[1]), champion }));
       }
     }
   };
