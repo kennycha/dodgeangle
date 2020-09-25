@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import UserSelectContainer from '../../containers/main/UserSelectContainer';
-import palette from '../../lib/styles/palette';
 
 const ChampionItemBlock = styled.div`
   padding: 10px;
   height: 150px;
   width: 150px;
   cursor: pointer;
-  background: ${palette.pink[3]};
 `;
 
 const SelectedChampionItemBlock = styled(ChampionItemBlock)`
@@ -16,7 +14,6 @@ const SelectedChampionItemBlock = styled(ChampionItemBlock)`
   position: relative;
   height: 150px;
   width: 150px;
-  background: ${palette.pink[5]};
 `;
 
 const ChampionItem = ({ champion, isSelected, onClick }) => {
