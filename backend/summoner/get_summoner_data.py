@@ -50,6 +50,9 @@ def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST))))
             break
     return res, key
 
+
+# error code 403
+# - matchs "key error" : 데이터 없음 return
 def get_data(summoners, n=20):
     champ_key_dict = get_champion_data()
     account_ids = []
