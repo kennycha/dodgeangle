@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import palette from '../../lib/styles/palette';
+import mainTheme from '../../lib/styles/mainTheme';
 
 const UserSelectBlock = styled.div`
   position: absolute;
@@ -9,7 +9,6 @@ const UserSelectBlock = styled.div`
   left: -60px;
   width: 300px;
   height: 300px;
-  background: ${palette.lime[3]};
   display: flex;
   justify-content: space-between;
   & > div {
@@ -32,11 +31,14 @@ const UserSelectItemBlock = styled.div`
   height: 70px;
   width: 70px;
   border-radius: 100%;
-  background: ${palette.red[5]};
+  color: ${mainTheme.mainFontColor};
+  background: ${mainTheme.mainSummoner};
+  font-size: 1.5rem;
+  border: 3px solid ${mainTheme.mainEnemy};
   ${(props) =>
     props.ally &&
     css`
-      background: ${palette.blue[5]};
+      border: 3px solid ${mainTheme.mainAlly};
     `}
 `;
 

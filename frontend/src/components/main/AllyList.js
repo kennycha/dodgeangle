@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
+import mainTheme from '../../lib/styles/mainTheme';
 
 const AllyListBlock = styled.div`
   height: 100%;
-  background: ${palette.orange[3]};
+  background: ${mainTheme.mainBackground};
+  border: 2px solid ${mainTheme.mainBorder};
 `;
 
 const AllyListItemBlock = styled.div`
-  background: ${palette.indigo[5]};
+  background: ${mainTheme.mainSummoner};
+  border: 2px solid ${mainTheme.mainBorder};
   margin: 0.5rem;
   height: 100px;
   display: flex;
@@ -21,6 +23,7 @@ const AllyInfo = styled.div`
   margin-left: 1.5rem;
   font-size: 1.25rem;
   font-weight: bold;
+  color: ${mainTheme.mainFontColor};
 `;
 
 const ChampionImg = styled.img`

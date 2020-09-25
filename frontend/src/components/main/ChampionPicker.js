@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import ChampionInputContainer from '../../containers/main/ChampionInputContainer';
 import ChampionListContainer from '../../containers/main/ChampionListContainer';
-import palette from '../../lib/styles/palette';
+import mainTheme from '../../lib/styles/mainTheme';
 
 const ChampionPickerBlock = styled.div`
   height: 100%;
-  background: ${palette.grape[3]};
+  background: ${mainTheme.mainBackground};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ChampionPicker = ({
