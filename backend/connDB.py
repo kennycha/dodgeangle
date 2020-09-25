@@ -16,7 +16,7 @@ def db_client():
 
 def set_data():
     client = db_client()
-    collection = client.normal_db.champion
+    collection = client.normal.champion_entry
 
     with open('champion/dummy/champion.json', encoding='utf-8') as f:
         file_data = json.load(f)
@@ -29,6 +29,8 @@ def set_data():
         for i in insert_list:
             if i == 'image':
                 temp[i] = tdata[i]['full']
+            elif i == 'key':
+                temp['id'] = tdata[i]
             else:
                 temp[i] = tdata[i]
         
@@ -38,8 +40,9 @@ def set_data():
 
 
 def main():
-    client = db_client()
-    print(client.list_database_names())
+    # client = db_client()
+    # print(client.list_database_names())
+    set_data()
 
 
 if __name__ == "__main__":

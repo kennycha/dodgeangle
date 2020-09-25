@@ -6,4 +6,5 @@ app_name = 'champion'
 
 urlpatterns = [
     path('allchampion/', views.get_all_champion, name='all_champion'),
+    path('test/', views.test, name='test'),
 ]
