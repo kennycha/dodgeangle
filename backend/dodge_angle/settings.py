@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     # DRF
     'rest_framework',
-    
+    # apps
     'champion',
+    'summoner',
 
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -86,24 +87,12 @@ WSGI_APPLICATION = 'dodge_angle.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'normal_db',
-        'ENFORCE_SCHEMA': False,
+        'NAME' : 'normal',
         'CLIENT': {
             'host': config('MONGO_INITDB_ROOT_HOST'),
             'port': 27017,
             'username': config('MONGO_INITDB_ROOT_USERNAME'),
             'password': config('MONGO_INITDB_ROOT_PASSWORD'),
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1'
-        },
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propagate': False,                        
-                }
-            },
         },
     }
 }
