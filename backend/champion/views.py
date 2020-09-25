@@ -1,31 +1,32 @@
 from django.shortcuts import render
 
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser 
-from rest_framework import status
 from rest_framework.decorators import api_view
 
-from .connDB import db_client
+import connDB
+from .models import Entry
+from .serializers import TagSerializer, ChampionSerializer, EntrySerializer
 
 from pymongo import MongoClient
-import json, os
+import json
 from bson.json_util import dumps
 from bson.json_util import loads
 
 @api_view(['GET'])
 def get_all_champion(request):
-    client = db_client()
-    cole = client.get_database('normal_db')
-    collection_list = cole.get_collection('champion').find()
+    client = connDB.db_client()
+    cole = client.get_database('normal')
+    collection_list = cole.get_collection('champion_entry').find()
     champion_data = loads(dumps(collection_list))
-    data = []
-    for champion in champion_data:
-        temp = {}
-        for key, value in champion.items():
-            if key != '_id' and key != 'key':
-                temp[key] = value
-            if key == 'key':
-                temp['id'] = value
-        data.append(temp)
+    data = [ { key:value for key, value in champion.items() if key != '_id'} for champion in champion_data ]
     client.close()
     return Response(data)
+
+@api_view(['GET'])
+def test(request):
+    entry = Entry.objects.all()
+    print(entry[0])
+    serializer = EntrySerializer(data=entry)
+    if serializer.is_valid(raise_exception=True):
+        return Response({'message': 'success save!', 'data': serializer.data})
+    return Response({'message': 'fail'})
