@@ -9,6 +9,7 @@ import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 const TeamListViewerBlock = styled(Responsive)`
   background: ${palette.violet[3]};
   user-select: none;
+  padding: 0.5rem 0;
   -moz-user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
