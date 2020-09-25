@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  confirmTeamMates,
   changePosition,
   changeMe,
+  switching,
 } from '../../modules/teamMates';
 
 const placeholder = document.createElement('span');
@@ -46,55 +46,44 @@ const TeamListViewerContainer = () => {
     setDragged(e.target);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', dragged);
-  };
-
-  const dragEnd = (e) => {
-    // dragged.style.display = 'block';
-    dragged.style.opacity = '1';
-    const pholders = document.querySelectorAll('.placeholder');
-    pholders.forEach((pholder) => pholder.remove());
-
-    const from = parseInt(dragged?.id);
-    const to = parseInt(over?.id);
-
-    if (from === to) {
-      return;
-    } else if (from < to) {
-      const newTeamMates = [
-        ...teamMates.slice(0, from),
-        ...teamMates.slice(from + 1, to),
-        teamMates[to],
-        teamMates[from],
-        ...teamMates.slice(to + 1),
-      ];
-      const teamMatesArray = newTeamMates.map((teamMate) => ({
-        ...teamMate,
-        id: newTeamMates.indexOf(teamMate),
-      }));
-      dispatch(confirmTeamMates(teamMatesArray));
-    } else {
-      const newTeamMates = [
-        ...teamMates.slice(0, to),
-        teamMates[from],
-        ...teamMates.slice(to, from),
-        ...teamMates.slice(from + 1),
-      ];
-      const teamMatesArray = newTeamMates.map((teamMate) => ({
-        ...teamMate,
-        id: newTeamMates.indexOf(teamMate),
-      }));
-      dispatch(confirmTeamMates(teamMatesArray));
-    }
+    e.target.style.opacity = '0.5'; // 드레그 중인 div 투명도 증가
   };
 
   const dragOver = (e) => {
     e.preventDefault();
-    // dragged.style.display = 'none';
-    dragged.style.opacity = '0.5';
-    if (e.target.className === 'placeholder') return;
-    if (e.target.parentNode !== dragged.parentNode) return;
-    setOver(e.target);
-    e.target.parentNode.insertBefore(placeholder, e.target);
+    let target = e.target;
+    // draggable div 탐색
+    while (target?.className !== dragged.className) {
+      // 타겟이 위쪽 여백(root) or 타겟이 공백(부모노드 찾아가면 root)
+      if (target?.id === 'root' || target?.parentNode?.id === 'root') {
+        // 스타일링할 over가 존재하고, 그 over가 dragged와 같지 않다면
+        if (over && over !== dragged) {
+          over.style.opacity = '1';
+        }
+        setOver();
+        return;
+      }
+      target = target.parentNode;
+    }
+
+    // 스타일링할 over가 존재하고, 그 over가 dragged와 같이 않고, 현재 타겟과 같지 않으면
+    if (over && over !== dragged && over !== target) {
+      over.style.opacity = '1';
+    }
+    target.style.opacity = '0.5';
+    setOver(target); // Over에 타겟 저장
+  };
+
+  const dragEnd = (e) => {
+    dragged.style.opacity = '1'; // 드레그 끝난 div 투명도 원상 복귀
+
+    if (!over) return; // 여백에서 멈췄으면 => 아무 동작 X
+    over.style.opacity = '1' // 드레그 타겟인 div 투명도 원상 복귀
+    const fromId = parseInt(dragged.id); // ? 삭제 => 없으면 로직 오류임
+    const toId = parseInt(over.id); // ? 삭제 => 없으면 로직 오류임
+
+    if (fromId === toId) return;
+    dispatch(switching({ fromId, toId }));
   };
 
   useEffect(() => {
