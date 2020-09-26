@@ -34,6 +34,7 @@ const PreEnterInputContainer = () => {
   const onInitClick = () => {
     dispatch(confirmTeamMates(null));
     setInnerTeamMates('');
+    localStorage.removeItem('teamMates');
   };
 
   return (
