@@ -3,6 +3,7 @@ const mainTheme = {
   mainFontColor: '#5A5952',
   mainLogoColor: '#F0F1F2',
   mainBorder: '#7E5C23',
+  mainButton: '#416C6B',
   mainSummoner: '#182329',
   mainAlly: '#00658A',
   mainEnemy: '#9A0923',

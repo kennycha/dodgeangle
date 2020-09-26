@@ -6,7 +6,7 @@ import mainTheme from '../../lib/styles/mainTheme';
 const NavbarBlock = styled.div`
   position: fixed;
   bottom: 4rem;
-  width: 100%;
+  right: 2rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   font-size: 1.5rem;
   color: ${mainTheme.mainBorder};
