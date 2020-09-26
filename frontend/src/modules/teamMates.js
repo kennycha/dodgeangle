@@ -5,8 +5,9 @@ const CONFIRM_TEAMMATES = 'teamMates/CONFIRM_TEAMMATES';
 const CHANGE_POSITION = 'teamMates/CHANGE_POSITION';
 const CHANGE_ME = 'teamMates/CHANGE_ME';
 const SWITCHING = 'teamMates/SWITCHING';
-const PICK_CHAMPION = 'teamMates/PICK_CHAMPION'
-const BAN_CHAMPION = 'teamMates/BAN_CHAMPION'
+const PICK_CHAMPION = 'teamMates/PICK_CHAMPION';
+const BAN_CHAMPION = 'teamMates/BAN_CHAMPION';
+const SET_MOST_CHAMPIONS = 'teamMates/SET_MOST_CHAMPIONS';
 
 // action creator 함수
 export const confirmTeamMates = createAction(
@@ -25,15 +26,21 @@ export const switching = createAction(SWITCHING, ({ fromId, toId }) => ({
   toId,
 }));
 
-export const pickChampion = createAction(PICK_CHAMPION, ({id, champion}) => ({
+export const pickChampion = createAction(PICK_CHAMPION, ({ id, champion }) => ({
   id,
   champion,
-}))
+}));
 
-export const banChampion = createAction(BAN_CHAMPION, ({id, champion}) => ({
+export const banChampion = createAction(BAN_CHAMPION, ({ id, champion }) => ({
   id,
   champion,
-}))
+}));
+
+export const setMostChampions = createAction(
+  SET_MOST_CHAMPIONS,
+  ({ id, champions }) => ({ id, champions }),
+);
+
 // initial state
 const initialState = {
   teamMates: null,
@@ -71,17 +78,25 @@ const teamMates = handleActions(
           : teamMate,
       ),
     }),
-    [PICK_CHAMPION]: (state, { payload: { id, champion }}) => ({
+    [PICK_CHAMPION]: (state, { payload: { id, champion } }) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.id === id ? { ...teamMate, pick: champion } : teamMate
+        teamMate.id === id ? { ...teamMate, pick: champion } : teamMate,
       ),
     }),
-    [BAN_CHAMPION]: (state, { payload: { id, champion }}) => ({
+    [BAN_CHAMPION]: (state, { payload: { id, champion } }) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.id === id ? { ...teamMate, ban: champion }: teamMate
-      )
+        teamMate.id === id ? { ...teamMate, ban: champion } : teamMate,
+      ),
+    }),
+    [SET_MOST_CHAMPIONS]: (state, { payload: { id, champions } }) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.id === id
+          ? { ...teamMate, mostChampions: champions }
+          : teamMate,
+      ),
     }),
   },
   initialState,
