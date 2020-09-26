@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
 
 const Input = styled.input`
-  margin: 5rem;
+  margin: 3rem;
   margin-bottom: 0;
   padding: 2rem;
-  height: 100px;
+  height: 80px;
   width: calc(100% - 10rem);
   background: ${mainTheme.mainSummoner};
   color: ${mainTheme.mainFontColor};

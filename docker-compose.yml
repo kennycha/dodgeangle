@@ -15,12 +15,13 @@ services:
       - "8000:8000"
     depends_on:
       - database
+      - mongodb
 
   frontend:
     build:
-      context: ./blog_frontend
+      context: ./frontend
       args:
-        API_URL: ${API_URL}
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
     volumes:
       - build_folder:/frontend/build
 
@@ -48,6 +49,18 @@ services:
     volumes:
       - persistent_data:/var/lib/mysql
 
+  mongodb:
+    image: mongo:4
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+
 volumes:
   build_folder:
   persistent_data:
+  mongo_data:

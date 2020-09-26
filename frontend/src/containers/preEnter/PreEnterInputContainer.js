@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import PreEnterInput from '../../components/preEnter/PreEnterInput';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { confirmTeamMates } from '../../modules/teamMates';
 
 const PreEnterInputContainer = () => {
-  const [teamMates, setTeamMates] = useState(``);
+  const [innerTeamMates, setInnerTeamMates] = useState(``);
   const dispatch = useDispatch();
+  const { teamMates } = useSelector(({ teamMates }) => ({
+    teamMates: teamMates.teamMates,
+  }));
 
   const onButtonClick = () => {
-    if (teamMates.length !== 0) {
-      const parsedTeamMates = teamMates
+    if (innerTeamMates.length !== 0) {
+      const parsedTeamMates = innerTeamMates
         .split('\n')
         .map((t) => t.trim().slice(0, -15))
         .slice(0, 5);
@@ -24,12 +27,21 @@ const PreEnterInputContainer = () => {
       dispatch(confirmTeamMates(teamMatesArray));
     }
   };
+  const onInputChange = (e) => {
+    setInnerTeamMates(e.target.value);
+  };
+  const onInitClick = () => {
+    dispatch(confirmTeamMates(null));
+    setInnerTeamMates('');
+  };
 
   return (
     <PreEnterInput
       teamMates={teamMates}
-      setTeamMates={setTeamMates}
+      innerTeamMates={innerTeamMates}
       onButtonClick={onButtonClick}
+      onInputChange={onInputChange}
+      onInitClick={onInitClick}
     />
   );
 };

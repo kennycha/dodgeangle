@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ChampionItemContainer from '../../containers/main/ChampionItemContainer';
 
 const ChampionListBlock = styled.div`
-  padding: 80px;
+  padding: 70px;
   padding-left: 100px;
   padding-right: 100px;
   height: 700px;

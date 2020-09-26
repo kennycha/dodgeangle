@@ -7,7 +7,6 @@ import PositionSelector from './PositionSelector';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 const TeamListViewerBlock = styled(Responsive)`
-  background: ${palette.violet[3]};
   user-select: none;
   padding: 0.5rem 0;
   -moz-user-select: none;
@@ -30,6 +29,22 @@ const TeamMateInfo = styled.div`
   margin-left: 1.5rem;
   font-size: 1.25rem;
   font-weight: bold;
+`;
+
+const InfoBlock = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: calc(100% - 2rem);
+  background: ${palette.gray[1]};
+  padding: 2rem;
+  margin: 1rem;
+  img {
+    border-radius: 20px;
+    width: 450px;
+    & + & {
+      margin: 5rem;
+    }
+  }
 `;
 
 const TeamListItem = ({
@@ -71,16 +86,23 @@ const TeamListViewer = ({
 }) => {
   return (
     <TeamListViewerBlock onDragOver={dragOver} draggable={false}>
-      {teamMates?.map((teamMate) => (
-        <TeamListItem
-          key={teamMate.id}
-          teamMate={teamMate}
-          onMeChange={onMeChange}
-          dragStart={dragStart}
-          dragEnd={dragEnd}
-          onPositionClick={onPositionClick}
-        />
-      ))}
+      {teamMates ? (
+        teamMates.map((teamMate) => (
+          <TeamListItem
+            key={teamMate.id}
+            teamMate={teamMate}
+            onMeChange={onMeChange}
+            dragStart={dragStart}
+            dragEnd={dragEnd}
+            onPositionClick={onPositionClick}
+          />
+        ))
+      ) : (
+        <InfoBlock>
+          <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
+          <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
+        </InfoBlock>
+      )}
     </TeamListViewerBlock>
   );
 };

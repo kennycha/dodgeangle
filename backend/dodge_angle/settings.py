@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     # DRF
     'rest_framework',
-    
-    'api',
+    # apps
+    'champion',
+    'summoner',
 
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -85,8 +86,14 @@ WSGI_APPLICATION = 'dodge_angle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME' : 'normal',
+        'CLIENT': {
+            'host': config('MONGO_INITDB_ROOT_HOST'),
+            'port': 27017,
+            'username': config('MONGO_INITDB_ROOT_USERNAME'),
+            'password': config('MONGO_INITDB_ROOT_PASSWORD'),
+        },
     }
 }
 
@@ -128,3 +135,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
