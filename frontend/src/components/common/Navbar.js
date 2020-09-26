@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const LinkBlock = styled.div`
   height: 4rem;
-  width: 22rem;
+  width: 26rem;
   padding-left: 3rem;
   padding-right: 3rem;
   display: flex;
@@ -35,6 +35,9 @@ const LinkBlock = styled.div`
   border-radius: 30px;
   img {
     width: 40px;
+    cursor: pointer;
+  }
+  span {
     cursor: pointer;
   }
 `;
@@ -57,13 +60,14 @@ const MenuBtn = styled.div`
   }
 `;
 
-const Navbar = ({ menuClicked, onBtnClick }) => {
+const Navbar = ({ menuClicked, onBtnClick, onNewClick }) => {
   return (
     <>
       <NavbarBlock>
         <Wrapper>
           {menuClicked ? (
             <LinkBlock>
+              <span onClick={onNewClick}>NEW</span>
               <Link to="/">ENTER</Link>
               <Link to="/main">MAIN</Link>
               <img
