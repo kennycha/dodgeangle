@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 
 const PreEnterButtonBlock = styled(Responsive)``;
 
-const PreEnterButton = () => {
+const PreEnterButton = ({ activated }) => {
   return (
     <PreEnterButtonBlock>
-      <Link to="/main">
-        <Button fullWidth>메인화면으로 이동</Button>
-      </Link>
+      {activated && (
+        <Link to="/main">
+          <Button fullWidth>밴픽화면으로 이동</Button>
+        </Link>
+      )}
     </PreEnterButtonBlock>
   );
 };
