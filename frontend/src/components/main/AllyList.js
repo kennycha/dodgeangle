@@ -43,7 +43,30 @@ const ChampionImg = styled.img`
 
 const SummonerName = styled.div`
   display: block;
-`
+`;
+
+const MostChampionsBlock = styled.div`
+  color: ${mainTheme.mainFontColor};
+  display: flex;
+  margin: 0.5rem;
+`;
+
+const MostChampion = styled.div`
+  color: ${mainTheme.mainFontColor};
+  margin: 0.25rem;
+  align-items: center;
+`;
+
+const ChampionMiniImg = styled.img`
+  height: 20px;
+  width: 20px;
+  display: block;
+  border-radius: 100%;
+`;
+
+const ChampionWinRate = styled.div`
+font-size: 1rem;
+`;
 
 const AllyListItem = ({ teamMate }) => {
   return (
@@ -64,17 +87,20 @@ const AllyListItem = ({ teamMate }) => {
                 : 'positions/' + teamMate.pos + '.png'
             }`)}
           />
-          <SummonerName>
-            {teamMate?.name}
-          </SummonerName>
+          <SummonerName>{teamMate?.name}</SummonerName>
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
-        <AllyInfo>
-          <SummonerName>
-            임시 우측 공간
-          </SummonerName>
-        </AllyInfo>
+        <MostChampionsBlock>
+          {teamMate?.mostChampions && teamMate?.mostChampions?.map((champion) => (
+            <MostChampion>
+              <ChampionMiniImg 
+                src={require(`../../img/champions/${champion.img}`)}
+              />
+              <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+            </MostChampion>
+          ))}
+        </MostChampionsBlock>
       </AllyInfoBlock>
     </AllyListItemBlock>
   );
