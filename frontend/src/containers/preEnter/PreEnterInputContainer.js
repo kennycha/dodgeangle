@@ -23,6 +23,7 @@ const PreEnterInputContainer = () => {
         me: false,
         ban: null,
         pick: null,
+        mostChampions: null,
       }));
       dispatch(confirmTeamMates(teamMatesArray));
     }
@@ -33,6 +34,7 @@ const PreEnterInputContainer = () => {
   const onInitClick = () => {
     dispatch(confirmTeamMates(null));
     setInnerTeamMates('');
+    localStorage.removeItem('teamMates');
   };
 
   return (
