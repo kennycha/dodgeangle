@@ -1,6 +1,7 @@
 const mainTheme = {
   mainBackground: '#03090C',
   mainFontColor: '#5A5952',
+  mainLogoColor: '#F0F1F2',
   mainBorder: '#7E5C23',
   mainSummoner: '#182329',
   mainAlly: '#00658A',

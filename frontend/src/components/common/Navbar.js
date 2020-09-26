@@ -30,11 +30,11 @@ const LinkBlock = styled.div`
   justify-content: space-between;
   align-items: center;
   background: ${mainTheme.mainBorder};
-  opacity: 0.75;
-  color: ${mainTheme.mainBackground};
-  border-radius: 20px;
+  opacity: 0.65;
+  color: ${mainTheme.mainLogoColor};
+  border-radius: 30px;
   img {
-    width: 50px;
+    width: 40px;
     cursor: pointer;
   }
 `;
@@ -46,10 +46,9 @@ const MenuBtn = styled.div`
   align-items: center;
   justify-content: center;
   background: ${mainTheme.mainBorder};
-  color: ${mainTheme.mainBorder};
   padding: 1rem;
   border-radius: 100%;
-  opacity: 0.75;
+  opacity: 0.65;
   cursor: pointer;
   z-index: 10;
   img {
@@ -58,15 +57,10 @@ const MenuBtn = styled.div`
   }
 `;
 
-const Spacer = styled.div`
-  height: 4rem;
-`;
-
 const Navbar = ({ menuClicked, onBtnClick }) => {
   return (
     <>
       <NavbarBlock>
-        <Spacer />
         <Wrapper>
           {menuClicked ? (
             <LinkBlock>

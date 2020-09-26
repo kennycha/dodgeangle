@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChampionByPositionContainer from '../../containers/main/ChampionByPositionContainer';
 import ChampionInputContainer from '../../containers/main/ChampionInputContainer';
 import ChampionListContainer from '../../containers/main/ChampionListContainer';
 import mainTheme from '../../lib/styles/mainTheme';
@@ -12,6 +13,12 @@ const ChampionPickerBlock = styled.div`
   align-items: center;
 `;
 
+const Spliter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
 const ChampionPicker = ({
   allChampions,
   resultChampions,
@@ -21,10 +28,16 @@ const ChampionPicker = ({
 }) => {
   return (
     <ChampionPickerBlock>
-      <ChampionInputContainer
-        allChampions={allChampions}
-        setResultChampions={setResultChampions}
-      />
+      <Spliter>
+        <ChampionByPositionContainer
+          allChampions={allChampions}
+          setResultChampions={setResultChampions}
+        />
+        <ChampionInputContainer
+          allChampions={allChampions}
+          setResultChampions={setResultChampions}
+        />
+      </Spliter>
       <ChampionListContainer
         resultChampions={resultChampions}
         selectedChampion={selectedChampion}
