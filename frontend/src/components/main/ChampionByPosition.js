@@ -14,7 +14,7 @@ const ChampionByPositionItem = styled.div`
   margin-left: 1rem;
   cursor: pointer;
   img {
-    width: 70px;
+    width: ${70/16}rem;
   }
 `;
 

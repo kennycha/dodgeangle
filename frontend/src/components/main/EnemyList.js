@@ -5,14 +5,14 @@ import mainTheme from '../../lib/styles/mainTheme';
 const EnemyListBlock = styled.div`
   height: 100%;
   background: ${mainTheme.mainBackground};
-  border: 2px solid ${mainTheme.mainBorder};
+  border: ${2/16}rem solid ${mainTheme.mainBorder};
 `;
 
 const EnemyListItemBlock = styled.div`
   background: ${mainTheme.mainSummoner};
-  border: 2px solid ${mainTheme.mainBorder};
+  border: ${2/16}rem solid ${mainTheme.mainBorder};
   margin: 0.5rem;
-  height: 100px;
+  height: ${100/16}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,15 +26,11 @@ const EnemyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: 40px;
-  width: 40px;
+  height: ${40/16}rem;
+  width: ${40/16}rem;
   margin-right: 1rem;
   border-radius: 100%;
   user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
 `;
 
 const EnemyListItem = ({ enemy }) => {
