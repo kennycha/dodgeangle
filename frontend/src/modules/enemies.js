@@ -1,10 +1,17 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // action type 설정
+const CONFIRM_ENEMIES = 'enemies/CONFIRM_ENEMIES';
 const ENEMY_PICK_CHAMPION = 'enemies/ENEMY_PICK_CHAMPION';
 const ENEMY_BAN_CHAMPION = 'enemies/ENEMY_BAN_CHAMPION';
 
 // action creator 함수
+export const confirmEnemies = createAction(
+  CONFIRM_ENEMIES,
+  // null값이 입력으로 들어올때, 초기화 진행한다.
+  (inputEnemies) => inputEnemies ? inputEnemies : initialState.enemies,
+);
+
 export const enemyPickChampion = createAction(
   ENEMY_PICK_CHAMPION,
   ({ id, champion }) => ({
@@ -56,6 +63,10 @@ const initialState = {
 // reducer
 const enemies = handleActions(
   {
+    [CONFIRM_ENEMIES]: (state, { payload: inputEnemies }) => ({
+      ...state,
+      enemies: inputEnemies,
+    }),
     [ENEMY_PICK_CHAMPION]: (state, { payload: { id, champion } }) => ({
       ...state,
       enemies: state.enemies.map((enemy) =>
