@@ -93,7 +93,7 @@ const AllyListItem = ({ teamMate }) => {
       <AllyInfoBlock>
         <MostChampionsBlock>
           {teamMate?.mostChampions && teamMate?.mostChampions?.map((champion) => (
-            <MostChampion>
+            <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
               <ChampionMiniImg 
                 src={require(`../../img/champions/${champion.img}`)}
               />
