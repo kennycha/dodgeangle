@@ -13,6 +13,7 @@ const NavbarContainer = () => {
   };
   const onNewClick = () => {
     dispatch(confirmTeamMates(null));
+    localStorage.removeItem('teamMates');
     history.push('/');
   };
   return (
