@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PreEnterInput from '../../components/preEnter/PreEnterInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmTeamMates } from '../../modules/teamMates';
+import { confirmEnemies } from '../../modules/enemies';
 
 const PreEnterInputContainer = () => {
   const [innerTeamMates, setInnerTeamMates] = useState(``);
@@ -33,8 +34,10 @@ const PreEnterInputContainer = () => {
   };
   const onInitClick = () => {
     dispatch(confirmTeamMates(null));
+    dispatch(confirmEnemies(null));
     setInnerTeamMates('');
     localStorage.removeItem('teamMates');
+    localStorage.removeItem('enemies');
   };
 
   return (

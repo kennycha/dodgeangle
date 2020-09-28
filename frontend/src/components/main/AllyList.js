@@ -5,14 +5,14 @@ import mainTheme from '../../lib/styles/mainTheme';
 const AllyListBlock = styled.div`
   height: 100%;
   background: ${mainTheme.mainBackground};
-  border: 2px solid ${mainTheme.mainBorder};
+  border: ${2/16}rem solid ${mainTheme.mainBorder};
 `;
 
 const AllyListItemBlock = styled.div`
   background: ${mainTheme.mainSummoner};
-  border: 2px solid ${mainTheme.mainBorder};
+  border: ${2/16}rem solid ${mainTheme.mainBorder};
   margin: 0.5rem;
-  height: 100px;
+  height: ${100/16}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +25,7 @@ const AllyInfoBlock = styled.div`
 `;
 
 const AllyInfo = styled.div`
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   font-size: 1.25rem;
   font-weight: bold;
   color: ${mainTheme.mainFontColor};
@@ -34,9 +34,9 @@ const AllyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: 40px;
-  width: 40px;
-  margin-right: 1rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
 `;
@@ -58,14 +58,14 @@ const MostChampion = styled.div`
 `;
 
 const ChampionMiniImg = styled.img`
-  height: 20px;
-  width: 20px;
+  height: 2rem;
+  width: 2rem;
   display: block;
   border-radius: 100%;
 `;
 
 const ChampionWinRate = styled.div`
-font-size: 1rem;
+  font-size: 1.25rem;
 `;
 
 const AllyListItem = ({ teamMate }) => {
@@ -93,7 +93,7 @@ const AllyListItem = ({ teamMate }) => {
       <AllyInfoBlock>
         <MostChampionsBlock>
           {teamMate?.mostChampions && teamMate?.mostChampions?.map((champion) => (
-            <MostChampion>
+            <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
               <ChampionMiniImg 
                 src={require(`../../img/champions/${champion.img}`)}
               />
