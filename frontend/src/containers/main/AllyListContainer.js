@@ -76,7 +76,7 @@ const AllyListContainer = () => {
         );
       });
     }
-  }, [teamMates, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     // teamMates가 변화되었거나 첫 렌더링일때 useEffect는 실행

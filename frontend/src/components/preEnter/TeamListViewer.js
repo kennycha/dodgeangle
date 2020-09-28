@@ -8,7 +8,7 @@ import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 const TeamListViewerBlock = styled(Responsive)`
   user-select: none;
-  padding: 0.5rem 0;
+  padding: 0;
   -moz-user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -37,10 +37,14 @@ const InfoBlock = styled.div`
   width: calc(100% - 2rem);
   background: ${palette.gray[1]};
   padding: 2rem;
-  margin: 1rem;
+  margin: 0.5rem 1rem;
   img {
-    border-radius: 20px;
-    width: 450px;
+    border-radius: ${20 / 16}rem;
+    width: ${450 / 16}rem;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
     & + & {
       margin: 5rem;
     }
