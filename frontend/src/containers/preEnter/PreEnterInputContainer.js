@@ -43,6 +43,7 @@ const PreEnterInputContainer = () => {
       onButtonClick={onButtonClick}
       onInputChange={onInputChange}
       onInitClick={onInitClick}
+      innerTeamMates={innerTeamMates}
     />
   );
 };
