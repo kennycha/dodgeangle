@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
-// import palette from '../../lib/styles/palette';
 
 const StyledInput = styled.textarea`
   margin-top: 1rem;
@@ -12,6 +11,12 @@ const StyledInput = styled.textarea`
   border-radius: 20px;
   font-size: 1.5rem;
   color: ${mainTheme.mainFontColor};
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: ${mainTheme.mainBackground};
+      opacity: 0.5;
+    `}
 `;
 
 const Input = (props) => {

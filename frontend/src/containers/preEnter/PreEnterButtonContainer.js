@@ -4,7 +4,7 @@ import PreEnterButton from '../../components/preEnter/PreEnterButton';
 import { confirmTeamMates } from '../../modules/teamMates';
 
 const PreEnterButtonContainer = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { teamMates } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
   }));
@@ -13,9 +13,9 @@ const PreEnterButtonContainer = () => {
     if (teamMates) {
       // teamMates !== null 일때 => teamMates값을 로컬스토리지에 업데이트
       localStorage.setItem(
-        "teamMates",
+        'teamMates',
         JSON.stringify(
-          teamMates.map(teamMate => ({
+          teamMates.map((teamMate) => ({
             id: teamMate.id,
             name: teamMate.name,
             pos: teamMate.pos,
@@ -23,19 +23,19 @@ const PreEnterButtonContainer = () => {
             ban: teamMate.ban,
             pick: teamMate.pick,
             mostChampions: teamMate.mostChampions,
-          }))
-        )
+          })),
+        ),
       );
     } else {
       // teamMates === null 일때
-      if (localStorage.getItem("teamMates")) {
+      if (localStorage.getItem('teamMates')) {
         // 로컬스토리 값이 존재 => 로컬스토리지 값을 Redux에 반영하기
-        dispatch(confirmTeamMates(JSON.parse(localStorage.getItem("teamMates"))))
+        dispatch(
+          confirmTeamMates(JSON.parse(localStorage.getItem('teamMates'))),
+        );
       }
     }
-    },
-    [teamMates]
-  );
+  }, [teamMates, dispatch]);
   return <PreEnterButton activated={Boolean(teamMates)} />;
 };
 

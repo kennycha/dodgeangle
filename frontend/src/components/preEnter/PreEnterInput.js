@@ -26,11 +26,12 @@ ex) 달려라메기님이 로비에 참가하셨습니다.
     <InputBlock>
       <Input
         onChange={onInputChange}
-        value={innerTeamMates}
         placeholder={placeholder}
+        value={innerTeamMates}
+        disabled={Boolean(teamMates)}
       />
       {teamMates ? (
-        <Button onClick={onInitClick} fullWidth>
+        <Button onClick={onInitClick} fullWidth red>
           팀원 재입력
         </Button>
       ) : (
