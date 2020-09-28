@@ -15,6 +15,8 @@ const StyledInput = styled.textarea`
     props.disabled &&
     css`
       background: ${mainTheme.mainBackground};
+      height: 200px;
+      overflow: hidden;
       opacity: 0.5;
     `}
 `;
