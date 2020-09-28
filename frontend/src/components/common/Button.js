@@ -23,6 +23,11 @@ const buttonStyle = css`
       padding-bottom: 0.75rem;
       width: 100%;
     `}
+  ${(props) =>
+    props.red &&
+    css`
+      background: ${mainTheme.mainBorder};
+    `}
 `;
 
 const StyledButton = styled.button`
