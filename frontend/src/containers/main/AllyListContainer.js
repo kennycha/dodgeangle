@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import AllyList from '../../components/main/AllyList';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMostChampions, confirmTeamMates } from '../../modules/teamMates';
+import { useHistory } from 'react-router-dom';
 
 const AllyListContainer = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { teamMates } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
   }));
+  if (!Boolean(teamMates)) {
+    history.push('/');
+  }
 
   useEffect(() => {
     // 아래는 임시코드, 실제론 API 요청해서 받기
