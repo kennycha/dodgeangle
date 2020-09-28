@@ -1,11 +1,30 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
 
+
 const AllyListBlock = styled.div`
-  height: 100%;
+height: 100%;
+background: ${mainTheme.mainBackground};
+border: ${2/16}rem solid ${mainTheme.mainBorder};
+`;
+
+const LabelBlock = styled.div`
+  height: 2rem;
+  padding: 0 1.5rem 0 1rem;
+  margin: 1rem 0 0.5rem 0;
   background: ${mainTheme.mainBackground};
-  border: ${2/16}rem solid ${mainTheme.mainBorder};
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+`;
+
+const Label = styled.div`
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: ${mainTheme.mainBackground};
+  color: ${mainTheme.mainAlly};
+  ${props=> props.white && css`font-size: 1rem; color: ${mainTheme.mainLogoColor}`}
 `;
 
 const AllyListItemBlock = styled.div`
@@ -67,6 +86,14 @@ const ChampionMiniImg = styled.img`
 const ChampionWinRate = styled.div`
   font-size: 1.25rem;
 `;
+const AllyListLabel = () => {
+  return (
+    <LabelBlock>
+      <Label >아군 팀</Label>
+      <Label white>모스트 챔피언</Label>
+    </LabelBlock>
+  )
+}
 
 const AllyListItem = ({ teamMate }) => {
   return (
@@ -109,6 +136,7 @@ const AllyListItem = ({ teamMate }) => {
 const AllyList = ({ teamMates }) => {
   return (
     <AllyListBlock>
+      <AllyListLabel />
       {teamMates?.map((teamMate) => (
         <AllyListItem key={teamMate.id} teamMate={teamMate} />
       ))}

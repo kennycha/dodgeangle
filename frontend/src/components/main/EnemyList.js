@@ -1,11 +1,29 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
 
 const EnemyListBlock = styled.div`
   height: 100%;
   background: ${mainTheme.mainBackground};
   border: ${2/16}rem solid ${mainTheme.mainBorder};
+`;
+
+const LabelBlock = styled.div`
+  height: 2rem;
+  padding: 0 1.5rem 0 1rem;
+  margin: 1rem 0 0.5rem 0;
+  background: ${mainTheme.mainBackground};
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+`;
+
+const Label = styled.div`
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: ${mainTheme.mainBackground};
+  color: ${mainTheme.mainEnemy};
+  ${props=> props.white && css`font-size: 1rem; color: ${mainTheme.mainLogoColor}`}
 `;
 
 const EnemyListItemBlock = styled.div`
@@ -48,6 +66,14 @@ const SummonerName = styled.div`
 /*
   AllyList의 모스트 챔피언 => EnemyList의 카운터 챔피언으로 추후에 넣으면 될듯
 */
+const EnemyListLabel = () => {
+  return (
+    <LabelBlock>
+      <Label >적군 팀</Label>
+      <Label white>카운터 챔피언</Label>
+    </LabelBlock>
+  )
+}
 
 const EnemyListItem = ({ enemy }) => {
   return (
@@ -66,7 +92,7 @@ const EnemyListItem = ({ enemy }) => {
               enemy.pick ? 'champions/' + enemy.pick.image : 'question.png'
             }`)}
           />
-          <SummonerName>{enemy.id}번 소환사</SummonerName>
+          <SummonerName>{enemy.id + 1}번 소환사</SummonerName>
         </EnemyInfo>
       </EnemyInfoBlock>
     </EnemyListItemBlock>
@@ -76,6 +102,7 @@ const EnemyListItem = ({ enemy }) => {
 const EnemyList = ({ enemies }) => {
   return (
     <EnemyListBlock>
+      <EnemyListLabel />
       {enemies?.map((enemy) => (
         <EnemyListItem key={enemy.id} enemy={enemy} />
       ))}
