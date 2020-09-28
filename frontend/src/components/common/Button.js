@@ -5,7 +5,7 @@ import mainTheme from '../../lib/styles/mainTheme';
 const buttonStyle = css`
   border: none;
   border-radius: 15px;
-  height: 80px;
+  height: 60px;
   font-size: 1.25rem;
   font-weight: bold;
   padding: 0.25rem 1rem;

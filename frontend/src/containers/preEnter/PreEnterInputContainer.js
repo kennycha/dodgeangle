@@ -40,7 +40,6 @@ const PreEnterInputContainer = () => {
   return (
     <PreEnterInput
       teamMates={teamMates}
-      innerTeamMates={innerTeamMates}
       onButtonClick={onButtonClick}
       onInputChange={onInputChange}
       onInitClick={onInitClick}

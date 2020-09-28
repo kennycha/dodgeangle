@@ -8,7 +8,6 @@ const InputBlock = styled(Responsive)``;
 
 const PreEnterInput = ({
   teamMates,
-  innerTeamMates,
   onButtonClick,
   onInputChange,
   onInitClick,
@@ -24,11 +23,7 @@ ex) 달려라메기님이 로비에 참가하셨습니다.
 
   return (
     <InputBlock>
-      <Input
-        onChange={onInputChange}
-        value={innerTeamMates}
-        placeholder={placeholder}
-      />
+      <Input onChange={onInputChange} placeholder={placeholder} />
       {teamMates ? (
         <Button onClick={onInitClick} fullWidth>
           팀원 재입력
