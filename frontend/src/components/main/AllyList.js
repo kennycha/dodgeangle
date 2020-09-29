@@ -103,7 +103,7 @@ const AllyListItem = ({ teamMate }) => {
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
           <ChampionImg
             src={require(`../../img/${
-              teamMate.ban ? 'champions/' + teamMate.ban.image : 'question.png'
+              teamMate.ban ? 'champions/' + teamMate.ban.image : 'nochampion.png'
             }`)}
           />
           {/* 선택한 position or 캐릭터 */}
@@ -122,7 +122,7 @@ const AllyListItem = ({ teamMate }) => {
           {teamMate?.mostChampions && teamMate?.mostChampions?.map((champion) => (
             <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
               <ChampionMiniImg 
-                src={require(`../../img/champions/${champion.img}`)}
+                src={require(`../../img/champions/${champion.image}`)}
               />
               <ChampionWinRate>{champion.winRate}</ChampionWinRate>
             </MostChampion>
