@@ -85,6 +85,7 @@ const ChampionMiniImg = styled.img`
 
 const ChampionWinRate = styled.div`
   font-size: 1.25rem;
+  text-align: center;
 `;
 const AllyListLabel = () => {
   return (
