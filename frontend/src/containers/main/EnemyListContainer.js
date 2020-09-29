@@ -20,9 +20,7 @@ const EnemyListContainer = () => {
         "enemies",
         JSON.stringify(
           enemies.map(enemy => ({
-            id: enemy.id,
-            ban: enemy.ban,
-            pick: enemy.pick,
+            ...enemy
           }))
         )
       );

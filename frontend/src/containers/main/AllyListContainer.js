@@ -91,13 +91,7 @@ const AllyListContainer = () => {
         'teamMates',
         JSON.stringify(
           teamMates.map((teamMate) => ({
-            id: teamMate.id,
-            name: teamMate.name,
-            pos: teamMate.pos,
-            me: teamMate.me,
-            ban: teamMate.ban,
-            pick: teamMate.pick,
-            mostChampions: teamMate.mostChampions,
+            ...teamMate
           })),
         ),
       );
