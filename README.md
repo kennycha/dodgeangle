@@ -4,7 +4,7 @@
 
 ## 사용법
 
-> 배포서버 주소 : http://j3a504.p.ssafy.io
+> http://j3a504.p.ssafy.io:8080/
 
 ### PreEnterPage
 - 예시 데이터
