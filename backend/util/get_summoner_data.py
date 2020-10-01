@@ -61,6 +61,7 @@ def get_data(summoners, n=20):
         else:
             match_list = res.json()['matches'][:n]
 
+        count_score = []
         for m in match_list:
             url = f'{base_url}/lol/match/v4/matches/{m["gameId"]}'
             match_res, _ = valid_request(url) 
@@ -71,25 +72,27 @@ def get_data(summoners, n=20):
                     break
             if p_num:
                 m['win'] = match_res.json()['participants'][p_num-1]['stats']['win']
+                count_score.append(m['win'])
         
-        match_data[f'summoners'].append({
+        if count_score[0]:
+            win, lose = count_score.index(False), 0
+        else:
+            win, lose = 0, count_score.index(True)
+        
+        match_data['summoners'].append({
                                         'summonerName': summoner,
                                         'accountId': account_id,
                                         'key': key,
                                         'matches': match_list
                                          })
-    match_list_columns =(
-                            'gameId',
-                            'championId',
-                            'win',
-                            'role',
-                            'lane'
-    )
     match_data_columns = (
                             'summonerName',
+                            'win',
+                            'lose',
                             'mostChampId',
+                            'mostChampCount',
                             'winRate',
-                            'mostLane',                        
+                            'mostLane',
     )
 
     match_data_list = []
@@ -97,15 +100,20 @@ def get_data(summoners, n=20):
         match_list_frame = pd.DataFrame(summoner['matches'])
         if not summoner['matches']:
             most_champ = []
+            most_champ_count = []
             win_rate = []
             most_lane = []
         else:
             most_champ = list(match_list_frame['champion'].value_counts().keys())
+            most_champ_count = list(match_list_frame['champion'].value_counts())
             win_rate = [round(len(match_list_frame[(match_list_frame['champion']==mc) & (match_list_frame['win'] == True)]) /len(match_list_frame[match_list_frame['champion']==mc])*100,2) for mc in most_champ]
             most_lane = []
         match_data_list.append([
             summoner['summonerName'],
+            win,
+            lose,
             most_champ,
+            most_champ_count,
             win_rate,
             most_lane,
         ])
