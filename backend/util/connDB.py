@@ -18,23 +18,25 @@ def set_data():
     client = db_client()
     collection = client.normal.champion_champion
 
-    with open('champion/fixtures/champion.json', encoding='utf-8') as f:
+    with open('champion/fixtures/dummy.json', encoding='utf-8') as f:
         file_data = json.load(f)
-    
-    insert_list = ['key', 'name', 'image', 'tags']
-    for data in file_data:
-        temp = {}
-        tdata = file_data[data]
-        for i in insert_list:
-            if i == 'image':
-                temp[i] = tdata[i]['full']
-            elif i == 'key':
-                temp['id'] = int(tdata[i])
-            else:
-                temp[i] = tdata[i]
-        
-        collection.insert(temp)
 
+    with open('champion/fixtures/position.json', encoding='utf-8') as f:
+        pos_data = json.load(f)
+    
+    insert_list = ['id', 'name', 'image', 'pos', 'counter']
+
+    temp = {}
+    for data in file_data:
+        del data['_id']
+        position = [d['pos'] for d in pos_data if d['name'] == data['name']]
+        data['pos'] = position[0]
+        temp[data['name']] = data
+
+    index = sorted(temp)
+    for i in range(len(index)):
+        collection.insert(temp[index[i]])
+    
     client.close()
 
 
