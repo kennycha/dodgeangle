@@ -3,9 +3,10 @@ from .models import Champion
 
 
 class ChampionSerializer(serializers.ModelSerializer):
-    tags = serializers.ListField(child=serializers.CharField())
+    counter = serializers.ListField(child=serializers.CharField())
+    pos = serializers.ListField(child=serializers.CharField())
 
 
     class Meta:
         model = Champion
-        fields = ('id', 'name', 'image', 'tags',)
+        fields = ('id', 'name', 'image', 'counter', 'pos',)
