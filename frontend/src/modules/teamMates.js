@@ -8,6 +8,7 @@ const SWITCHING = 'teamMates/SWITCHING';
 const PICK_CHAMPION = 'teamMates/PICK_CHAMPION';
 const BAN_CHAMPION = 'teamMates/BAN_CHAMPION';
 const SET_MOST_CHAMPIONS = 'teamMates/SET_MOST_CHAMPIONS';
+const FETCH_API_DATA = 'teamMates/FETCH_API_DATA';
 
 // action creator 함수
 export const confirmTeamMates = createAction(
@@ -38,7 +39,26 @@ export const banChampion = createAction(BAN_CHAMPION, ({ id, champion }) => ({
 
 export const setMostChampions = createAction(
   SET_MOST_CHAMPIONS,
-  ({ id, champions }) => ({ id, champions }),
+  ({ summonerId, champions }) => ({ summonerId, champions }),
+);
+
+export const fetchApiData = createAction(
+  FETCH_API_DATA,
+  ({
+    summoner,
+    streak_win,
+    streak_loss,
+    most_lane,
+    troll_index,
+    most_champion,
+  }) => ({
+    summoner,
+    streak_win,
+    streak_loss,
+    most_lane,
+    troll_index,
+    most_champion,
+  }),
 );
 
 // initial state
@@ -95,6 +115,36 @@ const teamMates = handleActions(
       teamMates: state.teamMates.map((teamMate) =>
         teamMate.id === id
           ? { ...teamMate, mostChampions: champions }
+          : teamMate,
+      ),
+    }),
+    [FETCH_API_DATA]: (
+      state,
+      {
+        payload: {
+          summoner,
+          streak_win,
+          streak_loss,
+          most_lane,
+          troll_index,
+          most_champion,
+        },
+      },
+    ) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.name === summoner
+          ? {
+              ...teamMate,
+              pos: most_lane,
+              badges: [
+                streak_win - streak_loss >= 0
+                  ? streak_win - streak_loss + '연승중'
+                  : -streak_win + streak_loss + '연패중',
+                '트롤지수 ' + troll_index,
+              ],
+              mostChampions: most_champion,
+            }
           : teamMate,
       ),
     }),
