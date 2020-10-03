@@ -60,9 +60,38 @@ const ChampionImg = styled.img`
   display: block;
 `;
 
-const SummonerName = styled.div`
-  display: block;
+const SummonerBlock = styled.div`
 `;
+
+const SummonerName = styled.div`
+`;
+
+
+const SummonerBadgeBlock = styled.div`
+  margin-top: 0.25rem;
+`;
+
+const SummonerBadge = styled.span`
+  background: ${mainTheme.mainBackground};
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  padding: 0 0.15rem; 
+  border-radius: 10%;
+
+
+  ${(props) =>
+    props.win &&
+    css`
+      color: ${mainTheme.mainAlly}
+    `}
+  ${(props) =>
+    props.loss &&
+    css`
+      color: ${mainTheme.mainEnemy}
+    `}
+`;
+
 
 const MostChampionsBlock = styled.div`
   color: ${mainTheme.mainFontColor};
@@ -87,6 +116,7 @@ const ChampionWinRate = styled.div`
   font-size: 1.25rem;
   text-align: center;
 `;
+
 const AllyListLabel = () => {
   return (
     <LabelBlock>
@@ -115,7 +145,20 @@ const AllyListItem = ({ teamMate }) => {
                 : 'positions/' + teamMate.pos + '.png'
             }`)}
           />
-          <SummonerName>{teamMate?.name}</SummonerName>
+          <SummonerBlock>
+            <SummonerName>{teamMate?.name}</SummonerName>
+            <SummonerBadgeBlock>
+              {teamMate.badges && teamMate.badges.map(badge => (
+                <SummonerBadge
+                  win={(badge.length >= 3) && (badge.slice(badge.length-3,badge.length) === "연승중")}
+                  loss={(badge.length >= 3) && (badge.slice(badge.length-3,badge.length) === "연패중")}
+                >
+                  {badge}
+                </SummonerBadge>
+              ))}
+            </SummonerBadgeBlock>
+          </SummonerBlock>
+        
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
