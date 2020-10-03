@@ -118,7 +118,7 @@ const EnemyListItem = ({ enemy }) => {
                 <ChampionWinRate>{champion.winRate}</ChampionWinRate>
               </CounterOrExpetedChampion>
             ))
-          ) : enemy.expectedChampions !== null ? (
+          ) : enemy.expectedChampions !== null && (
             enemy.expectedChampions.map((champion) => (
               <CounterOrExpetedChampion key={enemy.expectedChampions.indexOf(champion)}>
                 <ChampionMiniImg
@@ -127,8 +127,6 @@ const EnemyListItem = ({ enemy }) => {
                 <ChampionWinRate>{champion.winRate}</ChampionWinRate>
               </CounterOrExpetedChampion>
             ))
-          ) : (
-            <SummonerName>빈공간</SummonerName>
           )}
         </CounterOrExpetedChampionsBlock>
       </EnemyInfoBlock>
