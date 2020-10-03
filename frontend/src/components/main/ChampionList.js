@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import ChampionItemContainer from '../../containers/main/ChampionItemContainer';
 
 const ChampionListBlock = styled.div`
-  padding: ${70/16}rem;
-  padding-left: ${100/16}rem;
-  padding-right: ${100/16}rem;
-  height: ${700/16}rem;
+  padding: ${80 / 16}rem;
+  padding-top: ${50 / 16}rem;
+  height: ${600 / 16}rem;
   display: grid;
-  grid-template-columns: repeat(6, ${140/16}rem);
-  grid-auto-rows: ${120/16}rem;
+  grid-template-columns: repeat(6, ${100 / 16}rem);
+  grid-auto-rows: ${100 / 16}rem;
   gap: 1rem;
   overflow: auto;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+
   div.spaceholder {
-    height: ${250/16}rem;
+    height: ${250 / 16}rem;
   }
 `;
 

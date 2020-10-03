@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Navbar from '../../components/common/Navbar';
 import { confirmTeamMates } from '../../modules/teamMates';
 import { confirmEnemies } from '../../modules/enemies';
+import { initializePhase } from '../../modules/phase';
 
 const NavbarContainer = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const NavbarContainer = () => {
   const onNewClick = () => {
     dispatch(confirmTeamMates(null));
     dispatch(confirmEnemies(null));
+    dispatch(initializePhase());
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');
     history.push('/');

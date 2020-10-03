@@ -5,7 +5,7 @@ import mainTheme from '../../lib/styles/mainTheme';
 const AllyAnalysisBlock = styled.div`
   height: 100%;
   background: ${mainTheme.mainAnalysis};
-  border: ${2/16}rem solid ${mainTheme.mainBorder};
+  border: ${2 / 16}rem solid ${mainTheme.mainBorder};
 `;
 
 const AllyAnalysis = () => {

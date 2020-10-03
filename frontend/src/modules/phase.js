@@ -1,10 +1,15 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // action type
-const CHANGE_TO_PICK_PHASE = 'phase/CHANGE_TO_PICK_PHASE';
+const INITIALIZE_PHASE = 'phase/INITIALIZE_PHASE';
+const CHANGE_PHASE = 'phase/CHANGE_PHASE';
 
 // action creator 함수
-export const changeToPickPhase = createAction(CHANGE_TO_PICK_PHASE);
+export const initializePhase = createAction(INITIALIZE_PHASE);
+
+export const changePhase = createAction(CHANGE_PHASE, ({ currentPhase }) => ({
+  currentPhase,
+}));
 
 // initial state
 const initialState = {
@@ -14,9 +19,13 @@ const initialState = {
 // reducer
 const phase = handleActions(
   {
-    [CHANGE_TO_PICK_PHASE]: (state) => ({
+    [CHANGE_PHASE]: (state, { payload: { currentPhase } }) => ({
       ...state,
-      phase: 'pick',
+      phase: currentPhase === 'ban' ? 'pick' : 'complete',
+    }),
+    [INITIALIZE_PHASE]: (state) => ({
+      ...state,
+      phase: 'ban',
     }),
   },
   initialState,
