@@ -98,8 +98,8 @@ const ChampionWinRate = styled.div`
 const EnemyListLabel = () => {
   return (
     <LabelBlock>
-      <Label>적군 팀</Label>
       <Label white>카운터 챔피언</Label>
+      <Label>적군 팀</Label>
     </LabelBlock>
   );
 };
