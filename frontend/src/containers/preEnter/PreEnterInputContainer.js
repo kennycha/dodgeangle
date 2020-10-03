@@ -6,13 +6,7 @@ import { confirmEnemies } from '../../modules/enemies';
 import allchampions from '../../lib/allchampions';
 
 const PreEnterInputContainer = () => {
-  const [innerTeamMates, setInnerTeamMates] = useState(
-`SKT_T1_Khan님이 로비에 참가하셨습니다.
-SKT_T1_Clid님이 로비에 참가하셨습니다.
-SKT_T1_Faker님이 로비에 참가하셨습니다.
-SKT_T1_Teddy님이 로비에 참가하셨습니다.
-SKT_T1_Effort님이 로비에 참가하셨습니다.
-`);
+  const [innerTeamMates, setInnerTeamMates] = useState(``);
   const dispatch = useDispatch();
   const { teamMates } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
