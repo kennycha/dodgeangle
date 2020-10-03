@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const ChampionByPositionBlock = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 3rem;
   margin-left: 2rem;
 `;
 
@@ -14,7 +13,7 @@ const ChampionByPositionItem = styled.div`
   margin-left: 1rem;
   cursor: pointer;
   img {
-    width: ${70/16}rem;
+    width: ${50 / 16}rem;
   }
 `;
 

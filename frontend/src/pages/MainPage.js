@@ -10,17 +10,19 @@ import EnemyAnalysisContainer from '../containers/main/EnemyAnalysisContainer';
 import EnemyListContainer from '../containers/main/EnemyListContainer';
 
 const MainBlock = styled.div`
-  min-height: 100vh;
+  height: 651px;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 3fr 2fr;
+  width: 1920px;
+  margin: 0 auto;
 `;
 
 const Spliter = styled.div`
   display: grid;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 3fr 2fr;
   &:first-child,
   &:last-child {
-    grid-template-rows: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 `;
 
