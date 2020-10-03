@@ -2,11 +2,10 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
 
-
 const AllyListBlock = styled.div`
-height: 100%;
-background: ${mainTheme.mainBackground};
-border: ${2/16}rem solid ${mainTheme.mainBorder};
+  height: 100%;
+  background: ${mainTheme.mainBackground};
+  border: ${2 / 16}rem solid ${mainTheme.mainBorder};
 `;
 
 const LabelBlock = styled.div`
@@ -24,14 +23,19 @@ const Label = styled.div`
   font-weight: bold;
   background: ${mainTheme.mainBackground};
   color: ${mainTheme.mainAlly};
-  ${props=> props.white && css`font-size: 1rem; color: ${mainTheme.mainLogoColor}`}
+  ${(props) =>
+    props.white &&
+    css`
+      font-size: 1rem;
+      color: ${mainTheme.mainLogoColor};
+    `}
 `;
 
 const AllyListItemBlock = styled.div`
   background: ${mainTheme.mainSummoner};
-  border: ${2/16}rem solid ${mainTheme.mainBorder};
+  border: ${2 / 16}rem solid ${mainTheme.mainBorder};
   margin: 0.5rem;
-  height: ${100/16}rem;
+  height: ${100 / 16}rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,12 +64,9 @@ const ChampionImg = styled.img`
   display: block;
 `;
 
-const SummonerBlock = styled.div`
-`;
+const SummonerBlock = styled.div``;
 
-const SummonerName = styled.div`
-`;
-
+const SummonerName = styled.div``;
 
 const SummonerBadgeBlock = styled.div`
   margin-top: 0.25rem;
@@ -76,22 +77,20 @@ const SummonerBadge = styled.span`
   font-size: 1rem;
   font-weight: bold;
   margin-right: 0.5rem;
-  padding: 0 0.15rem; 
+  padding: 0 0.15rem;
   border-radius: 10%;
-
 
   ${(props) =>
     props.win &&
     css`
-      color: ${mainTheme.mainAlly}
+      color: ${mainTheme.mainAlly};
     `}
   ${(props) =>
     props.loss &&
     css`
-      color: ${mainTheme.mainEnemy}
+      color: ${mainTheme.mainEnemy};
     `}
 `;
-
 
 const MostChampionsBlock = styled.div`
   color: ${mainTheme.mainFontColor};
@@ -120,11 +119,11 @@ const ChampionWinRate = styled.div`
 const AllyListLabel = () => {
   return (
     <LabelBlock>
-      <Label >아군 팀</Label>
+      <Label>아군 팀</Label>
       <Label white>모스트 챔피언</Label>
     </LabelBlock>
-  )
-}
+  );
+};
 
 const AllyListItem = ({ teamMate }) => {
   return (
@@ -134,7 +133,9 @@ const AllyListItem = ({ teamMate }) => {
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
           <ChampionImg
             src={require(`../../img/${
-              teamMate.ban ? 'champions/' + teamMate.ban.image : 'nochampion.png'
+              teamMate.ban
+                ? 'champions/' + teamMate.ban.image
+                : 'nochampion.png'
             }`)}
           />
           {/* 선택한 position or 캐릭터 */}
@@ -148,29 +149,37 @@ const AllyListItem = ({ teamMate }) => {
           <SummonerBlock>
             <SummonerName>{teamMate?.name}</SummonerName>
             <SummonerBadgeBlock>
-              {teamMate.badges && teamMate.badges.map(badge => (
-                <SummonerBadge
-                  win={(badge.length >= 3) && (badge.slice(badge.length-3,badge.length) === "연승중")}
-                  loss={(badge.length >= 3) && (badge.slice(badge.length-3,badge.length) === "연패중")}
-                >
-                  {badge}
-                </SummonerBadge>
-              ))}
+              {teamMate.badges &&
+                teamMate.badges.map((badge) => (
+                  <SummonerBadge
+                    key={teamMate.badges.indexOf(badge)}
+                    win={
+                      badge.length >= 3 &&
+                      badge.slice(badge.length - 3, badge.length) === '연승중'
+                    }
+                    loss={
+                      badge.length >= 3 &&
+                      badge.slice(badge.length - 3, badge.length) === '연패중'
+                    }
+                  >
+                    {badge}
+                  </SummonerBadge>
+                ))}
             </SummonerBadgeBlock>
           </SummonerBlock>
-        
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate?.mostChampions && teamMate?.mostChampions?.map((champion) => (
-            <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
-              <ChampionMiniImg 
-                src={require(`../../img/champions/${champion.image}`)}
-              />
-              <ChampionWinRate>{champion.winRate}</ChampionWinRate>
-            </MostChampion>
-          ))}
+          {teamMate?.mostChampions &&
+            teamMate?.mostChampions?.map((champion) => (
+              <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
+                <ChampionMiniImg
+                  src={require(`../../img/champions/${champion.image}`)}
+                />
+                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+              </MostChampion>
+            ))}
         </MostChampionsBlock>
       </AllyInfoBlock>
     </AllyListItemBlock>
