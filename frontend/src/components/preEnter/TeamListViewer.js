@@ -6,6 +6,7 @@ import PositionSelector from './PositionSelector';
 //npm install react-icons --save
 // import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 import mainTheme from '../../lib/styles/mainTheme';
+import ReactPlayer from 'react-player';
 
 const TeamListViewerBlock = styled(Responsive)`
   user-select: none;
@@ -65,20 +66,25 @@ const TeamMateInfo = styled.div`
 const InfoBlock = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: calc(100% - 2rem);
   background: ${palette.gray[1]};
   padding: 2rem;
   margin: 0.5rem 1rem;
   img {
     border-radius: ${20 / 16}rem;
-    width: ${450 / 16}rem;
+    width: ${400 / 16}rem;
+    height: ${280 / 16}rem;
+    margin-right: 1rem;
     -moz-user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    & + & {
-      margin: 5rem;
-    }
+  }
+  div.player-container {
+    border-radius: ${20 / 16}rem;
+    overflow: hidden;
+    width: ${500 / 16}rem;
   }
 `;
 
@@ -131,7 +137,15 @@ const TeamListViewer = ({
       ) : (
         <InfoBlock>
           <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
-          <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
+          <div className="player-container">
+            <ReactPlayer
+              url="https://res.cloudinary.com/kennycld/video/upload/v1601798334/dodgeAngle/infoVideo_rjwaqh.mp4"
+              playing={true}
+              loop={true}
+              width="500px"
+              height="280px"
+            />
+          </div>
         </InfoBlock>
       )}
     </TeamListViewerBlock>
