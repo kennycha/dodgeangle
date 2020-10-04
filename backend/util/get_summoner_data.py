@@ -5,6 +5,7 @@ from datetime import datetime
 import pandas as pd
 
 from util.connDB import db_client
+from util.get_troll_score import get_troll_score, troll_preprocess
 
 from champion.models import Champion
 from champion.serializers import ChampionSerializer
@@ -62,6 +63,7 @@ def get_data(summoners, n=20):
             match_list = res.json()['matches'][:n]
 
         count_score = []
+        troll_list = []
         for m in match_list:
             url = f'{base_url}/lol/match/v4/matches/{m["gameId"]}'
             match_res, _ = valid_request(url) 
@@ -73,7 +75,14 @@ def get_data(summoners, n=20):
             if p_num:
                 m['win'] = match_res.json()['participants'][p_num-1]['stats']['win']
                 count_score.append(m['win'])
-        
+
+            (champ_id, kda, dpm, gpm) = troll_preprocess(match_res.json(), p_num)
+            troll_each = get_troll_score(champ_id, kda, dpm, gpm)
+            troll_list.append(troll_each)
+        troll_index = round(sum(troll_list) / len(troll_list), 2)   # 평균
+        # print(troll_list)
+        # print(troll_index)
+
         if count_score[0]:
             win, lose = count_score.index(False), 0
         else:
