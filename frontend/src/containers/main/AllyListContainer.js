@@ -9,10 +9,11 @@ const AllyListContainer = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { teamMates } = useSelector(({ teamMates }) => ({
+  const { teamMates, meSelected } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
+    meSelected: teamMates.meSelected,
   }));
-  if (!Boolean(teamMates)) {
+  if (!Boolean(teamMates) || !meSelected) {
     history.push('/');
   }
 
@@ -24,10 +25,10 @@ const AllyListContainer = () => {
       // === teamMates는 존재하는데, 모스트 챔피언은 없으면
       // => 모스트 챔피언 요청
       teamMates.forEach((teamMate) => {
-        let newMostChampions = [0,1,2].map(() => ({
-          ...allchampions[Math.floor((Math.random()*allchampions.length))],
-          winRate: Math.floor((Math.random()*100)),
-        }))
+        let newMostChampions = [0, 1, 2].map(() => ({
+          ...allchampions[Math.floor(Math.random() * allchampions.length)],
+          winRate: Math.floor(Math.random() * 100),
+        }));
         dispatch(
           setMostChampions({
             id: teamMate.id,
@@ -46,7 +47,7 @@ const AllyListContainer = () => {
         'teamMates',
         JSON.stringify(
           teamMates.map((teamMate) => ({
-            ...teamMate
+            ...teamMate,
           })),
         ),
       );
