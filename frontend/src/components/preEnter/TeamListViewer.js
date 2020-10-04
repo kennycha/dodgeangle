@@ -31,6 +31,7 @@ const TeamListItemBlock = styled.div`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  position: relative;
 `;
 
 const TeamMateInfo = styled.div`
@@ -88,13 +89,21 @@ const InfoBlock = styled.div`
   }
 `;
 
-const TeamListItem = ({
-  teamMate,
-  dragStart,
-  dragEnd,
-  onPositionClick,
-  onMeChange,
-}) => {
+const MeBlock = styled.div`
+  position: absolute;
+  left: -70px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background: ${mainTheme.mainBan};
+  color: ${mainTheme.mainLogoColor};
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TeamListItem = ({ teamMate, dragStart, dragEnd, onPositionClick }) => {
   return (
     <TeamListItemBlock
       draggable={true}
@@ -103,6 +112,7 @@ const TeamListItem = ({
       id={teamMate.id}
       className="draggable"
     >
+      {teamMate.me && <MeBlock>Me</MeBlock>}
       <TeamMateInfo draggable={false}>
         <span className="teamMate-order">{parseInt(teamMate.id) + 1}픽</span>
         <span className="teamMate-name">{teamMate.name}</span>

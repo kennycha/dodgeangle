@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import PreEnterInput from '../../components/preEnter/PreEnterInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { confirmTeamMates, fetchApiData } from '../../modules/teamMates';
+import {
+  confirmTeamMates,
+  fetchApiData,
+  initializeMe,
+} from '../../modules/teamMates';
 import { confirmEnemies } from '../../modules/enemies';
 import allchampions from '../../lib/allchampions';
 import { initializePhase } from '../../modules/phase';
@@ -64,6 +68,7 @@ const PreEnterInputContainer = () => {
     dispatch(confirmTeamMates(null));
     dispatch(confirmEnemies(null));
     dispatch(initializePhase());
+    dispatch(initializeMe());
     setInnerTeamMates('');
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');
