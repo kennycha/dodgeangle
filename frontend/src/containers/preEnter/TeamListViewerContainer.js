@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TeamListViewer from '../../components/preEnter/TeamListViewer';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  changePosition,
-  changeMe,
-  switching,
-} from '../../modules/teamMates';
+import { changePosition, switching } from '../../modules/teamMates';
 
 const placeholder = document.createElement('span');
 placeholder.className = 'placeholder';
@@ -36,10 +32,6 @@ const TeamListViewerContainer = () => {
         pos: e.target.parentNode.id,
       }),
     );
-  };
-
-  const onMeChange = (id) => {
-    dispatch(changeMe(id));
   };
 
   const dragStart = (e) => {
@@ -78,7 +70,7 @@ const TeamListViewerContainer = () => {
     dragged.style.opacity = '1'; // 드레그 끝난 div 투명도 원상 복귀
 
     if (!over) return; // 여백에서 멈췄으면 => 아무 동작 X
-    over.style.opacity = '1' // 드레그 타겟인 div 투명도 원상 복귀
+    over.style.opacity = '1'; // 드레그 타겟인 div 투명도 원상 복귀
     const fromId = parseInt(dragged.id); // ? 삭제 => 없으면 로직 오류임
     const toId = parseInt(over.id); // ? 삭제 => 없으면 로직 오류임
 
@@ -105,7 +97,6 @@ const TeamListViewerContainer = () => {
     <TeamListViewer
       teamMates={teamMates}
       error={error}
-      onMeChange={onMeChange}
       dragStart={dragStart}
       dragEnd={dragEnd}
       dragOver={dragOver}

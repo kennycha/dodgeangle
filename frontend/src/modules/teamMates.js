@@ -4,6 +4,7 @@ import { createAction, handleActions } from 'redux-actions';
 const CONFIRM_TEAMMATES = 'teamMates/CONFIRM_TEAMMATES';
 const CHANGE_POSITION = 'teamMates/CHANGE_POSITION';
 const CHANGE_ME = 'teamMates/CHANGE_ME';
+const INITIALIZE_ME = 'teamMates/INITIALIZE_ME';
 const SWITCHING = 'teamMates/SWITCHING';
 const PICK_CHAMPION = 'teamMates/PICK_CHAMPION';
 const BAN_CHAMPION = 'teamMates/BAN_CHAMPION';
@@ -21,6 +22,8 @@ export const changePosition = createAction(CHANGE_POSITION, ({ id, pos }) => ({
 }));
 
 export const changeMe = createAction(CHANGE_ME, (id) => id);
+
+export const initializeMe = createAction(INITIALIZE_ME);
 
 export const switching = createAction(SWITCHING, ({ fromId, toId }) => ({
   fromId,
@@ -64,6 +67,7 @@ export const fetchApiData = createAction(
 // initial state
 const initialState = {
   teamMates: null,
+  meSelected: false,
   error: null,
 };
 
@@ -82,11 +86,16 @@ const teamMates = handleActions(
     }),
     [CHANGE_ME]: (state, { payload: id }) => ({
       ...state,
+      meSelected: true,
       teamMates: state.teamMates.map((teamMate) =>
         teamMate.id === id
           ? { ...teamMate, me: true }
           : { ...teamMate, me: false },
       ),
+    }),
+    [INITIALIZE_ME]: (state) => ({
+      ...state,
+      meSelected: false,
     }),
     [SWITCHING]: (state, { payload: { fromId, toId } }) => ({
       ...state,
