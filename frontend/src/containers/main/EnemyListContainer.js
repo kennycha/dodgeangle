@@ -63,6 +63,17 @@ const EnemyListContainer = () => {
           })),
         ),
       );
+    } else {
+      // enemies === null 일때
+      if (localStorage.getItem('enemies')) {
+        // 로컬스토리지 값이 존재 => 로컬스토리지 값을 Redux에 반영하기
+        dispatch(confirmEnemies(JSON.parse(localStorage.getItem('enemies'))));
+      }
+      // } else {
+      //   // enemies가 null 값 === 초기 생성이후, null값으로 변경된 상태에서 Redux에 남아 있는 상태
+      //   // => 초기화 한다.
+      //   dispatch(confirmEnemies(null));
+      // }
     }
   }, [enemies, dispatch]);
   return <EnemyList enemies={enemies} />;
