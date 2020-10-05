@@ -1,19 +1,18 @@
 import React from 'react';
 import ChampionByPosition from '../../components/main/ChampionByPosition';
-import allchampions from '../../lib/allchampions';
 
 const ChampionByPositionContainer = ({ allChampions, setResultChampions }) => {
   const onPositionClick = (event) => {
     const {
       target: { alt },
     } = event;
-    const newResultChampions = allchampions.filter((champion) =>
+    const newResultChampions = allChampions.filter((champion) =>
       champion.pos.includes(alt),
     );
     setResultChampions(newResultChampions);
   };
   const onAllClick = () => {
-    setResultChampions(allchampions);
+    setResultChampions(allChampions);
   };
   return (
     <ChampionByPosition

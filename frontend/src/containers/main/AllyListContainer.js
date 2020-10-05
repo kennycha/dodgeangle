@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import AllyList from '../../components/main/AllyList';
 import { useSelector, useDispatch } from 'react-redux';
-import { setMostChampions, confirmTeamMates } from '../../modules/teamMates';
+import { confirmTeamMates } from '../../modules/teamMates';
+// import { setMostChampions } from '../../modules/teamMates';
 import { useHistory } from 'react-router-dom';
-import allchampions from '../../lib/allchampions';
 
 const AllyListContainer = () => {
   const dispatch = useDispatch();
@@ -17,27 +17,27 @@ const AllyListContainer = () => {
     history.push('/');
   }
 
-  useEffect(() => {
-    // 아래는 임시코드, 실제론 API 요청해서 받기
+  // useEffect(() => {
+  //   // 아래는 임시코드, 실제론 API 요청해서 받기
 
-    if (teamMates && teamMates[0]?.mostChampions == null) {
-      // PreEnter에서 MainPage로 처음 넘어오는 상황에서 작동
-      // === teamMates는 존재하는데, 모스트 챔피언은 없으면
-      // => 모스트 챔피언 요청
-      teamMates.forEach((teamMate) => {
-        let newMostChampions = [0, 1, 2].map(() => ({
-          ...allchampions[Math.floor(Math.random() * allchampions.length)],
-          winRate: Math.floor(Math.random() * 100),
-        }));
-        dispatch(
-          setMostChampions({
-            id: teamMate.id,
-            champions: newMostChampions,
-          }),
-        );
-      });
-    }
-  }, [teamMates, dispatch]);
+  //   if (teamMates && teamMates[0]?.mostChampions == null) {
+  //     // PreEnter에서 MainPage로 처음 넘어오는 상황에서 작동
+  //     // === teamMates는 존재하는데, 모스트 챔피언은 없으면
+  //     // => 모스트 챔피언 요청
+  //     teamMates.forEach((teamMate) => {
+  //       let newMostChampions = [0, 1, 2].map(() => ({
+  //         ...allchampions[Math.floor(Math.random() * allchampions.length)],
+  //         winRate: Math.floor(Math.random() * 100),
+  //       }));
+  //       dispatch(
+  //         setMostChampions({
+  //           id: teamMate.id,
+  //           champions: newMostChampions,
+  //         }),
+  //       );
+  //     });
+  //   }
+  // }, [teamMates, dispatch]);
 
   useEffect(() => {
     // teamMates가 변화되었거나 첫 렌더링일때 useEffect는 실행

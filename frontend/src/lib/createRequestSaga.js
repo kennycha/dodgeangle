@@ -1,7 +1,13 @@
 import { call, put } from 'redux-saga/effects';
 import { startLoading, finishLoading } from '../modules/loading';
 
-const createRequestSaga = (type, request) => {
+export const createRequestActionTypes = (type) => {
+  const SUCCESS = `${type}_SUCCESS`;
+  const FAILURE = `${type}_FAILURE`;
+  return [type, SUCCESS, FAILURE];
+};
+
+export default function createRequestSaga(type, request) {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
 
@@ -22,6 +28,4 @@ const createRequestSaga = (type, request) => {
     }
     yield put(finishLoading(type));
   };
-};
-
-export default createRequestSaga;
+}

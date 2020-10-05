@@ -86,24 +86,32 @@ const ChampionPicker = ({
 }) => {
   return (
     <ChampionPickerBlock phase={phase}>
-      <Spliter>
-        <ChampionByPositionContainer
-          allChampions={allChampions}
-          setResultChampions={setResultChampions}
-        />
-        <ChampionInputContainer
-          allChampions={allChampions}
-          setResultChampions={setResultChampions}
-        />
-      </Spliter>
-      <PhaseBtn onClick={onPhaseBtnClick} phase={phase}>
-        {phase === 'ban' ? '벤 완료' : phase === 'pick' ? '픽 완료' : '완료'}
-      </PhaseBtn>
-      <ChampionListContainer
-        resultChampions={resultChampions}
-        selectedChampion={selectedChampion}
-        setSelectedChampion={setSelectedChampion}
-      />
+      {allChampions && (
+        <>
+          <Spliter>
+            <ChampionByPositionContainer
+              allChampions={allChampions}
+              setResultChampions={setResultChampions}
+            />
+            <ChampionInputContainer
+              allChampions={allChampions}
+              setResultChampions={setResultChampions}
+            />
+          </Spliter>
+          <PhaseBtn onClick={onPhaseBtnClick} phase={phase}>
+            {phase === 'ban'
+              ? '벤 완료'
+              : phase === 'pick'
+              ? '픽 완료'
+              : '완료'}
+          </PhaseBtn>
+          <ChampionListContainer
+            resultChampions={resultChampions}
+            selectedChampion={selectedChampion}
+            setSelectedChampion={setSelectedChampion}
+          />
+        </>
+      )}
     </ChampionPickerBlock>
   );
 };

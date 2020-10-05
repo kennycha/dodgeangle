@@ -30,16 +30,17 @@ const ChampionList = ({
 }) => {
   return (
     <ChampionListBlock>
-      {resultChampions.map((champion) => (
-        <ChampionItemContainer
-          key={champion.id}
-          champion={champion}
-          isSelected={
-            selectedChampion ? selectedChampion.id === champion.id : false
-          }
-          setSelectedChampion={setSelectedChampion}
-        />
-      ))}
+      {resultChampions &&
+        resultChampions.map((champion) => (
+          <ChampionItemContainer
+            key={champion.id}
+            champion={champion}
+            isSelected={
+              selectedChampion ? selectedChampion.id === champion.id : false
+            }
+            setSelectedChampion={setSelectedChampion}
+          />
+        ))}
       <div className="spaceholder" />
     </ChampionListBlock>
   );
