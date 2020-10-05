@@ -66,11 +66,13 @@ const TeamMateInfo = styled.div`
 
 const InfoBlock = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: calc(100% - 2rem);
   background: ${palette.gray[1]};
   padding: 2rem;
+  padding-top: 1rem;
   margin: 0.5rem 1rem;
   img {
     border-radius: ${20 / 16}rem;
@@ -86,6 +88,17 @@ const InfoBlock = styled.div`
     border-radius: ${20 / 16}rem;
     overflow: hidden;
     width: ${500 / 16}rem;
+  }
+  div.split {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: calc(100% - 2rem);
+    background: ${palette.gray[1]};
+  }
+  h3 {
+    color: ${mainTheme.mainFontColor};
+    margin-top: 0;
   }
 `;
 
@@ -146,15 +159,21 @@ const TeamListViewer = ({
         ))
       ) : (
         <InfoBlock>
-          <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
-          <div className="player-container">
-            <ReactPlayer
-              url="https://res.cloudinary.com/kennycld/video/upload/v1601798334/dodgeAngle/infoVideo_rjwaqh.mp4"
-              playing={true}
-              loop={true}
-              width="500px"
-              height="280px"
-            />
+          <h3>
+            팀원 입력을 완료한 후, 아래 영상과 같이 팀원 픽 순서와 포지션 정보를
+            확정해주세요
+          </h3>
+          <div className="split">
+            <img src={require('../../img/inputinfo.png')} alt="inputinfo" />
+            <div className="player-container">
+              <ReactPlayer
+                url="https://res.cloudinary.com/kennycld/video/upload/v1601798334/dodgeAngle/infoVideo_rjwaqh.mp4"
+                playing={true}
+                loop={true}
+                width="500px"
+                height="280px"
+              />
+            </div>
           </div>
         </InfoBlock>
       )}
