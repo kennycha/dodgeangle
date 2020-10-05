@@ -92,7 +92,9 @@ def get_data(summoners, n=20):
                                         'summonerName': summoner,
                                         'accountId': account_id,
                                         'key': key,
-                                        'matches': match_list
+                                        'matches': match_list,
+                                        'trollList': troll_list,
+                                        'trollIndex': troll_index,
                                          })
     match_data_columns = (
                             'summonerName',
@@ -102,6 +104,8 @@ def get_data(summoners, n=20):
                             'mostChampCount',
                             'winRate',
                             'mostLane',
+                            'trollList',
+                            'trollIndex',
     )
 
     match_data_list = []
@@ -125,6 +129,8 @@ def get_data(summoners, n=20):
             most_champ_count,
             win_rate,
             most_lane,
+            summoner['trollList'],
+            summoner['trollIndex'],
         ])
     match_frame = pd.DataFrame(match_data_list, columns=match_data_columns)
     match_json = match_frame.to_json(orient='index')
