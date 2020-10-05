@@ -1,6 +1,8 @@
 import json
 from pymongo import MongoClient
 from decouple import config
+import pandas as pd
+import numpy as np
 
 def db_client():
     client = MongoClient(
@@ -25,7 +27,7 @@ def set_data():
         pos_data = json.load(f)
     
     insert_list = ['id', 'name', 'image', 'pos', 'counter']
-
+    
     temp = {}
     for data in file_data:
         del data['_id']
@@ -39,11 +41,22 @@ def set_data():
     
     client.close()
 
-
+def update_data():
+    client = db_client()
+    collection = client.normal.champion_champion
+    
+    counter_data = pd.read_pickle('champion/fixtures/counter_champs.pkl')
+    for i in range(len(counter_data)):
+        collection.update( 
+            {'id': int(counter_data.iloc[i].name) }, 
+            {'$set': 
+                {'counter':[ {'id':key,'win_rate':win_rate} for key, win_rate in zip(counter_data.iloc[i][0],counter_data.iloc[i][1])] }},  upsert=True )
+        
 def main():
     # client = db_client()
     # print(client.list_database_names())
     set_data()
+    # update_data()
 
 
 if __name__ == "__main__":

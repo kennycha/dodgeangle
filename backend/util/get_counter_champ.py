@@ -99,10 +99,34 @@ counter_df = pd.DataFrame(data,columns=('participantId','championId','championNa
 
 # 0행렬 생성
 champs_mat = np.zeros([150,150])
+win_cnt_mat = np.zeros([150,150])
 champs_columns = { c:idx for idx,c in enumerate(champ_key_dict.keys())}
-for _, row in counter_df[['championId','opponentChamp','goldDiffPerMinDeltas']].iterrows():
+for _, row in counter_df[['championId','opponentChamp','goldDiffPerMinDeltas','win']].iterrows():
     if row[2]['10-20']<0:
         champs_mat[champs_columns[row[0]]][champs_columns[row[1]]]-=1
     elif row[2]['10-20']>0:
         champs_mat[champs_columns[row[0]]][champs_columns[row[1]]]+=1
-counter_champ_frame = pd.DataFrame(champs_mat,columns = (champ_key_dict[c] for c in champ_key_dict.keys()),index=(champ_key_dict[c] for c in champ_key_dict.keys()))
+    if row[3]:
+        win_cnt_mat[champs_columns[row[0]]][champs_columns[row[1]]]+=1
+    elif row[3] == False:
+        win_cnt_mat[champs_columns[row[1]]][champs_columns[row[0]]]+=1
+counter_champ_frame = pd.DataFrame(champs_mat,columns = (champ_key_dict.keys()),index=(champ_key_dict.keys()))
+win_cnt_frame = pd.DataFrame(win_cnt_mat, columns = (champ_key_dict.keys()), index=(champ_key_dict.keys()))
+
+# 챔피언별 승률
+win_rate_mat = np.zeros([150,150])
+for i in range(len(win_cnt_mat)):
+    for j in range(len(win_cnt_mat)):
+        if i!=j and win_cnt_mat[i][j]+win_cnt_mat[j][i]:
+            win_rate_mat[i][j] = round(win_cnt_mat[i][j]/(win_cnt_mat[i][j]+win_cnt_mat[j][i])*100,1)
+np.save('champion/fixtures/win_rate_mat',win_rate_mat)
+
+# counter champ 3개 추출
+counter_champ_three = []
+for idx,row in counter_champ_frame.iterrows():
+    counter_champs = list(row.sort_values().keys()[:3])
+    counter_champ_three.append([counter_champs,[win_rate_mat[champs_columns[idx]][champs_columns[c]] for c in counter_champs]])
+
+    
+counter_champ_three_frame = pd.DataFrame(counter_champ_three,index=champ_key_dict.keys()) 
+pd.to_pickle(counter_champ_three_frame,'champion/fixtures/counter_champs.pkl')   
