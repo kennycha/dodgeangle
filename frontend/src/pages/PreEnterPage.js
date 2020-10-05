@@ -3,7 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import PreEnterTitle from '../components/preEnter/PreEnterTitle';
 import PreEnterInputContainer from '../containers/preEnter/PreEnterInputContainer';
 import TeamListViewerContainer from '../containers/preEnter/TeamListViewerContainer';
-import PreEnterButton from '../components/preEnter/PreEnterButton';
+import NavbarContainer from '../containers/common/NavbarContainer';
+import styled from 'styled-components';
+import mainTheme from '../lib/styles/mainTheme';
+import PreEnterButtonContainer from '../containers/preEnter/PreEnterButtonContainer';
+
+const PreEnterBlock = styled.div`
+  background: ${mainTheme.mainSummoner};
+  min-height: 100vh;
+`;
 
 const PreEnterPage = () => {
   return (
@@ -11,10 +19,13 @@ const PreEnterPage = () => {
       <Helmet>
         <title>PreEnter | DODGEANGLE</title>
       </Helmet>
-      <PreEnterTitle />
-      <PreEnterInputContainer />
-      <TeamListViewerContainer />
-      <PreEnterButton />
+      <PreEnterBlock>
+        <PreEnterTitle />
+        <PreEnterInputContainer />
+        <TeamListViewerContainer />
+        <PreEnterButtonContainer />
+        <NavbarContainer />
+      </PreEnterBlock>
     </>
   );
 };

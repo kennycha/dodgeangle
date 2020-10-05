@@ -1,30 +1,32 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import palette from '../../lib/styles/palette';
+import mainTheme from '../../lib/styles/mainTheme';
 
 const buttonStyle = css`
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 15px;
+  height: 60px;
+  font-size: 1.25rem;
   font-weight: bold;
   padding: 0.25rem 1rem;
-  color: white;
+  color: ${mainTheme.mainLogoColor};
   outline: none;
   margin-top: 1rem;
   margin-bottom: 1rem;
   cursor: pointer;
+  background: ${mainTheme.mainButton};
 
-  background: ${palette.gray[8]};
-  &:hover {
-    background: ${palette.gray[6]};
-  }
   ${(props) =>
     props.fullWidth &&
     css`
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
       width: 100%;
-      font-size: 1.125rem;
+    `}
+  ${(props) =>
+    props.red &&
+    css`
+      background: ${mainTheme.mainBorder};
     `}
 `;
 

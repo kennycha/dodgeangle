@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import mainTheme from '../../lib/styles/mainTheme';
 
 const Input = styled.input`
-  margin: 5rem;
+  margin: 2rem;
+  margin-top: 0;
   margin-bottom: 0;
   padding: 2rem;
-  height: 100px;
+  height: ${80 / 16}rem;
   width: calc(100% - 10rem);
   background: ${mainTheme.mainSummoner};
   color: ${mainTheme.mainFontColor};
   font-size: 1.25rem;
-  border: 3px solid ${mainTheme.mainBorder};
+  border: ${3 / 16}rem solid ${mainTheme.mainBorder};
 `;
 
 const ChampionInput = ({ onChange }) => {

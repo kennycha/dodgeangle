@@ -4,9 +4,12 @@ import { createAction, handleActions } from 'redux-actions';
 const CONFIRM_TEAMMATES = 'teamMates/CONFIRM_TEAMMATES';
 const CHANGE_POSITION = 'teamMates/CHANGE_POSITION';
 const CHANGE_ME = 'teamMates/CHANGE_ME';
+const INITIALIZE_ME = 'teamMates/INITIALIZE_ME';
 const SWITCHING = 'teamMates/SWITCHING';
-const PICK_CHAMPION = 'teamMates/PICK_CHAMPION'
-const BAN_CHAMPION = 'teamMates/BAN_CHAMPION'
+const PICK_CHAMPION = 'teamMates/PICK_CHAMPION';
+const BAN_CHAMPION = 'teamMates/BAN_CHAMPION';
+const SET_MOST_CHAMPIONS = 'teamMates/SET_MOST_CHAMPIONS';
+const FETCH_API_DATA = 'teamMates/FETCH_API_DATA';
 
 // action creator 함수
 export const confirmTeamMates = createAction(
@@ -20,23 +23,51 @@ export const changePosition = createAction(CHANGE_POSITION, ({ id, pos }) => ({
 
 export const changeMe = createAction(CHANGE_ME, (id) => id);
 
+export const initializeMe = createAction(INITIALIZE_ME);
+
 export const switching = createAction(SWITCHING, ({ fromId, toId }) => ({
   fromId,
   toId,
 }));
 
-export const pickChampion = createAction(PICK_CHAMPION, ({id, champion}) => ({
+export const pickChampion = createAction(PICK_CHAMPION, ({ id, champion }) => ({
   id,
   champion,
-}))
+}));
 
-export const banChampion = createAction(BAN_CHAMPION, ({id, champion}) => ({
+export const banChampion = createAction(BAN_CHAMPION, ({ id, champion }) => ({
   id,
   champion,
-}))
+}));
+
+export const setMostChampions = createAction(
+  SET_MOST_CHAMPIONS,
+  ({ summonerId, champions }) => ({ summonerId, champions }),
+);
+
+export const fetchApiData = createAction(
+  FETCH_API_DATA,
+  ({
+    summoner,
+    streak_win,
+    streak_loss,
+    most_lane,
+    troll_index,
+    most_champion,
+  }) => ({
+    summoner,
+    streak_win,
+    streak_loss,
+    most_lane,
+    troll_index,
+    most_champion,
+  }),
+);
+
 // initial state
 const initialState = {
   teamMates: null,
+  meSelected: false,
   error: null,
 };
 
@@ -55,11 +86,16 @@ const teamMates = handleActions(
     }),
     [CHANGE_ME]: (state, { payload: id }) => ({
       ...state,
+      meSelected: true,
       teamMates: state.teamMates.map((teamMate) =>
         teamMate.id === id
           ? { ...teamMate, me: true }
           : { ...teamMate, me: false },
       ),
+    }),
+    [INITIALIZE_ME]: (state) => ({
+      ...state,
+      meSelected: false,
     }),
     [SWITCHING]: (state, { payload: { fromId, toId } }) => ({
       ...state,
@@ -71,17 +107,55 @@ const teamMates = handleActions(
           : teamMate,
       ),
     }),
-    [PICK_CHAMPION]: (state, { payload: { id, champion }}) => ({
+    [PICK_CHAMPION]: (state, { payload: { id, champion } }) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.id === id ? { ...teamMate, pick: champion } : teamMate
+        teamMate.id === id ? { ...teamMate, pick: champion } : teamMate,
       ),
     }),
-    [BAN_CHAMPION]: (state, { payload: { id, champion }}) => ({
+    [BAN_CHAMPION]: (state, { payload: { id, champion } }) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.id === id ? { ...teamMate, ban: champion }: teamMate
-      )
+        teamMate.id === id ? { ...teamMate, ban: champion } : teamMate,
+      ),
+    }),
+    [SET_MOST_CHAMPIONS]: (state, { payload: { id, champions } }) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.id === id
+          ? { ...teamMate, mostChampions: champions }
+          : teamMate,
+      ),
+    }),
+    [FETCH_API_DATA]: (
+      state,
+      {
+        payload: {
+          summoner,
+          streak_win,
+          streak_loss,
+          most_lane,
+          troll_index,
+          most_champion,
+        },
+      },
+    ) => ({
+      ...state,
+      teamMates: state.teamMates.map((teamMate) =>
+        teamMate.name === summoner
+          ? {
+              ...teamMate,
+              pos: most_lane,
+              badges: [
+                streak_win - streak_loss >= 0
+                  ? streak_win - streak_loss + '연승중'
+                  : -streak_win + streak_loss + '연패중',
+                '트롤지수 ' + troll_index,
+              ],
+              mostChampions: most_champion,
+            }
+          : teamMate,
+      ),
     }),
   },
   initialState,
