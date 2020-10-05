@@ -41,14 +41,17 @@ export const setCounterChampions = createAction(
 );
 
 // initial state
+// localStorage에 값이 있다 => 해당 값을 활용한 초기화
 const initialState = {
-  enemies: [0,1,2,3,4].map(idx => ({
-    id: idx,
-    ban: null,
-    pick: null,
-    expectedChampions: null,
-    counterChampions: null,
-  })),
+  enemies: localStorage.getItem('enemies')
+    ? JSON.parse(localStorage.getItem('enemies'))
+    : [0, 1, 2, 3, 4].map((idx) => ({
+        id: idx,
+        ban: null,
+        pick: null,
+        expectedChampions: null,
+        counterChampions: null,
+      })),
   error: null,
 };
 
