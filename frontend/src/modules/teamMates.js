@@ -65,8 +65,11 @@ export const fetchApiData = createAction(
 );
 
 // initial state
+// 초기화시 localStorage값이 있으면 활용
 const initialState = {
-  teamMates: null,
+  teamMates: localStorage.getItem('teamMates')
+    ? JSON.parse(localStorage.getItem('teamMates'))
+    : null,
   meSelected: false,
   error: null,
 };
