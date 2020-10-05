@@ -1,6 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import dotenv from 'dotenv';
 import mainTheme from '../../lib/styles/mainTheme';
+
+dotenv.config();
+const URL = process.env.REACT_APP_API_URL;
 
 const EnemyListBlock = styled.div`
   height: 100%;
@@ -109,25 +113,28 @@ const EnemyListItem = ({ enemy }) => {
     <EnemyListItemBlock>
       <EnemyInfoBlock>
         <CounterOrExpetedChampionsBlock>
-          {enemy.counterChampions !== null ? (
-            enemy.counterChampions.map((champion) => (
-              <CounterOrExpetedChampion key={enemy.counterChampions.indexOf(champion)}>
-                <ChampionMiniImg
-                  src={require(`../../img/champions/${champion.image}`)}
-                />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
-              </CounterOrExpetedChampion>
-            ))
-          ) : enemy.expectedChampions !== null && (
-            enemy.expectedChampions.map((champion) => (
-              <CounterOrExpetedChampion key={enemy.expectedChampions.indexOf(champion)}>
-                <ChampionMiniImg
-                  src={require(`../../img/champions/${champion.image}`)}
-                />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
-              </CounterOrExpetedChampion>
-            ))
-          )}
+          {enemy.counterChampions !== null
+            ? enemy.counterChampions.map((champion) => (
+                <CounterOrExpetedChampion
+                  key={enemy.counterChampions.indexOf(champion)}
+                >
+                  <ChampionMiniImg
+                    src={`${URL}/media/champion/${champion.image}`}
+                  />
+                  <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                </CounterOrExpetedChampion>
+              ))
+            : enemy.expectedChampions !== null &&
+              enemy.expectedChampions.map((champion) => (
+                <CounterOrExpetedChampion
+                  key={enemy.expectedChampions.indexOf(champion)}
+                >
+                  <ChampionMiniImg
+                    src={`${URL}/media/champion/${champion.image}`}
+                  />
+                  <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                </CounterOrExpetedChampion>
+              ))}
         </CounterOrExpetedChampionsBlock>
       </EnemyInfoBlock>
       <EnemyInfoBlock>
@@ -135,18 +142,23 @@ const EnemyListItem = ({ enemy }) => {
           {/* 순서 => AllyList와 대칭을 위해 반대로 */}
 
           <SummonerName>{enemy.id + 1}번 소환사</SummonerName>
-          
+
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
-            src={require(`../../img/${
-              enemy.pick ? 'champions/' + enemy.pick.image : 'question.png'
-            }`)}
+            src={
+              enemy.pick
+                ? `${URL}/media/champion/${enemy.pick.image}`
+                : require('../../img/question.png')
+            }
+            alt="pick"
           />
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
           <ChampionImg
-            src={require(`../../img/${
-              enemy.ban ? 'champions/' + enemy.ban.image : 'nochampion.png'
-            }`)}
+            src={
+              enemy.ban
+                ? `${URL}/media/champion/${enemy.ban.image}`
+                : require('../../img/nochampion.png')
+            }
           />
         </EnemyInfo>
       </EnemyInfoBlock>
