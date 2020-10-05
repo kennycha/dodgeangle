@@ -1,4 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
+import createRequestSaga, {
+  createRequestActionTypes,
+} from '../lib/createRequestSaga';
+import * as summonerAPI from '../lib/api/summoner';
+import { takeLatest } from 'redux-saga/effects';
 
 // action type 설정
 const CONFIRM_TEAMMATES = 'teamMates/CONFIRM_TEAMMATES';
@@ -9,7 +14,13 @@ const SWITCHING = 'teamMates/SWITCHING';
 const PICK_CHAMPION = 'teamMates/PICK_CHAMPION';
 const BAN_CHAMPION = 'teamMates/BAN_CHAMPION';
 const SET_MOST_CHAMPIONS = 'teamMates/SET_MOST_CHAMPIONS';
-const FETCH_API_DATA = 'teamMates/FETCH_API_DATA';
+// const FETCH_API_DATA = 'teamMates/FETCH_API_DATA';
+
+const [
+  GET_SUMMONERS_INFO,
+  GET_SUMMONERS_INFO_SUCCESS,
+  GET_SUMMONERS_INFO_FAILURE,
+] = createRequestActionTypes('teamMates/GET_SUMMONERS_INFO');
 
 // action creator 함수
 export const confirmTeamMates = createAction(
@@ -45,24 +56,38 @@ export const setMostChampions = createAction(
   ({ summonerId, champions }) => ({ summonerId, champions }),
 );
 
-export const fetchApiData = createAction(
-  FETCH_API_DATA,
-  ({
-    summoner,
-    streak_win,
-    streak_loss,
-    most_lane,
-    troll_index,
-    most_champion,
-  }) => ({
-    summoner,
-    streak_win,
-    streak_loss,
-    most_lane,
-    troll_index,
-    most_champion,
-  }),
+// export const fetchApiData = createAction(
+//   FETCH_API_DATA,
+//   ({
+//     summoner,
+//     streak_win,
+//     streak_lose,
+//     most_lane,
+//     troll_index,
+//     most_champion,
+//   }) => ({
+//     summoner,
+//     streak_win,
+//     streak_lose,
+//     most_lane,
+//     troll_index,
+//     most_champion,
+//   }),
+// );
+
+export const getSummonersInfo = createAction(
+  GET_SUMMONERS_INFO,
+  (summoners) => summoners,
 );
+
+// saga
+const getSummonersInfoSaga = createRequestSaga(
+  GET_SUMMONERS_INFO,
+  summonerAPI.getSummonersInfo,
+);
+export function* teamMatesSaga() {
+  yield takeLatest(GET_SUMMONERS_INFO, getSummonersInfoSaga);
+}
 
 // initial state
 const initialState = {
@@ -127,35 +152,87 @@ const teamMates = handleActions(
           : teamMate,
       ),
     }),
-    [FETCH_API_DATA]: (
+
+    [GET_SUMMONERS_INFO_SUCCESS]: (
       state,
       {
-        payload: {
-          summoner,
-          streak_win,
-          streak_loss,
-          most_lane,
-          troll_index,
-          most_champion,
-        },
+        payload: [summoner1, summoner2, summoner3, summoner4, summoner5],
+        meta: response,
       },
     ) => ({
       ...state,
       teamMates: state.teamMates.map((teamMate) =>
-        teamMate.name === summoner
+        teamMate.name === summoner1.summoner
           ? {
               ...teamMate,
-              pos: most_lane,
               badges: [
-                streak_win - streak_loss >= 0
-                  ? streak_win - streak_loss + '연승중'
-                  : -streak_win + streak_loss + '연패중',
-                '트롤지수 ' + troll_index,
+                summoner1.streak_win - summoner1.streak_lose >= 0
+                  ? summoner1.streak_win - summoner1.streak_lose + '연승중'
+                  : -summoner1.streak_win + summoner1.streak_lose + '연패중',
+                '트롤지수 ' + summoner1.troll_index,
               ],
-              mostChampions: most_champion,
+              mostChampions: summoner1.most_champion.slice(0, 3),
+              trollIndex: summoner1.troll_index,
+              trollList: summoner1.troll_list,
+            }
+          : teamMate.name === summoner2.summoner
+          ? {
+              ...teamMate,
+              badges: [
+                summoner2.streak_win - summoner2.streak_lose >= 0
+                  ? summoner2.streak_win - summoner2.streak_lose + '연승중'
+                  : -summoner2.streak_win + summoner2.streak_lose + '연패중',
+                '트롤지수 ' + summoner2.troll_index,
+              ],
+              mostChampions: summoner2.most_champion.slice(0, 3),
+              trollIndex: summoner2.troll_index,
+              trollList: summoner2.troll_list,
+            }
+          : teamMate.name === summoner3.summoner
+          ? {
+              ...teamMate,
+              badges: [
+                summoner3.streak_win - summoner3.streak_lose >= 0
+                  ? summoner3.streak_win - summoner3.streak_lose + '연승중'
+                  : -summoner3.streak_win + summoner3.streak_lose + '연패중',
+                '트롤지수 ' + summoner3.troll_index,
+              ],
+              mostChampions: summoner3.most_champion.slice(0, 3),
+              trollIndex: summoner3.troll_index,
+              trollList: summoner3.troll_list,
+            }
+          : teamMate.name === summoner4.summoner
+          ? {
+              ...teamMate,
+              badges: [
+                summoner4.streak_win - summoner4.streak_lose >= 0
+                  ? summoner4.streak_win - summoner4.streak_lose + '연승중'
+                  : -summoner4.streak_win + summoner4.streak_lose + '연패중',
+                '트롤지수 ' + summoner4.troll_index,
+              ],
+              mostChampions: summoner4.most_champion.slice(0, 3),
+              trollIndex: summoner4.troll_index,
+              trollList: summoner4.troll_list,
+            }
+          : teamMate.name === summoner5.summoner
+          ? {
+              ...teamMate,
+              badges: [
+                summoner5.streak_win - summoner5.streak_lose >= 0
+                  ? summoner5.streak_win - summoner5.streak_lose + '연승중'
+                  : -summoner5.streak_win + summoner5.streak_lose + '연패중',
+                '트롤지수 ' + summoner5.troll_index,
+              ],
+              mostChampions: summoner5.most_champion.slice(0, 3),
+              trollIndex: summoner5.troll_index,
+              trollList: summoner5.troll_list,
             }
           : teamMate,
       ),
+    }),
+    [GET_SUMMONERS_INFO_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
     }),
   },
   initialState,
