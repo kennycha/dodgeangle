@@ -1,6 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import dotenv from 'dotenv';
 import mainTheme from '../../lib/styles/mainTheme';
+
+dotenv.config();
+const URL = process.env.REACT_APP_API_URL;
 
 const AllyListBlock = styled.div`
   height: 100%;
@@ -132,19 +136,21 @@ const AllyListItem = ({ teamMate }) => {
         <AllyInfo>
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
           <ChampionImg
-            src={require(`../../img/${
+            src={
               teamMate.ban
-                ? 'champions/' + teamMate.ban.image
-                : 'nochampion.png'
-            }`)}
+                ? `${URL}/media/champion/${teamMate.ban.image}`
+                : require('../../img/nochampion.png')
+            }
+            alt="ban"
           />
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
-            src={require(`../../img/${
+            src={
               teamMate.pick
-                ? 'champions/' + teamMate.pick.image
-                : 'positions/' + teamMate.pos + '.png'
-            }`)}
+                ? `${URL}/media/champion/${teamMate.pick.image}`
+                : require(`../../img/positions/${teamMate.pos}.png`)
+            }
+            alt="pick"
           />
           <SummonerBlock>
             <SummonerName>{teamMate?.name}</SummonerName>
@@ -175,7 +181,7 @@ const AllyListItem = ({ teamMate }) => {
             teamMate?.mostChampions?.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
-                  src={require(`../../img/champions/${champion.image}`)}
+                  src={`${URL}/media/champion/${champion.image}`}
                 />
                 <ChampionWinRate>{champion.winRate}</ChampionWinRate>
               </MostChampion>

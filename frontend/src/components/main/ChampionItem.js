@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import dotenv from 'dotenv';
 import UserSelectContainer from '../../containers/main/UserSelectContainer';
+
+dotenv.config();
+const URL = process.env.REACT_APP_API_URL;
 
 const ChampionItemBlock = styled.div`
   height: ${100 / 16}rem;
@@ -27,17 +31,11 @@ const ChampionItem = ({ champion, isSelected, onClick }) => {
   return isSelected ? (
     <SelectedChampionItemBlock id="con0" onClick={onClick}>
       <UserSelectContainer champion={champion} />
-      <img
-        src={require(`../../img/champions/${champion.image}`)}
-        alt="champion1"
-      />
+      <img src={`${URL}/media/champion/${champion.image}`} alt="champion1" />
     </SelectedChampionItemBlock>
   ) : (
     <ChampionItemBlock onClick={onClick}>
-      <img
-        src={require(`../../img/champions/${champion.image}`)}
-        alt="champion2"
-      />
+      <img src={`${URL}/media/champion/${champion.image}`} alt="champion2" />
     </ChampionItemBlock>
   );
 };
