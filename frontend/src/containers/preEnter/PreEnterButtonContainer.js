@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PreEnterButton from '../../components/preEnter/PreEnterButton';
-import {
-  changeMe,
-  confirmTeamMates,
-  getSummonersInfo,
-} from '../../modules/teamMates';
+import { changeMe, getSummonersInfo } from '../../modules/teamMates';
 
 const PreEnterButtonContainer = () => {
   const dispatch = useDispatch();
