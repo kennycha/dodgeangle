@@ -33,6 +33,7 @@ const PreEnterInputContainer = () => {
         badges: null,
       }));
       dispatch(confirmTeamMates(teamMatesArray));
+      dispatch(confirmEnemies(null));
 
       // 이곳에서 API로 요청해서 => 1.most_lane => pos 2.most_champion => mostChampions 3. streak_win or streak_lost => badges : 연승중 or 연패중
       //  SAMPLE 데이터 생성
