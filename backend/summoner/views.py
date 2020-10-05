@@ -22,6 +22,7 @@ def get_user_data(request, username):
         temp['streak_lose'] = summoner_data['lose']
         temp['most_lane'] = 'top'
         temp['troll_index'] = summoner_data['trollIndex']
+        temp['troll_list'] = summoner_data['trollList']
         if not summoner_data['mostChampId']:
             temp['most_champion'] = []
         else:
