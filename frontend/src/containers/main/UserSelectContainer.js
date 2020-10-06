@@ -63,7 +63,7 @@ const UserSelectContainer = ({ champion }) => {
                     // 이때 champion => 
                     returnObject = {
                       ...champion,
-                      win_rate: targetChampion.win_rate
+                      winRate: targetChampion.win_rate
                     }
                   }
                 });
