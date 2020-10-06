@@ -316,7 +316,7 @@ def test_data(request, username):
             ]
         }
         if u != user[0]:
-            sample['recommend_champ'] = []
+            sample['recommend_champ'] = None
         data.append(sample)
     return Response(data)
     

@@ -115,7 +115,7 @@ def get_data(summoners, n=20):
         if summoner['summonerName'] == summoners[0]:
             recomm_champ = recommend_champs(most_champ)
         else:
-            recomm_champ = []
+            recomm_champ = None
         
         match_data_list.append([
             summoner['summonerName'],
