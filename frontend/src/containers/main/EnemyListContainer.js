@@ -13,6 +13,9 @@ const EnemyListContainer = () => {
   const { enemies } = useSelector(({ enemies }) => ({
     enemies: enemies.enemies,
   }));
+  const { phase } = useSelector(({ phase }) => ({
+    phase: phase.phase,
+  }));
   // 이 공간엔 AllyList의 모스트 챔피언 => EnemyList의 카운터 챔피언으로 대칭
   // useEffect(() => {
   //   // enemies 변화 => ban or pick에 의한 변화에 반응하려고 함
@@ -76,7 +79,7 @@ const EnemyListContainer = () => {
       // }
     }
   }, [enemies, dispatch]);
-  return <EnemyList enemies={enemies} />;
+  return <EnemyList enemies={enemies} phase={phase}/>;
 };
 
 export default EnemyListContainer;
