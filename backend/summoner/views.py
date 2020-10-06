@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from util.get_summoner_data import get_data
+from util.get_dodge_win_rate import get_win_rate
 from champion.models import Champion
 from champion.serializers import ChampionSerializer
 
@@ -354,3 +355,15 @@ def get_user_data(request, username):
             temp['most_champion'] = champion_data
         data.append(temp)
     return Response(data)
+
+@api_view(['GET'])
+def get_dodge_angle(request):
+    # 대충 어떤 parameter
+    troll_score = request.GET.get('troll',0)
+    ally_win_rate = get_win_rate(request.GET.get('ally',0))
+    enemy_win_rate = get_win_rate(request.GET.get('enemy',0))
+    if troll_score:
+        data = int(((sum(troll_score)/len(troll_score))*((1-ally_win_rate)*100))*0.018) # 상대 이길확률은 모르겠음
+       
+    return Response(data)
+
