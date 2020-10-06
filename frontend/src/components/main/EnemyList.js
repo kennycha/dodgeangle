@@ -123,7 +123,7 @@ const BanList = ({ enemies, phase }) => {
       {enemies &&
         enemies.map((enemy) => (
           <BanImg
-            key={enemy.name}
+            key={enemy.id}
             src={
               enemy.ban && phase !== 'ban'
                 ? `${URL}/media/champion/${enemy.ban.image}`
@@ -163,7 +163,7 @@ const EnemyListItem = ({ enemy, phase }) => {
         <CounterOrExpetedChampionsBlock>
           {counterChampions &&
             counterChampions.map((champion) => (
-              <CounterOrExpetedChampion>
+              <CounterOrExpetedChampion key={champion.id}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
