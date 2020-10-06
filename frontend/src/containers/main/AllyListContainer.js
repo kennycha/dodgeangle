@@ -15,7 +15,6 @@ const AllyListContainer = () => {
   const { phase } = useSelector(({ phase }) => ({
     phase: phase.phase,
   }));
-  console.log("에러전", "teamMates값", teamMates, "meSelected값", meSelected)
   if (!Boolean(teamMates) || !meSelected) {
     history.push('/');
   }
