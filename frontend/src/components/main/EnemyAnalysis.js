@@ -131,7 +131,8 @@ const Status = ({selected}) => {
         <RuneRowBlock status>
           {['1', '2', '3'].map((col) => (
             <RuneImg
-              src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
+              src={`${URL}/media/rune/${6}${row}${col}.png`}
+              // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
               noSelected={selected[row] !== `${col}`}
               status
             />
