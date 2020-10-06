@@ -359,10 +359,15 @@ def get_user_data(request, username):
 @api_view(['GET'])
 def get_dodge_angle(request):
     # 대충 어떤 parameter
-    troll_score = request.GET.get('troll',0)
+    
+    troll_score_str = request.GET.get('troll',0)
+    
+    
     ally_win_rate = get_win_rate(request.GET.get('ally',0))
     enemy_win_rate = get_win_rate(request.GET.get('enemy',0))
-    if troll_score:
+
+    if troll_score_str:
+        troll_score = list(map(float,troll_score_str.split(',')))
         data = int(((sum(troll_score)/len(troll_score))*((1-ally_win_rate)*100))*0.018) # 상대 이길확률은 모르겠음
        
     return Response(data)

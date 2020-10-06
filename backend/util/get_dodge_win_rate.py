@@ -1,8 +1,9 @@
 import joblib
 from sklearn.linear_model import LinearRegression
 import pandas as pd
-def get_win_rate(champ_list):
-    if champ_list:
+def get_win_rate(champ_list_str):
+    if champ_list_str:
+        champ_list = list(map(int,champ_list_str.split(',')))
         champ_KM = pd.read_pickle('util/champ_KM')
         champ_KM_dict = { val[0]:val[1] for _, val in champ_KM.iterrows()}
         
@@ -13,4 +14,3 @@ def get_win_rate(champ_list):
         nd = list(map(lambda x:x/sum(d),d))
         mlr = joblib.load('util/mlr.sav')
         return float(mlr.predict([nd])[0][0])
-        
