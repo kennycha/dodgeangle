@@ -102,14 +102,16 @@ m = csr_matrix((data, (row, col)))
 similarities = cosine_similarity(m.transpose())
 np.save('./similarities',similarities)
 
-def recommend_champs(champ_id):
+def recommend_champs(champ_ids):
     similarities = np.load('similarities.npy')
-    ss= []
-    for i in range(1,len(similarities[champ_id])):
-        if similarities[champ_id][i]:
-            ss.append((i,similarities[champ_id][i]))
+    ss_list = []
+    for champ_id in champ_ids:
+        ss= []
+        for i in range(1,len(similarities[champ_id])):
+            if similarities[champ_id][i]:
+                ss.append((i,similarities[champ_id][i]))
 
-    ss.sort(key=lambda x:x[1], reverse=True)
-    ss_list = [champ_key_dict[s[0]] for s in ss][:3]
+        ss.sort(key=lambda x:x[1], reverse=True)
+        ss_list.append([champ_key_dict[s[0]] for s in ss][0])
     return ss_list
 
