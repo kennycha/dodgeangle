@@ -123,7 +123,7 @@ const BanList = ({ enemies, phase }) => {
       {enemies &&
         enemies.map((enemy) => (
           <BanImg
-            key={enemy.name}
+            key={enemy.id}
             src={
               enemy.ban && phase !== 'ban'
                 ? `${URL}/media/champion/${enemy.ban.image}`
@@ -139,42 +139,37 @@ const BanList = ({ enemies, phase }) => {
 /*
   AllyList의 모스트 챔피언 => EnemyList의 카운터 챔피언으로 추후에 넣으면 될듯
 */
-const EnemyListLabel = () => {
+const EnemyListLabel = ({ phase }) => {
   return (
     <LabelBlock>
-      <Label white>카운터 챔피언</Label>
+      <Label white>{phase === 'ban' ? '예상 챔피언' : '카운터 챔피언'}</Label>
       <Label>적군 팀</Label>
     </LabelBlock>
   );
 };
 
 const EnemyListItem = ({ enemy, phase }) => {
+  const counterChampions =
+    phase === 'ban'
+      ? enemy.expectedChampions !== null
+        ? enemy.expectedChampions
+        : null
+      : enemy.counterChampions!== null
+      ? enemy.counterChampions
+      : null;
   return (
     <EnemyListItemBlock>
       <EnemyInfoBlock>
         <CounterOrExpetedChampionsBlock>
-          {enemy.counterChampions !== null
-            ? enemy.counterChampions.map((champion) => (
-                <CounterOrExpetedChampion
-                  key={enemy.counterChampions.indexOf(champion)}
-                >
-                  <ChampionMiniImg
-                    src={`${URL}/media/champion/${champion.image}`}
-                  />
-                  <ChampionWinRate>{champion.winRate}</ChampionWinRate>
-                </CounterOrExpetedChampion>
-              ))
-            : enemy.expectedChampions !== null &&
-              enemy.expectedChampions.map((champion) => (
-                <CounterOrExpetedChampion
-                  key={enemy.expectedChampions.indexOf(champion)}
-                >
-                  <ChampionMiniImg
-                    src={`${URL}/media/champion/${champion.image}`}
-                  />
-                  <ChampionWinRate>{champion.winRate}</ChampionWinRate>
-                </CounterOrExpetedChampion>
-              ))}
+          {counterChampions &&
+            counterChampions.map((champion) => (
+              <CounterOrExpetedChampion key={champion.id}>
+                <ChampionMiniImg
+                  src={`${URL}/media/champion/${champion.image}`}
+                />
+                <ChampionWinRate>{parseInt(champion.winRate)}</ChampionWinRate>
+              </CounterOrExpetedChampion>
+            ))}
         </CounterOrExpetedChampionsBlock>
       </EnemyInfoBlock>
       <EnemyInfoBlock>
@@ -214,7 +209,7 @@ const EnemyList = ({ enemies, phase }) => {
   return (
     <EnemyListBlock>
       <BanList enemies={enemies} phase={phase} />
-      <EnemyListLabel />
+      <EnemyListLabel phase={phase} />
       {enemies?.map((enemy) => (
         <EnemyListItem key={enemy.id} enemy={enemy} phase={phase} />
       ))}

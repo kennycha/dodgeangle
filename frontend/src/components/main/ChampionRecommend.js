@@ -8,14 +8,21 @@ const ChampionRecommendBlock = styled.div`
   border: ${2 / 16}rem solid ${mainTheme.mainBorder};
 `;
 
-const ChampionRecommend = ({ me, allchampion }) => {
+const ChampionRecommend = ({ me, allchampion, dodgeAngle }) => {
   return (
     <ChampionRecommendBlock>
       {me.recommendChamp &&
         allchampion &&
         me.recommendChamp.map((id) => (
-          <div>{allchampion.find((champion) => champion.id === id).name}</div>
+          <div key={id}>
+            {allchampion.find((champion) => champion.id === id).name}
+          </div>
         ))}
+      {dodgeAngle && (
+        <div>
+          {dodgeAngle.allyRate}, {dodgeAngle.enemyRate}, {dodgeAngle.dodgeAngle}
+        </div>
+      )}
     </ChampionRecommendBlock>
   );
 };
