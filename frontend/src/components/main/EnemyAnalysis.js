@@ -153,14 +153,19 @@ const Status = ({ selected }) => {
   );
 };
 
-const EnemyAnalysis = ({ mainSelected, subSelected, statusSelected }) => {
+const EnemyAnalysis = ({ main, sub, status }) => {
+  const validation = main && sub && status
   return (
     <EnemyAnalysisBlock>
-      <RuneTitle />
-      <FlexBlock>
-        <Rune main selected={mainSelected} />
-        <Rune selected={subSelected} statusSelected={statusSelected} />
-      </FlexBlock>
+      {validation &&
+        <>
+          <RuneTitle />
+          <FlexBlock>
+            <Rune main selected={main} />
+            <Rune selected={sub} statusSelected={status} />
+          </FlexBlock>
+        </>
+      }
     </EnemyAnalysisBlock>
   );
 };
