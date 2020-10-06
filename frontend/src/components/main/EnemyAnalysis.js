@@ -157,9 +157,9 @@ const EnemyAnalysis = ({ main, sub, status }) => {
   const validation = main && sub && status
   return (
     <EnemyAnalysisBlock>
+      <RuneTitle />
       {validation &&
         <>
-          <RuneTitle />
           <FlexBlock>
             <Rune main selected={main} />
             <Rune selected={sub} statusSelected={status} />
