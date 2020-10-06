@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UserSelect from '../../components/main/UserSelect';
-import allchampion from '../../modules/allchampion';
 import { enemyBanChampion, enemyPickChampion, setCounterChampions, setExpectedChampions } from '../../modules/enemies';
 import { banChampion, pickChampion } from '../../modules/teamMates';
 
