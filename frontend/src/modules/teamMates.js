@@ -95,7 +95,9 @@ const initialState = {
   teamMates: localStorage.getItem('teamMates')
     ? JSON.parse(localStorage.getItem('teamMates'))
     : null,
-  meSelected: false,
+  meSelected: localStorage.getItem('meSelected')
+    ? localStorage.getItem('meSelected')
+    : false,
   error: null,
 };
 

@@ -15,6 +15,7 @@ const AllyListContainer = () => {
   const { phase } = useSelector(({ phase }) => ({
     phase: phase.phase,
   }));
+  console.log("에러전", "teamMates값", teamMates, "meSelected값", meSelected)
   if (!Boolean(teamMates) || !meSelected) {
     history.push('/');
   }
@@ -53,8 +54,9 @@ const AllyListContainer = () => {
           })),
         ),
       );
+      localStorage.setItem('meSelected', meSelected)
     }
-  }, [teamMates, dispatch]);
+  }, [teamMates, meSelected, dispatch]);
 
   return <AllyList teamMates={teamMates} phase={phase}/>;
 };
