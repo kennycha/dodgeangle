@@ -86,34 +86,34 @@ const RuneTitle = () => {
 };
 
 const Rune = ({main, selected, statusSelected}) => {
-  const rows = main ? ['0', '1', '2', '3', '4'] : ['0', '2', '3', '4']
+  const rows = main ? [0, 1, 2, 3, 4] : [0, 2, 3, 4]
   const four = ["11", "21", "24"]
   return (
     <RuneBlock border>
       {rows.map((row) => (
         <RuneRowBlock>
-          {row === '0'
-            ? ['1','2','3','4','5'].map(col=> (
+          {row === 0
+            ? [1, 2, 3, 4, 5].map(col=> (
                 <RuneImg
                   src={`${URL}/media/rune/${col}${0}${0}.png`}
                   // src={require(`../../img/rune/${col}${0}${0}.png`)}
-                  noSelected={selected[0] !== `${col}`}
+                  noSelected={parseInt(selected[0]) !== col}
                   five
                 />
               ))
-            : selected[0]+row !== four[0] && selected[0]+row !== four[1] && selected[0]+row !== four[2] 
-            ? ['1', '2', '3'].map((col) => (
+            : selected[0]+row.toString() !== four[0] && selected[0]+row.toString() !== four[1] && selected[0]+row.toString() !== four[2] 
+            ? [1, 2, 3].map((col) => (
                 <RuneImg
                   src={`${URL}/media/rune/${selected[0]}${row}${col}.png`}
                   // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
-                  noSelected={selected[row] !== `${col}`}
+                  noSelected={parseInt(selected[row]) !== col}
                 />
               ))
-            : ['1', '2', '3', '4'].map((col) => (
+            : [1, 2, 3, 4].map((col) => (
                 <RuneImg
                   src={`${URL}/media/rune/${selected[0]}${row}${col}.png`}
                   // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
-                  noSelected={selected[row] !== `${col}`}
+                  noSelected={parseInt(selected[row]) !== col}
                   four
                 />
               ))}
@@ -127,13 +127,13 @@ const Rune = ({main, selected, statusSelected}) => {
 const Status = ({selected}) => {
   return (
     <RuneBlock status>
-      {['1', '2', '3'].map((row) => (
+      {[1, 2, 3].map((row) => (
         <RuneRowBlock status>
-          {['1', '2', '3'].map((col) => (
+          {[1, 2, 3].map((col) => (
             <RuneImg
               src={`${URL}/media/rune/${6}${row}${col}.png`}
               // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
-              noSelected={selected[row-1] !== `${col}`}
+              noSelected={parseInt(selected[row-1]) !== col}
               status
             />
           ))}

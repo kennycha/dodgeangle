@@ -5,7 +5,7 @@ const EnemyAnalysisContainer = () => {
   // 샘플
   const mainSelected = "12312"
   const subSelected = "2234"
-  const statusSelected = "6123"
+  const statusSelected = "123"
   return (
     <EnemyAnalysis
      mainSelected={mainSelected}
