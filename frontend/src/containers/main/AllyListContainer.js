@@ -12,6 +12,9 @@ const AllyListContainer = () => {
     teamMates: teamMates.teamMates,
     meSelected: teamMates.meSelected,
   }));
+  const { phase } = useSelector(({ phase }) => ({
+    phase: phase.phase,
+  }));
   if (!Boolean(teamMates) || !meSelected) {
     history.push('/');
   }
@@ -53,7 +56,7 @@ const AllyListContainer = () => {
     }
   }, [teamMates, dispatch]);
 
-  return <AllyList teamMates={teamMates} />;
+  return <AllyList teamMates={teamMates} phase={phase}/>;
 };
 
 export default AllyListContainer;
