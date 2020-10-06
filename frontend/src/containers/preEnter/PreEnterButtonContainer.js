@@ -41,8 +41,9 @@ const PreEnterButtonContainer = () => {
           })),
         ),
       );
+      localStorage.setItem('meSelected', meSelected)
     }
-  }, [teamMates, dispatch]);
+  }, [teamMates, meSelected, dispatch]);
   return (
     <PreEnterButton
       activated={Boolean(teamMates)}

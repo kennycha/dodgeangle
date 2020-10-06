@@ -53,8 +53,9 @@ const AllyListContainer = () => {
           })),
         ),
       );
+      localStorage.setItem('meSelected', meSelected)
     }
-  }, [teamMates, dispatch]);
+  }, [teamMates, meSelected, dispatch]);
 
   return <AllyList teamMates={teamMates} phase={phase}/>;
 };
