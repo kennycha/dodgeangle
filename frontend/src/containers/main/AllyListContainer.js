@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import AllyList from '../../components/main/AllyList';
 import { useSelector, useDispatch } from 'react-redux';
-import { confirmTeamMates } from '../../modules/teamMates';
 // import { setMostChampions } from '../../modules/teamMates';
 import { useHistory } from 'react-router-dom';
 
