@@ -14,8 +14,7 @@ const EnemyListBlock = styled.div`
 
 const LabelBlock = styled.div`
   height: 2rem;
-  padding: 0 1.5rem 0 1rem;
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem;
   background: ${mainTheme.mainBackground};
   justify-content: space-between;
   align-items: center;
@@ -96,6 +95,47 @@ const ChampionWinRate = styled.div`
   text-align: center;
 `;
 
+const BanListBlock = styled.div`
+  margin: 1rem;
+  width: calc(100%-2rem);
+  background: ${mainTheme.mainBackground};
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const BanImg = styled.img`
+  background: ${mainTheme.mainBackground};
+  display: block;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-left: 1rem;
+  padding: 0.1rem;
+  ${(props) =>
+    props.ban &&
+    css`
+      padding: 0.25rem;
+    `}
+`;
+
+const BanList = ({ enemies, phase }) => {
+  return (
+    <BanListBlock>
+      {enemies &&
+        enemies.map((enemy) => (
+          <BanImg
+            key={enemy.name}
+            src={
+              enemy.ban && phase !== 'ban'
+                ? `${URL}/media/champion/${enemy.ban.image}`
+                : require('../../img/noban.png')
+            }
+            ban={!enemy.ban || phase === 'ban'}
+          />
+        ))}
+    </BanListBlock>
+  );
+};
+
 /*
   AllyList의 모스트 챔피언 => EnemyList의 카운터 챔피언으로 추후에 넣으면 될듯
 */
@@ -108,7 +148,7 @@ const EnemyListLabel = () => {
   );
 };
 
-const EnemyListItem = ({ enemy }) => {
+const EnemyListItem = ({ enemy, phase }) => {
   return (
     <EnemyListItemBlock>
       <EnemyInfoBlock>
@@ -152,26 +192,31 @@ const EnemyListItem = ({ enemy }) => {
             }
             alt="pick"
           />
+
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
-          <ChampionImg
-            src={
-              enemy.ban
-                ? `${URL}/media/champion/${enemy.ban.image}`
-                : require('../../img/nochampion.png')
-            }
-          />
+          {phase === 'ban' && (
+            <ChampionImg
+              src={
+                enemy.ban
+                  ? `${URL}/media/champion/${enemy.ban.image}`
+                  : require('../../img/nochampion.png')
+              }
+              alt="ban"
+            />
+          )}
         </EnemyInfo>
       </EnemyInfoBlock>
     </EnemyListItemBlock>
   );
 };
 
-const EnemyList = ({ enemies }) => {
+const EnemyList = ({ enemies, phase }) => {
   return (
     <EnemyListBlock>
+      <BanList enemies={enemies} phase={phase} />
       <EnemyListLabel />
       {enemies?.map((enemy) => (
-        <EnemyListItem key={enemy.id} enemy={enemy} />
+        <EnemyListItem key={enemy.id} enemy={enemy} phase={phase} />
       ))}
     </EnemyListBlock>
   );

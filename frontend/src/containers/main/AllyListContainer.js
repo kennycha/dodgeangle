@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import AllyList from '../../components/main/AllyList';
 import { useSelector, useDispatch } from 'react-redux';
-import { confirmTeamMates } from '../../modules/teamMates';
 // import { setMostChampions } from '../../modules/teamMates';
 import { useHistory } from 'react-router-dom';
 
@@ -12,6 +11,9 @@ const AllyListContainer = () => {
   const { teamMates, meSelected } = useSelector(({ teamMates }) => ({
     teamMates: teamMates.teamMates,
     meSelected: teamMates.meSelected,
+  }));
+  const { phase } = useSelector(({ phase }) => ({
+    phase: phase.phase,
   }));
   if (!Boolean(teamMates) || !meSelected) {
     history.push('/');
@@ -54,7 +56,7 @@ const AllyListContainer = () => {
     }
   }, [teamMates, dispatch]);
 
-  return <AllyList teamMates={teamMates} />;
+  return <AllyList teamMates={teamMates} phase={phase}/>;
 };
 
 export default AllyListContainer;
