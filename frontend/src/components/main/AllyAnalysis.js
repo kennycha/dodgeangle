@@ -5,12 +5,13 @@ import LineChart from '../common/LineChart';
 
 const AllyAnalysisBlock = styled.div`
   height: 100%;
-  background: ${mainTheme.mainSummoner};
+  background: ${mainTheme.mainBackground};
   border: ${2 / 16}rem solid ${mainTheme.mainBorder};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  padding: 0 0.5rem;
   div {
     font-size: 1.2rem;
     font-weight: bolder;

@@ -9,13 +9,15 @@ const URL = process.env.REACT_APP_API_URL;
 const EnemyAnalysisBlock = styled.div`
   height: 100%;
   background: ${mainTheme.mainBackground};
-  border: ${2/16}rem solid ${mainTheme.mainBorder};
+  border: ${2 / 16}rem solid ${mainTheme.mainBorder};
 `;
 
 const RuneTitleBlock = styled.div`
-  color: ${mainTheme.mainAlly};
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
+  color: ${mainTheme.mainFontColor};
+  height: 1rem;
+  margin-top: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,17 +25,21 @@ const RuneTitleBlock = styled.div`
 
 const FlexBlock = styled.div`
   margin: 1rem;
+  height: calc(100% - 3.5rem);
   background: ${mainTheme.mainAnalysis};
-  display:flex
-`
+  border-radius: 25px;
+  overflow: hidden;
+  display: flex;
+`;
 const RuneBlock = styled.div`
   background: ${mainTheme.mainAnalysis};
+  margin-top: 2rem;
+  padding: 0.3rem;
   ${(props) =>
     props.status &&
     css`
-      margin: 0 1rem 1rem 1rem;
+      /* margin: 0 1rem 1rem 1rem; */
     `}
-
 `;
 
 const RuneRowBlock = styled.div`
@@ -41,19 +47,19 @@ const RuneRowBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const RuneImg = styled.img`
   background: ${mainTheme.mainBackground};
-  height: 4rem;
-  width: 4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin: 0.5rem 0.75rem;
   border-radius: 100%;
   display: block;
   ${(props) =>
     props.noSelected &&
     css`
-      opacity: 0.1;
+      opacity: 0.15;
     `}
   ${(props) =>
     props.four &&
@@ -63,37 +69,35 @@ const RuneImg = styled.img`
   ${(props) =>
     props.five &&
     css`
-      height: 2.5rem;
-      width: 2.5rem;
-      margin: 0.5rem 0.4rem;
+      height: 2.2rem;
+      width: 2.2rem;
+      margin: 0.5rem 0.2rem;
     `}
   ${(props) =>
     props.status &&
     css`
-      height: 2rem;
-      width: 2rem;
+      height: 3rem;
+      width: 3rem;
       margin: 0.25rem 0.25rem;
     `}
-`
+`;
 // 3 : 마진 4.5 + 크기 12 16.5
 // 4 : 마진 0.4 + 크기 16 16.4
 // 5 : 마진 4 + 크기 12.5
 
 const RuneTitle = () => {
-  return (
-    <RuneTitleBlock >추천 룬</RuneTitleBlock>
-  );
+  return <RuneTitleBlock>추천 룬</RuneTitleBlock>;
 };
 
-const Rune = ({main, selected, statusSelected}) => {
-  const rows = main ? [0, 1, 2, 3, 4] : [0, 2, 3, 4]
-  const four = ["11", "21", "24"]
+const Rune = ({ main, selected, statusSelected }) => {
+  const rows = main ? [0, 1, 2, 3, 4] : [0, 2, 3, 4];
+  const four = ['11', '21', '24'];
   return (
     <RuneBlock border>
       {rows.map((row) => (
         <RuneRowBlock>
           {row === 0
-            ? [1, 2, 3, 4, 5].map(col=> (
+            ? [1, 2, 3, 4, 5].map((col) => (
                 <RuneImg
                   src={`${URL}/media/rune/${col}${0}${0}.png`}
                   // src={require(`../../img/rune/${col}${0}${0}.png`)}
@@ -101,7 +105,9 @@ const Rune = ({main, selected, statusSelected}) => {
                   five
                 />
               ))
-            : selected[0]+row.toString() !== four[0] && selected[0]+row.toString() !== four[1] && selected[0]+row.toString() !== four[2] 
+            : selected[0] + row.toString() !== four[0] &&
+              selected[0] + row.toString() !== four[1] &&
+              selected[0] + row.toString() !== four[2]
             ? [1, 2, 3].map((col) => (
                 <RuneImg
                   src={`${URL}/media/rune/${selected[0]}${row}${col}.png`}
@@ -121,10 +127,10 @@ const Rune = ({main, selected, statusSelected}) => {
       ))}
       {!main && <Status selected={statusSelected} />}
     </RuneBlock>
-  )
-}
+  );
+};
 
-const Status = ({selected}) => {
+const Status = ({ selected }) => {
   return (
     <RuneBlock status>
       {[1, 2, 3].map((row) => (
@@ -133,7 +139,7 @@ const Status = ({selected}) => {
             <RuneImg
               src={`${URL}/media/rune/${6}${row}${col}.png`}
               // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
-              noSelected={parseInt(selected[row-1]) !== col}
+              noSelected={parseInt(selected[row - 1]) !== col}
               status
             />
           ))}
@@ -141,18 +147,18 @@ const Status = ({selected}) => {
       ))}
     </RuneBlock>
   );
-}
+};
 
-const EnemyAnalysis = ({mainSelected, subSelected, statusSelected}) => {
+const EnemyAnalysis = ({ mainSelected, subSelected, statusSelected }) => {
   return (
     <EnemyAnalysisBlock>
       <RuneTitle />
       <FlexBlock>
         <Rune main selected={mainSelected} />
-        <Rune selected={subSelected} statusSelected={statusSelected}/>
+        <Rune selected={subSelected} statusSelected={statusSelected} />
       </FlexBlock>
     </EnemyAnalysisBlock>
-  )
+  );
 };
 
 export default EnemyAnalysis;
