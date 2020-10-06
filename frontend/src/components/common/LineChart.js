@@ -13,6 +13,8 @@ const STYLE = {
   color: `${mainTheme.mainFontColor}`,
   background: `${mainTheme.mainLogoColor}`,
   borderRadius: `15px`,
+  marginLeft: '15px',
+  marginRight: '15px',
 };
 
 const AXIS = {

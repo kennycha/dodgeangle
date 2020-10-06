@@ -14,22 +14,22 @@ const EnemyAnalysisBlock = styled.div`
 
 const RuneTitleBlock = styled.div`
   color: ${mainTheme.mainFontColor};
-  height: 1rem;
+  width: 100%;
   margin-top: 0.8rem;
+  margin-bottom: 1.8rem;
   font-size: 1.2rem;
   font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 `;
 
 const FlexBlock = styled.div`
   margin: 1rem;
-  height: calc(100% - 3.5rem);
   background: ${mainTheme.mainAnalysis};
   border-radius: 25px;
   overflow: hidden;
   display: flex;
+  /* align-items: center; */
+  justify-content: center;
 `;
 const RuneBlock = styled.div`
   background: ${mainTheme.mainAnalysis};

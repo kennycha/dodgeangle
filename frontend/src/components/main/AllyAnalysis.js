@@ -11,7 +11,7 @@ const AllyAnalysisBlock = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 0.2rem;
   div {
     font-size: 1.2rem;
     font-weight: bolder;
