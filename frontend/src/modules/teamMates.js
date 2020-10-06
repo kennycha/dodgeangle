@@ -162,9 +162,8 @@ const teamMates = handleActions(
         payload: [summoner1, summoner2, summoner3, summoner4, summoner5],
         meta: response,
       },
-    ) => ({
-      ...state,
-      teamMates: state.teamMates.map((teamMate) =>
+    ) => {
+      let newTeamMates = state.teamMates.map((teamMate) =>
         teamMate.name === summoner1.summoner
           ? {
               ...teamMate,
@@ -231,8 +230,28 @@ const teamMates = handleActions(
               trollList: summoner5.troll_list,
             }
           : teamMate,
-      ),
-    }),
+      );
+      let me = state.teamMates.find((t) => t.me);
+      const meIndex = state.teamMates.indexOf(me);
+      me = {
+        ...me,
+        badges: [
+          summoner1.streak_win - summoner1.streak_lose >= 0
+            ? summoner1.streak_win - summoner1.streak_lose + '연승중'
+            : -summoner1.streak_win + summoner1.streak_lose + '연패중',
+          '트롤지수 ' + summoner1.troll_index,
+        ],
+        mostChampions: summoner1.most_champion.slice(0, 3),
+        trollIndex: summoner1.troll_index,
+        trollList: summoner1.troll_list,
+        recommendChamp: summoner1.recommend_champ.slice(0, 3),
+      };
+      newTeamMates[meIndex] = me;
+      return {
+        ...state,
+        teamMates: newTeamMates,
+      };
+    },
     [GET_SUMMONERS_INFO_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
