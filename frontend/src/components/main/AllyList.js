@@ -120,6 +120,45 @@ const ChampionWinRate = styled.div`
   text-align: center;
 `;
 
+const BanListBlock = styled.div`
+  margin: 1rem 0 0 1rem;
+  background: ${mainTheme.mainBackground};
+  display: flex;
+`
+
+const BanImg = styled.img`
+  background: ${mainTheme.mainSummoner};
+  display: block;
+  height: 3rem;
+  width: 3rem;
+  margin-right: 1rem;
+  padding: 0.1rem;
+  ${props =>
+    props.ban &&
+    css`
+      padding: 0.25rem;
+    `
+  }
+`;
+
+const BanList = ({ teamMates, phase }) => {
+  return (
+    <BanListBlock>
+      {teamMates && teamMates.map(teamMate => (
+          <BanImg
+            key={teamMate.name}
+            src={
+              teamMate.ban && phase === "pick"
+                ? `${URL}/media/champion/${teamMate.ban.image}`
+                : require('../../img/noban.png')
+              }
+            ban={!teamMate.ban || phase === "ban"}
+          />
+      ))}
+    </BanListBlock>
+  )
+}
+
 const AllyListLabel = () => {
   return (
     <LabelBlock>
@@ -129,20 +168,23 @@ const AllyListLabel = () => {
   );
 };
 
-const AllyListItem = ({ teamMate }) => {
+
+const AllyListItem = ({ teamMate, phase }) => {
   return (
     <AllyListItemBlock>
       <AllyInfoBlock>
         <AllyInfo>
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
-          <ChampionImg
-            src={
-              teamMate.ban
-                ? `${URL}/media/champion/${teamMate.ban.image}`
-                : require('../../img/nochampion.png')
-            }
-            alt="ban"
-          />
+          {phase === "ban" &&
+            <ChampionImg
+              src={
+                teamMate.ban
+                  ? `${URL}/media/champion/${teamMate.ban.image}`
+                  : require('../../img/nochampion.png')
+              }
+              alt="ban"
+            />
+          }
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
             src={
@@ -192,12 +234,13 @@ const AllyListItem = ({ teamMate }) => {
   );
 };
 
-const AllyList = ({ teamMates }) => {
+const AllyList = ({ teamMates, phase }) => {
   return (
     <AllyListBlock>
+      <BanList teamMates={teamMates} phase={phase} />
       <AllyListLabel />
       {teamMates?.map((teamMate) => (
-        <AllyListItem key={teamMate.id} teamMate={teamMate} />
+        <AllyListItem key={teamMate.id} teamMate={teamMate} phase={phase} />
       ))}
     </AllyListBlock>
   );
