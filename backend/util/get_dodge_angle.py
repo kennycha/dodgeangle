@@ -13,3 +13,4 @@ def get_win_rate(champ_list):
         nd = list(map(lambda x:x/sum(d),d))
         mlr = joblib.load('util/mlr.sav')
         return float(mlr.predict([nd])[0][0])
+        
