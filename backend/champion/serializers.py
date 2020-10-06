@@ -1,21 +1,22 @@
 from rest_framework import serializers
-from .models import Champion, Rune
+from .models import Champion
 
 
 class ChampionSerializer(serializers.ModelSerializer):
-    counter = serializers.ListField(child=serializers.CharField())
-    pos = serializers.ListField(child=serializers.CharField())
+    rune = serializers.SerializerMethodField()
+    counter = serializers.SerializerMethodField()
+    pos = serializers.SerializerMethodField()
 
 
     class Meta:
         model = Champion
-        fields = ('id', 'name', 'image', 'counter', 'pos',)
+        fields = ('id', 'name', 'image', 'rune', 'counter', 'pos',)
 
+    def get_rune(self, obj):
+        return obj.rune
 
-class RuneSerializer(serializers.ModelSerializer):
+    def get_counter(self, obj):
+        return obj.counter
 
-    class Meta:
-        model = Rune
-        fields = ('primary', 'primary1', 'primary2', 'primary3', 'primary4', 'sub', 'sub1', 'sub2', 'stat1', 'stat2', 'stat3',)
-
-    
+    def get_pos(self, obj):
+        return obj.pos

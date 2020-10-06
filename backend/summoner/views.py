@@ -184,6 +184,7 @@ def get_user_data(request, username):
         temp['summoner'] = summoner_data['summonerName']
         temp['streak_win'] = summoner_data['win']
         temp['streak_lose'] = summoner_data['lose']
+        temp['recommend_champ'] = summoner_data['recommendChampId']
         temp['most_lane'] = 'top'
         temp['troll_index'] = summoner_data['trollIndex']
         temp['troll_list'] = summoner_data['trollList']

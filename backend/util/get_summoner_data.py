@@ -4,11 +4,8 @@ from decouple import config
 from datetime import datetime
 import pandas as pd
 
-from util.connDB import db_client
 from util.get_troll_score import get_troll_score, troll_preprocess
-
-from champion.models import Champion
-from champion.serializers import ChampionSerializer
+from util.get_recommend_champ import recommend_champs
 
 LOL_API_KEY = config('LOL_API_KEY') # 같은 디렉토리에 .env 파일 생성 후 api 키 복붙
 LOL_API_KEY2 = config('LOL_API_KEY2')
@@ -22,12 +19,6 @@ base_url = 'https://kr.api.riotgames.com'
 
 error_status = [400, 401, 403, 429, 500, 502, 503, 504] # 404는 제외
 DATA_DIR = 'data'
-
-def get_champion_data():
-    champion = Champion.objects.all()
-    serializer = ChampionSerializer(champion, many=True)
-    return serializer.data
-
 
 def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST)))):
     cnt=0 # 100번 이상 실패시 정지
@@ -45,7 +36,6 @@ def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST))))
 # error code 403
 # - matchs "key error" : 데이터 없음 return
 def get_data(summoners, n=20):
-    champ_key_dict = get_champion_data()
     account_ids = []
     for summoner in summoners:
         url = f'{base_url}/lol/summoner/v4/summoners/by-name/{summoner}'
@@ -80,8 +70,6 @@ def get_data(summoners, n=20):
             troll_each = get_troll_score(champ_id, kda, dpm, gpm)
             troll_list.append(troll_each)
         troll_index = round(sum(troll_list) / len(troll_list), 2)   # 평균
-        # print(troll_list)
-        # print(troll_index)
 
         if count_score[0]:
             win, lose = count_score.index(False), 0
@@ -100,6 +88,7 @@ def get_data(summoners, n=20):
                             'summonerName',
                             'win',
                             'lose',
+                            'recommendChampId',
                             'mostChampId',
                             'mostChampCount',
                             'winRate',
@@ -121,10 +110,18 @@ def get_data(summoners, n=20):
             most_champ_count = list(match_list_frame['champion'].value_counts())
             win_rate = [round(len(match_list_frame[(match_list_frame['champion']==mc) & (match_list_frame['win'] == True)]) /len(match_list_frame[match_list_frame['champion']==mc])*100,2) for mc in most_champ]
             most_lane = []
+
+        # 추천 챔피언
+        if summoner['summonerName'] == summoners[0]:
+            recomm_champ = recommend_champs(most_champ)
+        else:
+            recomm_champ = []
+        
         match_data_list.append([
             summoner['summonerName'],
             win,
             lose,
+            recomm_champ,
             most_champ,
             most_champ_count,
             win_rate,
@@ -138,9 +135,8 @@ def get_data(summoners, n=20):
 
 
 def main():
-    # get_data(['MadRice', 'planbe'])
-    champ_key_dict = get_champion_data()
-    print(champ_key_dict)
+    get_data(['MadRice', 'planbe'])
+
 
 if __name__ == "__main__":
     main()
