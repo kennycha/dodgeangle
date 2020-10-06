@@ -16,7 +16,7 @@ def test_data(request, username):
     data = []
     for u in user:
         sample = {
-            "summoner": "planbe",
+            "summoner": u,
             "streak_win": 1,
             "streak_lose": 0,
             "recommend_champ": [
