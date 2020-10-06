@@ -133,7 +133,7 @@ const Status = ({selected}) => {
             <RuneImg
               src={`${URL}/media/rune/${6}${row}${col}.png`}
               // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
-              noSelected={selected[row] !== `${col}`}
+              noSelected={selected[row-1] !== `${col}`}
               status
             />
           ))}
