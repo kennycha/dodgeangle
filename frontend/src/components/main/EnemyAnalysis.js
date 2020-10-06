@@ -95,10 +95,11 @@ const Rune = ({ main, selected, statusSelected }) => {
   return (
     <RuneBlock border>
       {rows.map((row) => (
-        <RuneRowBlock>
+        <RuneRowBlock key={row}>
           {row === 0
             ? [1, 2, 3, 4, 5].map((col) => (
                 <RuneImg
+                  key={row*10+col}
                   src={`${URL}/media/rune/${col}${0}${0}.png`}
                   // src={require(`../../img/rune/${col}${0}${0}.png`)}
                   noSelected={parseInt(selected[0]) !== col}
@@ -110,6 +111,7 @@ const Rune = ({ main, selected, statusSelected }) => {
               selected[0] + row.toString() !== four[2]
             ? [1, 2, 3].map((col) => (
                 <RuneImg
+                  key={row*10+col}
                   src={`${URL}/media/rune/${selected[0]}${row}${col}.png`}
                   // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
                   noSelected={parseInt(selected[row]) !== col}
@@ -117,6 +119,7 @@ const Rune = ({ main, selected, statusSelected }) => {
               ))
             : [1, 2, 3, 4].map((col) => (
                 <RuneImg
+                  key={row*10+col}
                   src={`${URL}/media/rune/${selected[0]}${row}${col}.png`}
                   // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
                   noSelected={parseInt(selected[row]) !== col}
@@ -134,9 +137,10 @@ const Status = ({ selected }) => {
   return (
     <RuneBlock status>
       {[1, 2, 3].map((row) => (
-        <RuneRowBlock status>
+        <RuneRowBlock status key={row}>
           {[1, 2, 3].map((col) => (
             <RuneImg
+              key={row*10+col}
               src={`${URL}/media/rune/${6}${row}${col}.png`}
               // src={require(`../../img/rune/${selected[0]}${row}${col}.png`)}
               noSelected={parseInt(selected[row - 1]) !== col}
@@ -149,14 +153,19 @@ const Status = ({ selected }) => {
   );
 };
 
-const EnemyAnalysis = ({ mainSelected, subSelected, statusSelected }) => {
+const EnemyAnalysis = ({ main, sub, status }) => {
+  const validation = main && sub && status
   return (
     <EnemyAnalysisBlock>
       <RuneTitle />
-      <FlexBlock>
-        <Rune main selected={mainSelected} />
-        <Rune selected={subSelected} statusSelected={statusSelected} />
-      </FlexBlock>
+      {validation &&
+        <>
+          <FlexBlock>
+            <Rune main selected={main} />
+            <Rune selected={sub} statusSelected={status} />
+          </FlexBlock>
+        </>
+      }
     </EnemyAnalysisBlock>
   );
 };
