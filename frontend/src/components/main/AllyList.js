@@ -142,7 +142,6 @@ const BanImg = styled.img`
 `;
 
 const BanList = ({ teamMates, phase }) => {
-  console.log(teamMates, phase)
   return (
     <BanListBlock>
       {teamMates && teamMates.map(teamMate => (
