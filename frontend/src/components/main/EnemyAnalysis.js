@@ -143,13 +143,13 @@ const Status = ({selected}) => {
   );
 }
 
-const EnemyAnalysis = () => {
+const EnemyAnalysis = ({mainSelected, subSelected, statusSelected}) => {
   return (
     <EnemyAnalysisBlock>
       <RuneTitle />
       <FlexBlock>
-        <Rune main selected="12312" />
-        <Rune selected="2234" statusSelected="6123"/>
+        <Rune main selected={mainSelected} />
+        <Rune selected={subSelected} statusSelected={statusSelected}/>
       </FlexBlock>
     </EnemyAnalysisBlock>
   )
