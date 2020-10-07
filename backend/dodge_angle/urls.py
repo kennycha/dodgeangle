@@ -24,12 +24,13 @@ urlpatterns = [
 
     path('api/v1/', include('champion.urls')),
     path('api/v1/summoner/', include('summoner.urls')),
+    path('api/v1/dodgeangle/', views.get_dodge_angle, name='dodge_angle'),
 
     path('api/v1/summonerA/<str:username>/', views.test_data),
+    path('api/v1/dodgeangleA/', views.get_dodge_angle_test, name='dodge_angle_test'),
     
     path('swagger/', schema_view.with_ui('swagger')),
 
-    path('api/v1/dodgeangle/', views.get_dodge_angle, name='dodge_angle'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -341,14 +341,10 @@ def get_user_data(request, username):
             temp['most_champion'] = []
         else:
             champion_id = summoner_data['mostChampId']
-            # champion = Champion.objects.filter(id__in=champion_id)
-            # serializer = ChampionSerializer(champion, many=True)
             champion_data = []
             for i in range(len(champion_id)):
                 champion = Champion.objects.get(id=champion_id[i])
                 temp_champion = ChampionSerializer(champion).data
-                # temp_champion = serializer.data
-                # idx = champion_id.index(temp_champion['id'])
                 temp_champion['win_rate'] = summoner_data['winRate'][i]
                 temp_champion['count_game'] = summoner_data['mostChampCount'][i]
                 champion_data.append(temp_champion)
@@ -372,3 +368,15 @@ def get_dodge_angle(request):
         data = ['troll input 없음']
     return Response(data)
 
+
+import random
+@api_view(['GET'])
+def get_dodge_angle_test(request):
+    # 대충 어떤 parameter
+    troll_score_str = request.GET.get('troll',0)
+    
+    ally_win_rate = get_win_rate(request.GET.get('ally',0))
+    enemy_win_rate = get_win_rate(request.GET.get('enemy',0))
+
+    data = {'allyRate': random.randrange(1, 100), 'enemyRate': random.randrange(1, 100), 'dodgeAngle': random.randrange(1, 100)}
+    return Response(data)
