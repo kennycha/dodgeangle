@@ -195,7 +195,7 @@ const AllyListItem = ({ teamMate, phase }) => {
             alt="pick"
           />
           <SummonerBlock>
-            <SummonerName>{teamMate?.name}</SummonerName>
+            <SummonerName>{teamMate.name}</SummonerName>
             <SummonerBadgeBlock>
               {teamMate.badges &&
                 teamMate.badges.map((badge) => (
@@ -219,13 +219,13 @@ const AllyListItem = ({ teamMate, phase }) => {
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate?.mostChampions &&
-            teamMate?.mostChampions?.map((champion) => (
+          {teamMate.mostChampions &&
+            teamMate.mostChampions.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                <ChampionWinRate>{parseInt(champion.win_rate)}</ChampionWinRate>
               </MostChampion>
             ))}
         </MostChampionsBlock>
