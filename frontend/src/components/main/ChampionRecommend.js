@@ -104,7 +104,7 @@ const ChampionRecommend = ({ me, allchampion, dodgeAngle }) => {
       <RecommendList>
         <h3>최근 게임 데이터에 기반한 추천 챔피언</h3>
         <FlexBox className="with-padding">
-          {me.recommendChamp && allchampion ? (
+          {me && me.recommendChamp && allchampion ? (
             me.recommendChamp.map((id) => (
               <RecommendItem key={id}>
                 <div>
