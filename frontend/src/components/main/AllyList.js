@@ -199,20 +199,23 @@ const AllyListItem = ({ teamMate, phase }) => {
             <SummonerBadgeBlock>
               {teamMate.badges &&
                 teamMate.badges.map((badge) => (
-                  <SummonerBadge
-                    key={teamMate.badges.indexOf(badge)}
-                    win={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연승중'
-                    }
-                    loss={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연패중'
-                    }
-                  >
-                    {badge}
-                  </SummonerBadge>
-                ))}
+                  badge.length || typeof badge === 'number'
+                    ? <SummonerBadge
+                        key={teamMate.badges.indexOf(badge)}
+                        win={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연승중'
+                        }
+                        loss={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연패중'
+                        }
+                      >
+                        {badge}
+                      </SummonerBadge>
+                    : <></>
+                ))
+              }
             </SummonerBadgeBlock>
           </SummonerBlock>
         </AllyInfo>
