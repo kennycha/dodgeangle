@@ -22,6 +22,7 @@ const NavbarContainer = () => {
     dispatch(initiateDodgeAngle());
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');
+    localStorage.removeItem('meSelected');
     history.push('/');
   };
   return (
