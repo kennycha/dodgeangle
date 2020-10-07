@@ -74,6 +74,7 @@ const PreEnterInputContainer = () => {
     setInnerTeamMates('');
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');
+    localStorage.removeItem('meSelected');
   };
 
   return (
