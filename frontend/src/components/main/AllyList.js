@@ -222,7 +222,7 @@ const AllyListItem = ({ teamMate, phase }) => {
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate.mostChampions &&
+          {Boolean(teamMate?.mostChampions) && teamMate.mostChampions.length &&
             teamMate.mostChampions.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
