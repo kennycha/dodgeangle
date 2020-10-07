@@ -25,6 +25,7 @@ def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST))))
     while True:
         headers = {'X-Riot-Token': LOL_API_LIST[key] }
         res = requests.get(url, headers=headers, params=params)
+        print(res)
         if res.status_code in error_status:
             print(f'[err code] : {res.status_code}')
             continue         
@@ -32,15 +33,60 @@ def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST))))
             break
     return res, key
 
+def get_match_data(ms):
+    m = ms[0]
+    summonerId = ms[1]
+
+    match_url = f'{base_url}/lol/match/v4/matches/{m["gameId"]}'
+    while True:
+        headers = {'X-Riot-Token': random.choice(LOL_API_LIST) }
+        match_res = requests.get(match_url, headers=headers)
+        if match_res.status_code in error_status:
+            print(f'[err code] : {match_res.status_code}')
+            continue
+        else:
+            break
+    # if match_res.status_code == 404:
+    #     return         
+
+    print('FINDING PNUM === FINDING PNUM === FINDING PNUM')
+    print(f"[[[[{m['gameId']}]]]]")
+    print(f'summoner id inside get_match_data >>>>>>>>> {summonerId}')
+    # print(f'length of participantIdenties per match >>>>>>>>>>> {match_res.json()['participantIdentities']}')
+
+    ## finding p_num
+    p_num = None
+    p_flag = False
+    for p in match_res.json()['participantIdentities']:
+        print(f"summonerIDs for each match >>>>>>>>>>> {p['player']['summonerName']}")
+        if p['player']['summonerName'].lower() == summonerId.lower():
+            p_num = p['participantId']
+            p_flag = True
+            break
+    if p_flag == False:
+        raise Exception('[예외] 최근에 아이디를 바꾼 팀원이 있는 것으로 추정됩니다.')
+
+    ## m['win'] >>> count_score
+    if p_num:
+        m['win'] = match_res.json()['participants'][p_num-1]['stats']['win']
+
+    ## troll each >>> troll_list >>> troll_index
+    (champ_id, kda, dpm, gpm) = troll_preprocess(match_res.json(), p_num)
+    troll_each = get_troll_score(champ_id, kda, dpm, gpm)
+
+    return (p_num, m['win'], troll_each)
 
 # error code 403
 # - matchs "key error" : 데이터 없음 return
 def get_data(summoners, n=20):
     account_ids = []
     for summoner in summoners:
+        print(f"SUMMONER NAME >>>>>>>>>>>>> {summoner}")
         url = f'{base_url}/lol/summoner/v4/summoners/by-name/{summoner}'
         res, key = valid_request(url)
         account_ids.append( (summoner,res.json()['id'], res.json()["accountId"], key) )
+        print(f"SUMMONERID >>>>>>>>>> {res.json()['id']}")
+        print(f"ACCOUNTID >>>>>>>>>>>>> {res.json()['accountId']}")
 
     match_data = { 'summoners': []}
     for summoner, summonerId, account_id, key in account_ids:
@@ -52,22 +98,24 @@ def get_data(summoners, n=20):
         else:
             match_list = res.json()['matches'][:n]
 
+        ####### 병렬처리 작업시작점
+        rendered_match_list = [(match, summoner) for match in match_list]
+
         count_score = []
         troll_list = []
-        for m in match_list:
-            url = f'{base_url}/lol/match/v4/matches/{m["gameId"]}'
-            match_res, _ = valid_request(url) 
-            p_num = None
-            for p in match_res.json()['participantIdentities']:
-                if p['player']['summonerId'] == summonerId:
-                    p_num = p['participantId']
-                    break
-            if p_num:
-                m['win'] = match_res.json()['participants'][p_num-1]['stats']['win']
-                count_score.append(m['win'])
+        with Pool(processes=5) as pool: # 병렬처리
+            pooled_list = pool.map(get_match_data, rendered_match_list)
 
-            (champ_id, kda, dpm, gpm) = troll_preprocess(match_res.json(), p_num)
-            troll_each = get_troll_score(champ_id, kda, dpm, gpm)
+        # 후처리
+        for i, _data in enumerate(pooled_list):
+            p_num, mwin, troll_each = _data
+
+            # pnum, mwin
+            if p_num:
+                match_list[i]['win'] = mwin
+                count_score.append(mwin)
+
+            # troll_each
             troll_list.append(troll_each)
         troll_index = round(sum(troll_list) / len(troll_list), 2)   # 평균
 
