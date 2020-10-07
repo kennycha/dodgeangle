@@ -169,8 +169,6 @@ const teamMates = handleActions(
         teamMates: state.teamMates.map((teamMate) => {
           let returnObject = { ...teamMate }
           summoners.forEach(summoner => {
-            console.log(summoner)
-            // console.log(summoner.summoner, teamMate.name, summoner.summoner === teamMate.name)
             if (summoner.summoner === teamMate.name) {
               returnObject = {
                 ...returnObject,
