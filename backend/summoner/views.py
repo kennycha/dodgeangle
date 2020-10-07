@@ -364,10 +364,11 @@ def get_dodge_angle(request):
 
     if troll_score_str:
         troll_score = list(map(float,troll_score_str.split(',')))
-        troll_mean = (sum(troll_score)/len(troll_score))*0.6
+        troll_mean = (sum(troll_score)/len(troll_score))
         
-        mul = (((enemy_win_rate)*100)-((ally_win_rate)*100))*70
-        da = int( (mul+100)*0.6 + troll_mean)
+        mul = (((enemy_win_rate)*100)-((ally_win_rate)*100))*50
+        print(mul,enemy_win_rate, ally_win_rate)
+        da = int( (mul+100)*0.4 + troll_mean)
         if da>180:
             da=180
         elif da<0:
