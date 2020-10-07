@@ -161,7 +161,7 @@ const EnemyListItem = ({ enemy, phase }) => {
     <EnemyListItemBlock>
       <EnemyInfoBlock>
         <CounterOrExpetedChampionsBlock>
-          {counterChampions &&
+          {Boolean(counterChampions) && counterChampions.length &&
             counterChampions.map((champion) => (
               <CounterOrExpetedChampion key={champion.id}>
                 <ChampionMiniImg
