@@ -3,10 +3,20 @@ from .models import Champion
 
 
 class ChampionSerializer(serializers.ModelSerializer):
-    counter = serializers.ListField(child=serializers.CharField())
-    pos = serializers.ListField(child=serializers.CharField())
+    rune = serializers.SerializerMethodField()
+    counter = serializers.SerializerMethodField()
+    pos = serializers.SerializerMethodField()
 
 
     class Meta:
         model = Champion
-        fields = ('id', 'name', 'image', 'counter', 'pos',)
+        fields = ('id', 'name', 'image', 'rune', 'counter', 'pos',)
+
+    def get_rune(self, obj):
+        return obj.rune
+
+    def get_counter(self, obj):
+        return obj.counter
+
+    def get_pos(self, obj):
+        return obj.pos
