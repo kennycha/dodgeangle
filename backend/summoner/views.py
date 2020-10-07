@@ -381,7 +381,6 @@ def get_dodge_angle(request):
                 'enemyRate':round(enemy_win_rate*100,2),
                 'dodgeAngle' : da
                 } 
-        print(mul)
     else:
         data = ['troll input 없음']
     return Response(data)
