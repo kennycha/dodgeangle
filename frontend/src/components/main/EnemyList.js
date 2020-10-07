@@ -60,8 +60,8 @@ const EnemyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: ${40 / 16}rem;
-  width: ${40 / 16}rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
