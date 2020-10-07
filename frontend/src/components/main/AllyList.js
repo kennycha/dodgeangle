@@ -21,6 +21,12 @@ const LabelBlock = styled.div`
   display: flex;
 `;
 
+const FlexBlock = styled.div`
+  dispaly: flex
+  justify-content: flex-end;
+  text-align: center;
+`
+
 const Label = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
@@ -32,6 +38,12 @@ const Label = styled.div`
       font-size: 1rem;
       color: ${mainTheme.mainLogoColor};
     `}
+    ${(props) =>
+      props.small &&
+      css`
+        font-size: 0.75rem;
+        color: ${mainTheme.mainBorder};
+      `}
 `;
 
 const AllyListItemBlock = styled.div`
@@ -42,6 +54,12 @@ const AllyListItemBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${(props) =>
+    props.me &&
+    css`
+    border: ${2/16}rem solid ${mainTheme.mainAlly};
+    `}
 `;
 
 const AllyInfoBlock = styled.div`
@@ -60,8 +78,8 @@ const AllyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
@@ -147,7 +165,7 @@ const BanList = ({ teamMates, phase }) => {
       {teamMates &&
         teamMates.map((teamMate) => (
           <BanImg
-            key={teamMate.name}
+            key={teamMate.id}
             src={
               teamMate.ban && phase !== 'ban'
                 ? `${URL}/media/champion/${teamMate.ban.image}`
@@ -164,14 +182,18 @@ const AllyListLabel = () => {
   return (
     <LabelBlock>
       <Label>아군 팀</Label>
-      <Label white>모스트 챔피언</Label>
+      <FlexBlock>
+        <Label white>모스트 챔피언</Label>
+        <Label small> (승률%)</Label>
+      </FlexBlock>
+      
     </LabelBlock>
   );
 };
 
 const AllyListItem = ({ teamMate, phase }) => {
   return (
-    <AllyListItemBlock>
+    <AllyListItemBlock me={teamMate.me}>
       <AllyInfoBlock>
         <AllyInfo>
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
@@ -187,6 +209,7 @@ const AllyListItem = ({ teamMate, phase }) => {
           )}
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
+            big={phase !== 'ban'}
             src={
               teamMate.pick
                 ? `${URL}/media/champion/${teamMate.pick.image}`
@@ -195,37 +218,40 @@ const AllyListItem = ({ teamMate, phase }) => {
             alt="pick"
           />
           <SummonerBlock>
-            <SummonerName>{teamMate?.name}</SummonerName>
+            <SummonerName>{teamMate.name}</SummonerName>
             <SummonerBadgeBlock>
               {teamMate.badges &&
                 teamMate.badges.map((badge) => (
-                  <SummonerBadge
-                    key={teamMate.badges.indexOf(badge)}
-                    win={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연승중'
-                    }
-                    loss={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연패중'
-                    }
-                  >
-                    {badge}
-                  </SummonerBadge>
-                ))}
+                  badge.length || typeof badge === 'number'
+                    ? <SummonerBadge
+                        key={teamMate.badges.indexOf(badge)}
+                        win={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연승중'
+                        }
+                        loss={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연패중'
+                        }
+                      >
+                        {badge}
+                      </SummonerBadge>
+                    : <></>
+                ))
+              }
             </SummonerBadgeBlock>
           </SummonerBlock>
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate?.mostChampions &&
-            teamMate?.mostChampions?.map((champion) => (
+          {Boolean(teamMate?.mostChampions) && teamMate.mostChampions.length &&
+            teamMate.mostChampions.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                <ChampionWinRate>{parseInt(champion.win_rate)}</ChampionWinRate>
               </MostChampion>
             ))}
         </MostChampionsBlock>

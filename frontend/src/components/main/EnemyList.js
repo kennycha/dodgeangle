@@ -60,8 +60,8 @@ const EnemyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: ${40 / 16}rem;
-  width: ${40 / 16}rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
@@ -161,13 +161,15 @@ const EnemyListItem = ({ enemy, phase }) => {
     <EnemyListItemBlock>
       <EnemyInfoBlock>
         <CounterOrExpetedChampionsBlock>
-          {counterChampions &&
+          {Boolean(counterChampions) && counterChampions.length &&
             counterChampions.map((champion) => (
               <CounterOrExpetedChampion key={champion.id}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{parseInt(champion.winRate)}</ChampionWinRate>
+                {/* {phase !== 'ban' &&
+                  <ChampionWinRate>{parseInt(champion.winRate)}</ChampionWinRate>
+                } */}
               </CounterOrExpetedChampion>
             ))}
         </CounterOrExpetedChampionsBlock>

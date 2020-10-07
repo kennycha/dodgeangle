@@ -11,9 +11,11 @@ const [
   GET_DODGEANGLE_SUCCESS,
   GET_DODGEANGLE_FAILURE,
 ] = createRequestActionTypes('dodgeAngle/GET_DODGEANGLE');
+const INITIATE_DODGEANGLE = `dodgeAngle/INITIATE_DODGEANGLE`;
 
 // action creator
 export const getDodgeAngle = createAction(GET_DODGEANGLE, (params) => params);
+export const initiateDodgeAngle = createAction(INITIATE_DODGEANGLE);
 
 // saga
 const getDodgeAngleSaga = createRequestSaga(
@@ -46,6 +48,9 @@ const dodgeAngle = handleActions(
     [GET_DODGEANGLE_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
+    }),
+    [INITIATE_DODGEANGLE]: (state) => ({
+      state: initialState,
     }),
   },
   initialState,
