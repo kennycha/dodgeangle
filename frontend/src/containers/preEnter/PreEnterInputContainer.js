@@ -8,6 +8,7 @@ import {
 } from '../../modules/teamMates';
 import { confirmEnemies } from '../../modules/enemies';
 import { initializePhase } from '../../modules/phase';
+import { initiateDodgeAngle } from '../../modules/dodgeAngle';
 
 const PreEnterInputContainer = () => {
   const [innerTeamMates, setInnerTeamMates] = useState(``);
@@ -69,6 +70,7 @@ const PreEnterInputContainer = () => {
     dispatch(confirmEnemies(null));
     dispatch(initializePhase());
     dispatch(initializeMe());
+    dispatch(initiateDodgeAngle());
     setInnerTeamMates('');
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');

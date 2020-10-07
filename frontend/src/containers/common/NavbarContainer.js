@@ -5,6 +5,7 @@ import Navbar from '../../components/common/Navbar';
 import { confirmTeamMates, initializeMe } from '../../modules/teamMates';
 import { confirmEnemies } from '../../modules/enemies';
 import { initializePhase } from '../../modules/phase';
+import { initiateDodgeAngle } from '../../modules/dodgeAngle';
 
 const NavbarContainer = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const NavbarContainer = () => {
     dispatch(confirmEnemies(null));
     dispatch(initializePhase());
     dispatch(initializeMe());
+    dispatch(initiateDodgeAngle());
     localStorage.removeItem('teamMates');
     localStorage.removeItem('enemies');
     history.push('/');
