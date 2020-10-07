@@ -54,6 +54,12 @@ const AllyListItemBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${(props) =>
+    props.me &&
+    css`
+    border: ${2/16}rem solid ${mainTheme.mainAlly};
+    `}
 `;
 
 const AllyInfoBlock = styled.div`
@@ -72,8 +78,8 @@ const AllyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
@@ -187,7 +193,7 @@ const AllyListLabel = () => {
 
 const AllyListItem = ({ teamMate, phase }) => {
   return (
-    <AllyListItemBlock>
+    <AllyListItemBlock me={teamMate.me}>
       <AllyInfoBlock>
         <AllyInfo>
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
@@ -203,6 +209,7 @@ const AllyListItem = ({ teamMate, phase }) => {
           )}
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
+            big={phase !== 'ban'}
             src={
               teamMate.pick
                 ? `${URL}/media/champion/${teamMate.pick.image}`
