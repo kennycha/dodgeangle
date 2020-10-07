@@ -167,7 +167,9 @@ const EnemyListItem = ({ enemy, phase }) => {
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{parseInt(champion.winRate)}</ChampionWinRate>
+                {phase !== 'ban' &&
+                  <ChampionWinRate>{parseInt(champion.winRate)}</ChampionWinRate>
+                }
               </CounterOrExpetedChampion>
             ))}
         </CounterOrExpetedChampionsBlock>
