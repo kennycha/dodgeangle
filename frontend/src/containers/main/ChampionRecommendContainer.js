@@ -11,7 +11,7 @@ const ChampionRecommendContainer = () => {
     }),
   );
   const me = teamMates.find((teamMate) => teamMate.me);
-  useEffect(() => {}, [me.recommendChamp, allchampion, dodgeAngle]);
+  useEffect(() => {}, [me, allchampion, dodgeAngle]);
   return (
     <ChampionRecommend
       me={me}
