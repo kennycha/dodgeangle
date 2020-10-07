@@ -147,7 +147,7 @@ const BanList = ({ teamMates, phase }) => {
       {teamMates &&
         teamMates.map((teamMate) => (
           <BanImg
-            key={teamMate.name}
+            key={teamMate.id}
             src={
               teamMate.ban && phase !== 'ban'
                 ? `${URL}/media/champion/${teamMate.ban.image}`
