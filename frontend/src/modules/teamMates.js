@@ -161,99 +161,35 @@ const teamMates = handleActions(
     [GET_SUMMONERS_INFO_SUCCESS]: (
       state,
       {
-        payload: [summoner1, summoner2, summoner3, summoner4, summoner5],
+        payload: summoners,
         meta: response,
-      },
-    ) => {
-      let newTeamMates = state.teamMates.map((teamMate) =>
-        teamMate.name === summoner1.summoner
-          ? {
-              ...teamMate,
-              badges: [
-                summoner1.streak_win - summoner1.streak_lose >= 0
-                  ? summoner1.streak_win - summoner1.streak_lose + '연승중'
-                  : -summoner1.streak_win + summoner1.streak_lose + '연패중',
-                '트롤지수 ' + summoner1.troll_index,
-              ],
-              mostChampions: summoner1.most_champion.slice(0, 3),
-              trollIndex: summoner1.troll_index,
-              trollList: summoner1.troll_list,
-            }
-          : teamMate.name === summoner2.summoner
-          ? {
-              ...teamMate,
-              badges: [
-                summoner2.streak_win - summoner2.streak_lose >= 0
-                  ? summoner2.streak_win - summoner2.streak_lose + '연승중'
-                  : -summoner2.streak_win + summoner2.streak_lose + '연패중',
-                '트롤지수 ' + summoner2.troll_index,
-              ],
-              mostChampions: summoner2.most_champion.slice(0, 3),
-              trollIndex: summoner2.troll_index,
-              trollList: summoner2.troll_list,
-            }
-          : teamMate.name === summoner3.summoner
-          ? {
-              ...teamMate,
-              badges: [
-                summoner3.streak_win - summoner3.streak_lose >= 0
-                  ? summoner3.streak_win - summoner3.streak_lose + '연승중'
-                  : -summoner3.streak_win + summoner3.streak_lose + '연패중',
-                '트롤지수 ' + summoner3.troll_index,
-              ],
-              mostChampions: summoner3.most_champion.slice(0, 3),
-              trollIndex: summoner3.troll_index,
-              trollList: summoner3.troll_list,
-            }
-          : teamMate.name === summoner4.summoner
-          ? {
-              ...teamMate,
-              badges: [
-                summoner4.streak_win - summoner4.streak_lose >= 0
-                  ? summoner4.streak_win - summoner4.streak_lose + '연승중'
-                  : -summoner4.streak_win + summoner4.streak_lose + '연패중',
-                '트롤지수 ' + summoner4.troll_index,
-              ],
-              mostChampions: summoner4.most_champion.slice(0, 3),
-              trollIndex: summoner4.troll_index,
-              trollList: summoner4.troll_list,
-            }
-          : teamMate.name === summoner5.summoner
-          ? {
-              ...teamMate,
-              badges: [
-                summoner5.streak_win - summoner5.streak_lose >= 0
-                  ? summoner5.streak_win - summoner5.streak_lose + '연승중'
-                  : -summoner5.streak_win + summoner5.streak_lose + '연패중',
-                '트롤지수 ' + summoner5.troll_index,
-              ],
-              mostChampions: summoner5.most_champion.slice(0, 3),
-              trollIndex: summoner5.troll_index,
-              trollList: summoner5.troll_list,
-            }
-          : teamMate,
-      );
-      let me = state.teamMates.find((t) => t.me);
-      const meIndex = state.teamMates.indexOf(me);
-      me = {
-        ...me,
-        badges: [
-          summoner1.streak_win - summoner1.streak_lose >= 0
-            ? summoner1.streak_win - summoner1.streak_lose + '연승중'
-            : -summoner1.streak_win + summoner1.streak_lose + '연패중',
-          '트롤지수 ' + summoner1.troll_index,
-        ],
-        mostChampions: summoner1.most_champion.slice(0, 3),
-        trollIndex: summoner1.troll_index,
-        trollList: summoner1.troll_list,
-        recommendChamp: summoner1.recommend_champ.slice(0, 3),
-      };
-      newTeamMates[meIndex] = me;
-      return {
+      }) => ({
         ...state,
-        teamMates: newTeamMates,
-      };
-    },
+        gets: summoners,
+        teamMates: state.teamMates.map((teamMate) => {
+          let returnObject = { ...teamMate }
+          summoners.forEach(summoner => {
+            console.log(summoner)
+            // console.log(summoner.summoner, teamMate.name, summoner.summoner === teamMate.name)
+            if (summoner.summoner === teamMate.name) {
+              returnObject = {
+                ...returnObject,
+                badges: [
+                  summoner.streak_win - summoner.streak_lose >= 0
+                    ? summoner.streak_win - summoner.streak_lose + '연승중'
+                    : -summoner.streak_win + summoner.streak_lose + '연패중',
+                  '트롤지수 ' + summoner.troll_index,
+                ],
+                mostChampions: summoner.most_champion.slice(0, 3),
+                trollIndex: summoner.troll_index,
+                trollList: summoner.troll_list,
+                recommendChamp: summoner.recommend_champ,
+              }
+            } 
+          })
+          return returnObject
+      }),
+    }),
     [GET_SUMMONERS_INFO_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
