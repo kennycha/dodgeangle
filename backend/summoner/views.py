@@ -362,7 +362,7 @@ def get_dodge_angle(request):
     enemy_win_rate = get_win_rate(request.GET.get('enemy',0))
 
     if troll_score_str:
-        troll_score = list(map(float,troll_score_str.split(',')))
+        troll_score = list(map(float, filter(lambda x: x, troll_score_str.split(','))))
         data = {'allyRate': round(ally_win_rate*100,2),'enemyRate':round(enemy_win_rate*100,2),'dodgeAngle' : int(((sum(troll_score)/len(troll_score))*((1-ally_win_rate)*100))*0.018)} # 상대 이길확률은 모르겠음
     else:
         data = ['troll input 없음']
