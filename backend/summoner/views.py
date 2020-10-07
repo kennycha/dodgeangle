@@ -326,31 +326,21 @@ def test_data(request, username):
 @api_view(['GET'])
 def get_user_data(request, username):
     user = username.split(',')
-    most_champion_data = loads(get_data(user))
+    users = get_data(user)
     data = []
-    for idx in range(len(user)):
-        temp = {}
-        summoner_data = most_champion_data[str(idx)]
-        temp['summoner'] = summoner_data['summonerName']
-        temp['streak_win'] = summoner_data['win']
-        temp['streak_lose'] = summoner_data['lose']
-        temp['recommend_champ'] = summoner_data['recommendChampId']
-        temp['most_lane'] = 'top'
-        temp['troll_index'] = summoner_data['trollIndex']
-        temp['troll_list'] = summoner_data['trollList']
-        if not summoner_data['mostChampId']:
-            temp['most_champion'] = []
-        else:
+    for summoner_data in users:
+        champion_data = []
+        if summoner_data['mostChampId']:
             champion_id = summoner_data['mostChampId']
-            champion_data = []
             for i in range(len(champion_id)):
                 champion = Champion.objects.get(id=champion_id[i])
-                temp_champion = ChampionSerializer(champion).data
-                temp_champion['win_rate'] = summoner_data['winRate'][i]
-                temp_champion['count_game'] = summoner_data['mostChampCount'][i]
-                champion_data.append(temp_champion)
-            temp['most_champion'] = champion_data
-        data.append(temp)
+                serializer = ChampionSerializer(champion).data
+                serializer['win_rate'] = summoner_data['winRate'][i]
+                champion_data.append(serializer)
+        summoner_data['most_champion'] = champion_data
+        del summoner_data['mostChampId']
+        del summoner_data['winRate']
+        data.append(summoner_data)
     return Response(data)
 
 @api_view(['GET'])
