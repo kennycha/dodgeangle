@@ -21,6 +21,12 @@ const LabelBlock = styled.div`
   display: flex;
 `;
 
+const FlexBlock = styled.div`
+  dispaly: flex
+  justify-content: flex-end;
+  text-align: center;
+`
+
 const Label = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
@@ -32,6 +38,12 @@ const Label = styled.div`
       font-size: 1rem;
       color: ${mainTheme.mainLogoColor};
     `}
+    ${(props) =>
+      props.small &&
+      css`
+        font-size: 0.75rem;
+        color: ${mainTheme.mainBorder};
+      `}
 `;
 
 const AllyListItemBlock = styled.div`
@@ -164,7 +176,11 @@ const AllyListLabel = () => {
   return (
     <LabelBlock>
       <Label>아군 팀</Label>
-      <Label white>모스트 챔피언</Label>
+      <FlexBlock>
+        <Label white>모스트 챔피언</Label>
+        <Label small> (승률%)</Label>
+      </FlexBlock>
+      
     </LabelBlock>
   );
 };
