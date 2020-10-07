@@ -17,13 +17,19 @@ const AllyAnalysisBlock = styled.div`
     font-weight: bolder;
     color: ${mainTheme.mainFontColor};
   }
+  h3 {
+    text-align: center;
+    color: ${mainTheme.mainFontColor};
+    font-weight: bolder;
+    margin-bottom: 0;
+  }
 `;
 
 const AllyAnalysis = ({ teamMatesNotMe }) => {
   return (
     <AllyAnalysisBlock>
       <div>최근 20경기 트롤지수</div>
-      {teamMatesNotMe &&
+      {teamMatesNotMe ? (
         teamMatesNotMe.map(
           (teamMate) =>
             teamMate.trollList && (
@@ -35,8 +41,10 @@ const AllyAnalysis = ({ teamMatesNotMe }) => {
                 key={teamMate.id}
               />
             ),
-        )}
-      {!teamMatesNotMe && <div>Loading...</div>}
+        )
+      ) : (
+        <h3>정보를 불러오는 중입니다.</h3>
+      )}
     </AllyAnalysisBlock>
   );
 };

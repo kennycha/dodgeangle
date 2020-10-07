@@ -104,21 +104,23 @@ const ChampionRecommend = ({ me, allchampion, dodgeAngle }) => {
       <RecommendList>
         <h3>최근 게임 데이터에 기반한 추천 챔피언</h3>
         <FlexBox className="with-padding">
-          {me.recommendChamp && allchampion
-            ? me.recommendChamp.map((id) => (
-                <RecommendItem key={id}>
-                  <div>
-                    {allchampion.find((champion) => champion.id === id).name}
-                  </div>
-                  <img
-                    src={`${URL}/media/champion/${
-                      allchampion.find((champion) => champion.id === id).image
-                    }`}
-                    alt="recommend"
-                  />
-                </RecommendItem>
-              ))
-            : '정보를 불러오는 중입니다.'}
+          {me.recommendChamp && allchampion ? (
+            me.recommendChamp.map((id) => (
+              <RecommendItem key={id}>
+                <div>
+                  {allchampion.find((champion) => champion.id === id).name}
+                </div>
+                <img
+                  src={`${URL}/media/champion/${
+                    allchampion.find((champion) => champion.id === id).image
+                  }`}
+                  alt="recommend"
+                />
+              </RecommendItem>
+            ))
+          ) : (
+            <h3>정보를 불러오는 중입니다.</h3>
+          )}
         </FlexBox>
       </RecommendList>
       <IndexList>
