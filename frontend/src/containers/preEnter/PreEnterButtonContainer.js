@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PreEnterButton from '../../components/preEnter/PreEnterButton';
-import { changeMe, confirmTeamMates } from '../../modules/teamMates';
+import { changeMe, getSummonersInfo } from '../../modules/teamMates';
 
 const PreEnterButtonContainer = () => {
   const dispatch = useDispatch();
@@ -10,9 +10,23 @@ const PreEnterButtonContainer = () => {
     teamMates: teamMates.teamMates,
     meSelected: teamMates.meSelected,
   }));
+
+  const getSummoners = async (id) => {
+    let summonersArray = [];
+    teamMates
+      .filter((t) => t.id === id)
+      .forEach((t) => summonersArray.push(t.name));
+    teamMates
+      .filter((t) => t.id !== id)
+      .forEach((t) => summonersArray.push(t.name));
+    const summoners = summonersArray.join(',');
+    return encodeURI(summoners);
+  };
+
   const onMeSelected = (id) => {
     dispatch(changeMe(id));
     setModalOpen(false);
+    getSummoners().then((res) => dispatch(getSummonersInfo(res)));
   };
   useEffect(() => {
     setModalOpen(false);
@@ -27,16 +41,9 @@ const PreEnterButtonContainer = () => {
           })),
         ),
       );
-    } else {
-      // teamMates === null 일때
-      if (localStorage.getItem('teamMates')) {
-        // 로컬스토리 값이 존재 => 로컬스토리지 값을 Redux에 반영하기
-        dispatch(
-          confirmTeamMates(JSON.parse(localStorage.getItem('teamMates'))),
-        );
-      }
+      localStorage.setItem('meSelected', meSelected)
     }
-  }, [teamMates, dispatch]);
+  }, [teamMates, meSelected, dispatch]);
   return (
     <PreEnterButton
       activated={Boolean(teamMates)}

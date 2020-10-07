@@ -14,13 +14,18 @@ const AllyListBlock = styled.div`
 
 const LabelBlock = styled.div`
   height: 2rem;
-  padding: 0 1.5rem 0 1rem;
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem;
   background: ${mainTheme.mainBackground};
   justify-content: space-between;
   align-items: center;
   display: flex;
 `;
+
+const FlexBlock = styled.div`
+  dispaly: flex
+  justify-content: flex-end;
+  text-align: center;
+`
 
 const Label = styled.div`
   font-size: 1.25rem;
@@ -33,6 +38,12 @@ const Label = styled.div`
       font-size: 1rem;
       color: ${mainTheme.mainLogoColor};
     `}
+    ${(props) =>
+      props.small &&
+      css`
+        font-size: 0.75rem;
+        color: ${mainTheme.mainBorder};
+      `}
 `;
 
 const AllyListItemBlock = styled.div`
@@ -43,6 +54,12 @@ const AllyListItemBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${(props) =>
+    props.me &&
+    css`
+    border: ${2/16}rem solid ${mainTheme.mainAlly};
+    `}
 `;
 
 const AllyInfoBlock = styled.div`
@@ -61,8 +78,8 @@ const AllyInfo = styled.div`
 `;
 
 const ChampionImg = styled.img`
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
   margin-right: 0.5rem;
   border-radius: 100%;
   display: block;
@@ -120,31 +137,79 @@ const ChampionWinRate = styled.div`
   text-align: center;
 `;
 
+const BanListBlock = styled.div`
+  margin: 1rem;
+  width: calc(100%-2rem);
+  background: ${mainTheme.mainBackground};
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const BanImg = styled.img`
+  background: ${mainTheme.mainBackground};
+  display: block;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-right: 1rem;
+  padding: 0.1rem;
+  ${(props) =>
+    props.ban &&
+    css`
+      padding: 0.25rem;
+    `}
+`;
+
+const BanList = ({ teamMates, phase }) => {
+  return (
+    <BanListBlock>
+      {teamMates &&
+        teamMates.map((teamMate) => (
+          <BanImg
+            key={teamMate.id}
+            src={
+              teamMate.ban && phase !== 'ban'
+                ? `${URL}/media/champion/${teamMate.ban.image}`
+                : require('../../img/noban.png')
+            }
+            ban={!teamMate.ban || phase === 'ban'}
+          />
+        ))}
+    </BanListBlock>
+  );
+};
+
 const AllyListLabel = () => {
   return (
     <LabelBlock>
       <Label>아군 팀</Label>
-      <Label white>모스트 챔피언</Label>
+      <FlexBlock>
+        <Label white>모스트 챔피언</Label>
+        <Label small> (승률%)</Label>
+      </FlexBlock>
+      
     </LabelBlock>
   );
 };
 
-const AllyListItem = ({ teamMate }) => {
+const AllyListItem = ({ teamMate, phase }) => {
   return (
-    <AllyListItemBlock>
+    <AllyListItemBlock me={teamMate.me}>
       <AllyInfoBlock>
         <AllyInfo>
           {/* 벤한 캐릭터, 추후 삭제 => 다른 곳으로 이동할 필요성 */}
-          <ChampionImg
-            src={
-              teamMate.ban
-                ? `${URL}/media/champion/${teamMate.ban.image}`
-                : require('../../img/nochampion.png')
-            }
-            alt="ban"
-          />
+          {phase === 'ban' && (
+            <ChampionImg
+              src={
+                teamMate.ban
+                  ? `${URL}/media/champion/${teamMate.ban.image}`
+                  : require('../../img/nochampion.png')
+              }
+              alt="ban"
+            />
+          )}
           {/* 선택한 position or 캐릭터 */}
           <ChampionImg
+            big={phase !== 'ban'}
             src={
               teamMate.pick
                 ? `${URL}/media/champion/${teamMate.pick.image}`
@@ -153,37 +218,40 @@ const AllyListItem = ({ teamMate }) => {
             alt="pick"
           />
           <SummonerBlock>
-            <SummonerName>{teamMate?.name}</SummonerName>
+            <SummonerName>{teamMate.name}</SummonerName>
             <SummonerBadgeBlock>
               {teamMate.badges &&
                 teamMate.badges.map((badge) => (
-                  <SummonerBadge
-                    key={teamMate.badges.indexOf(badge)}
-                    win={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연승중'
-                    }
-                    loss={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연패중'
-                    }
-                  >
-                    {badge}
-                  </SummonerBadge>
-                ))}
+                  badge.length || typeof badge === 'number'
+                    ? <SummonerBadge
+                        key={teamMate.badges.indexOf(badge)}
+                        win={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연승중'
+                        }
+                        loss={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연패중'
+                        }
+                      >
+                        {badge}
+                      </SummonerBadge>
+                    : <></>
+                ))
+              }
             </SummonerBadgeBlock>
           </SummonerBlock>
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate?.mostChampions &&
-            teamMate?.mostChampions?.map((champion) => (
+          {Boolean(teamMate?.mostChampions) && teamMate.mostChampions.length &&
+            teamMate.mostChampions.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                <ChampionWinRate>{parseInt(champion.win_rate)}</ChampionWinRate>
               </MostChampion>
             ))}
         </MostChampionsBlock>
@@ -192,12 +260,13 @@ const AllyListItem = ({ teamMate }) => {
   );
 };
 
-const AllyList = ({ teamMates }) => {
+const AllyList = ({ teamMates, phase }) => {
   return (
     <AllyListBlock>
+      <BanList teamMates={teamMates} phase={phase} />
       <AllyListLabel />
       {teamMates?.map((teamMate) => (
-        <AllyListItem key={teamMate.id} teamMate={teamMate} />
+        <AllyListItem key={teamMate.id} teamMate={teamMate} phase={phase} />
       ))}
     </AllyListBlock>
   );
