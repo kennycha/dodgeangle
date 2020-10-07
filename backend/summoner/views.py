@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 
 from bson.json_util import loads
 
+from math import log10
 
 @api_view(['GET'])
 def test_data(request, username):
@@ -362,12 +363,20 @@ def get_dodge_angle(request):
     
     troll_score_str = request.GET.get('troll',0)
     
-    ally_win_rate = get_win_rate(request.GET.get('ally',0))
-    enemy_win_rate = get_win_rate(request.GET.get('enemy',0))
+    ally_win_rate = get_win_rate(request.GET.get('ally',50))
+    enemy_win_rate = get_win_rate(request.GET.get('enemy',50))
 
     if troll_score_str:
         troll_score = list(map(float,troll_score_str.split(',')))
-        data = {'allyRate': round(ally_win_rate*100,2),'enemyRate':round(enemy_win_rate*100,2),'dodgeAngle' : int(((sum(troll_score)/len(troll_score))*((1-ally_win_rate)*100))*0.018)} # 상대 이길확률은 모르겠음
+        troll_mean = (sum(troll_score)/len(troll_score))*0.6
+        
+        mul = (((enemy_win_rate)*100)-((ally_win_rate)*100))*70
+     
+        data = {'allyRate': round(ally_win_rate*100,2),
+                'enemyRate':round(enemy_win_rate*100,2),
+                'dodgeAngle' : int( (mul+100)*0.6 + troll_mean)
+                } 
+        print(mul)
     else:
         data = ['troll input 없음']
     return Response(data)
