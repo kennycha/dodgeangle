@@ -147,7 +147,7 @@ const BanList = ({ teamMates, phase }) => {
       {teamMates &&
         teamMates.map((teamMate) => (
           <BanImg
-            key={teamMate.name}
+            key={teamMate.id}
             src={
               teamMate.ban && phase !== 'ban'
                 ? `${URL}/media/champion/${teamMate.ban.image}`
@@ -195,37 +195,40 @@ const AllyListItem = ({ teamMate, phase }) => {
             alt="pick"
           />
           <SummonerBlock>
-            <SummonerName>{teamMate?.name}</SummonerName>
+            <SummonerName>{teamMate.name}</SummonerName>
             <SummonerBadgeBlock>
               {teamMate.badges &&
                 teamMate.badges.map((badge) => (
-                  <SummonerBadge
-                    key={teamMate.badges.indexOf(badge)}
-                    win={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연승중'
-                    }
-                    loss={
-                      badge.length >= 3 &&
-                      badge.slice(badge.length - 3, badge.length) === '연패중'
-                    }
-                  >
-                    {badge}
-                  </SummonerBadge>
-                ))}
+                  badge.length || typeof badge === 'number'
+                    ? <SummonerBadge
+                        key={teamMate.badges.indexOf(badge)}
+                        win={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연승중'
+                        }
+                        loss={
+                          badge.length >= 3 &&
+                          badge.slice(badge.length - 3, badge.length) === '연패중'
+                        }
+                      >
+                        {badge}
+                      </SummonerBadge>
+                    : <></>
+                ))
+              }
             </SummonerBadgeBlock>
           </SummonerBlock>
         </AllyInfo>
       </AllyInfoBlock>
       <AllyInfoBlock>
         <MostChampionsBlock>
-          {teamMate?.mostChampions &&
-            teamMate?.mostChampions?.map((champion) => (
+          {Boolean(teamMate?.mostChampions) && teamMate.mostChampions.length &&
+            teamMate.mostChampions.map((champion) => (
               <MostChampion key={teamMate.mostChampions.indexOf(champion)}>
                 <ChampionMiniImg
                   src={`${URL}/media/champion/${champion.image}`}
                 />
-                <ChampionWinRate>{champion.winRate}</ChampionWinRate>
+                <ChampionWinRate>{parseInt(champion.win_rate)}</ChampionWinRate>
               </MostChampion>
             ))}
         </MostChampionsBlock>
