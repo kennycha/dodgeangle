@@ -26,7 +26,7 @@ const PreEnterButtonContainer = () => {
   const onMeSelected = (id) => {
     dispatch(changeMe(id));
     setModalOpen(false);
-    getSummoners().then((res) => dispatch(getSummonersInfo(res)));
+    getSummoners(id).then((res) => dispatch(getSummonersInfo(res)));
   };
   useEffect(() => {
     setModalOpen(false);

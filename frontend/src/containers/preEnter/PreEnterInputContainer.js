@@ -32,6 +32,7 @@ const PreEnterInputContainer = () => {
         pick: null,
         mostChampions: null,
         badges: null,
+        recommendChamp: null,
       }));
       dispatch(confirmTeamMates(teamMatesArray));
       dispatch(confirmEnemies(null));
