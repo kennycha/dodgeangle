@@ -25,7 +25,6 @@ def valid_request(url, params=None, key=random.choice(range(len(LOL_API_LIST))))
     while True:
         headers = {'X-Riot-Token': LOL_API_LIST[key] }
         res = requests.get(url, headers=headers, params=params)
-        print(res)
         if res.status_code in error_status:
             print(f'[err code] : {res.status_code}')
             continue         
@@ -46,19 +45,11 @@ def get_match_data(ms):
             continue
         else:
             break
-    # if match_res.status_code == 404:
-    #     return         
-
-    print('FINDING PNUM === FINDING PNUM === FINDING PNUM')
-    print(f"[[[[{m['gameId']}]]]]")
-    print(f'summoner id inside get_match_data >>>>>>>>> {summonerId}')
-    # print(f'length of participantIdenties per match >>>>>>>>>>> {match_res.json()['participantIdentities']}')
 
     ## finding p_num
     p_num = None
     p_flag = False
     for p in match_res.json()['participantIdentities']:
-        print(f"summonerIDs for each match >>>>>>>>>>> {p['player']['summonerName']}")
         if p['player']['summonerName'].lower() == summonerId.lower():
             p_num = p['participantId']
             p_flag = True
@@ -81,12 +72,9 @@ def get_match_data(ms):
 def get_data(summoners, n=20):
     account_ids = []
     for summoner in summoners:
-        print(f"SUMMONER NAME >>>>>>>>>>>>> {summoner}")
         url = f'{base_url}/lol/summoner/v4/summoners/by-name/{summoner}'
         res, key = valid_request(url)
         account_ids.append( (summoner,res.json()['id'], res.json()["accountId"], key) )
-        print(f"SUMMONERID >>>>>>>>>> {res.json()['id']}")
-        print(f"ACCOUNTID >>>>>>>>>>>>> {res.json()['accountId']}")
 
     match_data = { 'summoners': []}
     for summoner, summonerId, account_id, key in account_ids:

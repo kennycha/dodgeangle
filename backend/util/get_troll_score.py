@@ -18,8 +18,6 @@ def get_troll_score(champ_id, kda, dpm, gpm):
 def troll_preprocess(m, p_num):
     '''매치데이터와 플레이어 순서를 입력받아 트롤지수 계산에 필요한 데이터 추출'''
 
-    print(f'p_num >>>>>>>> {p_num}')
-    flag = False
     for player in m['participants']:
         if player['participantId'] == p_num:
             champ_id = player['championId']
@@ -29,9 +27,7 @@ def troll_preprocess(m, p_num):
             assists = player['stats']['assists']
             damage = player['stats']['totalDamageDealt']
             gold = player['stats']['goldEarned']
-            flag = True
             break
-    print(f"found player['participantId'] == p_num ????????????????????????????????? {flag}")
     
     duration = m['gameDuration'] / 60
     
