@@ -15,27 +15,24 @@ def get_troll_score(champ_id, kda, dpm, gpm):
     # 정규분포에서 누적분포함수(cumulative distribution function) 사용하여 백분율 환산
     return (1 - stats.norm(0, 1).cdf(scaled_data)[0][0]) * 100
 
-def troll_preprocess(m, p_num):
-    '''매치데이터와 플레이어 순서를 입력받아 트롤지수 계산에 필요한 데이터 추출'''
+def troll_preprocess(player, duration):
+    '''플레이어와 게임시간을 입력받아 트롤지수 계산에 필요한 데이터 추출'''
 
-    for player in m['participants']:
-        if player['participantId'] == p_num:
-            champ_id = player['championId']
-            kills = player['stats']['kills']
-            deaths = int(player['stats']['deaths'])
-            deaths = 1 if deaths == 0 else deaths
-            assists = player['stats']['assists']
-            damage = player['stats']['totalDamageDealt']
-            gold = player['stats']['goldEarned']
-            break
+    kills = player['stats']['kills']
+    deaths = int(player['stats']['deaths'])
+    deaths = 1 if deaths == 0 else deaths
+    assists = player['stats']['assists']
+    damage = player['stats']['totalDamageDealt']
+    gold = player['stats']['goldEarned']
     
-    duration = m['gameDuration'] / 60
+    # sec >> min 변환
+    duration = duration / 60
     
     kda = (kills + assists) / deaths
     dpm = damage / duration
     gpm = gold / duration
 
-    return (champ_id, kda, dpm, gpm)
+    return (kda, dpm, gpm)
 
 def main():
     score = get_troll_score(266, 0.2857142857142857, 50303/20, 5342/20)
