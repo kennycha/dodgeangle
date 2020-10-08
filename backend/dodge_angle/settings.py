@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     # DRF
     'rest_framework',
+    # Swagger
+    'drf_yasg',
     # apps
     'champion',
     'summoner',

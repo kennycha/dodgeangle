@@ -5,10 +5,10 @@ import mainTheme from '../../lib/styles/mainTheme';
 const UserSelectBlock = styled.div`
   position: absolute;
   z-index: -1;
-  top: -60px;
-  left: -60px;
-  width: 300px;
-  height: 300px;
+  top: -${50 / 16}rem;
+  left: -${50 / 16}rem;
+  width: ${220 / 16}rem;
+  height: ${220 / 16}rem;
   display: flex;
   justify-content: space-between;
   & > div {
@@ -28,17 +28,17 @@ const UserSelectItemBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
-  width: 70px;
+  height: ${50 / 16}rem;
+  width: ${50 / 16}rem;
   border-radius: 100%;
   color: ${mainTheme.mainFontColor};
   background: ${mainTheme.mainSummoner};
-  font-size: 1.5rem;
-  border: 3px solid ${mainTheme.mainEnemy};
+  font-size: 1.2rem;
+  border: ${3 / 16}rem solid ${mainTheme.mainEnemy};
   ${(props) =>
     props.ally &&
     css`
-      border: 3px solid ${mainTheme.mainAlly};
+      border: ${3 / 16}rem solid ${mainTheme.mainAlly};
     `}
 `;
 

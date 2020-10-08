@@ -1,29 +1,22 @@
 from rest_framework import serializers
-from .models import Entry, Champion, Tag
-
-
-class TagSerializer(serializers.ModelSerializer):
-    # tag = serializers.CharField()
-
-    class Meta:
-        model = Tag
-        fields = ('tag',)
+from .models import Champion
 
 
 class ChampionSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField()
-    # name = serializers.CharField()
-    # image = serializers.CharField()
-    tags = TagSerializer()
+    rune = serializers.SerializerMethodField()
+    counter = serializers.SerializerMethodField()
+    pos = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Champion
-        fields = ('id', 'name', 'image',) + TagSerializer.Meta.fields
+        fields = ('id', 'name', 'image', 'rune', 'counter', 'pos',)
 
+    def get_rune(self, obj):
+        return obj.rune
 
-class EntrySerializer(serializers.ModelSerializer):
-    champion = ChampionSerializer()
+    def get_counter(self, obj):
+        return obj.counter
 
-    class Meta:
-        model = Entry
-        fields = ChampionSerializer.Meta.fields
+    def get_pos(self, obj):
+        return obj.pos

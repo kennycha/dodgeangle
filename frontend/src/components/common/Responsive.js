@@ -6,13 +6,7 @@ const ResponsiveBlock = styled.div`
   padding-right: 1rem;
   width: 1024px;
   margin: 0 auto;
-
-  @media (max-width: 1024px) {
-    width: 768px;
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  min-width: 1024px;
 `;
 
 const Responsive = ({ children, ...rest }) => {

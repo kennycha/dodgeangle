@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import ChampionItemContainer from '../../containers/main/ChampionItemContainer';
 
 const ChampionListBlock = styled.div`
-  padding: 80px;
-  padding-left: 100px;
-  padding-right: 100px;
-  height: 700px;
+  padding: ${80 / 16}rem;
+  padding-top: ${50 / 16}rem;
+  height: ${600 / 16}rem;
   display: grid;
-  grid-template-columns: repeat(6, 140px);
-  grid-auto-rows: 120px;
+  grid-template-columns: repeat(6, ${100 / 16}rem);
+  grid-auto-rows: ${100 / 16}rem;
   gap: 1rem;
   overflow: auto;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+
   div.spaceholder {
-    height: 250px;
+    height: ${250 / 16}rem;
   }
 `;
 
@@ -24,16 +30,17 @@ const ChampionList = ({
 }) => {
   return (
     <ChampionListBlock>
-      {resultChampions.map((champion) => (
-        <ChampionItemContainer
-          key={champion.id}
-          champion={champion}
-          isSelected={
-            selectedChampion ? selectedChampion.id === champion.id : false
-          }
-          setSelectedChampion={setSelectedChampion}
-        />
-      ))}
+      {resultChampions &&
+        resultChampions.map((champion) => (
+          <ChampionItemContainer
+            key={champion.id}
+            champion={champion}
+            isSelected={
+              selectedChampion ? selectedChampion.id === champion.id : false
+            }
+            setSelectedChampion={setSelectedChampion}
+          />
+        ))}
       <div className="spaceholder" />
     </ChampionListBlock>
   );
