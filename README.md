@@ -136,32 +136,7 @@ $ python manage.py runserver
 
 ## 🐰 추가 _ Introduce BackEnd 
 
-### 1. Dodge Angle API
-
-#### 1.1 project init
-
-```bash
-$ pip install -r requirements.txt
-$ touch .env # SECRET_KEY 설정
-```
-
-#### 1.2 .env
-
-```bash
-# mongoDB 설정
-MONGO_INITDB_ROOT_HOST=j3a504.p.ssafy.io
-MONGO_INITDB_ROOT_USERNAME=username
-MONGO_INITDB_ROOT_PASSWORD=password
-
-# Riot API key
-LOL_API_KEY='RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-LOL_API_KEY2='RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-LOL_API_KEY3='RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-LOL_API_KEY4='RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-LOL_API_KEY5='RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-```
-
-### 2. 데이터 수집
+### 1. 데이터 수집
 
 > Riot API를 이용하여 특정 티어의 게임 데이터를 저장
 
@@ -203,11 +178,11 @@ res = requests.get(url, headers=headers, params=params)
 game_data += res.json()
 ```
 
-### 3. 데이터 전처리
+### 2. 데이터 전처리
 
 > 방대한 데이터를 pandas를 이용해서 필요한 데이터만 추출한 뒤 저장
 
-### 4. 데이터 분석
+### 3. 데이터 분석
 
 > 각종 분석 방법을 사용하여 데이터를 분석
 
@@ -253,7 +228,7 @@ game_data += res.json()
 
    - 소환사의 최근 전적 기준 최다 플레이 챔피언 및 승률을 나타냅니다
 
-### 5. API 구축
+### 4. API 구축
 
 > Django를 이용한 restful API 구축
 
