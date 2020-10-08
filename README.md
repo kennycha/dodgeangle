@@ -91,27 +91,25 @@ Keep oaring KR님이 로비에 참가하셨습니다.
 
 > 일반인친구들
 
-<img src="./images/README/yuen_ashe.jpg" style="zoom:5%;" /> 
+<img src="./images/README/yuen_ashe.jpg" style="zoom:50%;" /> 
 
-- 박유은 : BackEnd
+박유은 : BackEnd
 
-<img src="./images/README/hyeonjun_teemo.jpg" style="zoom:5%;" /> 
+<img src="./images/README/hyeonjun_teemo.jpg" style="zoom:50%;" /> 
 
-- 장현준
+장현준 : FrontEnd
 
-- FrontEnd
+<img src="./images/README/myeonju_amumu.jpg" style="zoom:50%;" /> 
 
-<img src="./images/README/myeonju_amumu.jpg" style="zoom:5%;" /> 
+정명주 : BackEnd & Infra
 
-- 정명주 : BackEnd & Infra
+<img src="./images/README/jinhwan_heimerdinger.jpg" style="zoom:50%;" /> 
 
-<img src="./images/README/jinhwan_heimerdinger.jpg" style="zoom:5%;" /> 
+조진환 : BackEnd
 
-- 조진환 : BackEnd
+<img src="./images/README/yeonbu_blitzcrank.jpg" style="zoom:50%;" /> 
 
-<img src="./images/README/yeonbu_blitzcrank.jpg" style="zoom:5%;" /> 
-
-- 차영부 : FrontEnd
+차영부 : FrontEnd
 
 ## ⚙️Install and Usage
 
