@@ -4,7 +4,11 @@
 
 ## ✏️ 사용법
 
-> http://j3a504.p.ssafy.io:8080/
+> http://j3a504.p.ssafy.io/
+
+## 소개영상
+
+> https://youtu.be/Q9cKjzQ3jZc
 
 ### 1. PreEnterPage
 
